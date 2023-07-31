@@ -5,6 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>🌭🕹🍔🛵🍟🖥🍕🚦</title>
+<script>
+function openPopup() {
+                var newwin = window.open("", "_blank", 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=650,height=600');
+                newwin.document.write('<div><button class="popupclose" id="popupclose" onclick="window.close()">close popup</button></div>');
+}
+</script>
 <style>
 body {
 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -265,6 +271,11 @@ height: 600px;
 width: 40%;
 margin: 30px;
 }
+	
+#popup{
+color: white;
+cursor: pointer;
+}
 </style>
 <script></script>
 </head>
@@ -320,7 +331,7 @@ margin: 30px;
 <div class="button-container">Element in vertical scroll</div>
 <div class="button-container">Element in vertical scroll</div>
 <div class="button-container">Element in vertical scroll</div>
-<div class="button-container">Element in vertical scroll</div>
+<div class="button-container popup" id="popup" onclick="openPopup()">Click to close popup</div>
 <div class="button-container"> <a href="https://getbootstrap.com/docs/4.0/components/forms/" target="_blank">getbootstrap</a></div>
 <div class="button-container"> <a href="https://getbootstrap.com/docs/4.0/components/forms/" target="_self">same tab getbootstrap</a></div>
 
