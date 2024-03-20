@@ -5,7 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>🌭🕹🍔🛵🍟🖥🍕🚦</title>
-
+<script>
+    function openPopup() {
+                    window.open("https://alex.arthurfurman.com/", "_blank", 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=600');
+    }
+    </script>
 <style>
 body {
 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -325,7 +329,7 @@ cursor: pointer;
 <div class="button-container">Element in vertical scroll</div>
 <div class="button-container">Element in vertical scroll</div>
 <div class="button-container">Element in vertical scroll</div>
-<div class="button-container">Element in vertical scroll</div>
+<div class="button-container" id="popup1" onclick="openPopup()">Click to open popup</div>
 <div><button class="button-container popup" id="popup" onclick="window.close()">close popup</button></div>
 <div class="button-container"> <a href="https://getbootstrap.com/docs/4.0/components/forms/" target="_blank">getbootstrap</a></div>
 <div class="button-container"> <a href="https://getbootstrap.com/docs/4.0/components/forms/" target="_self">same tab getbootstrap</a></div>
