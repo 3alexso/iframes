@@ -1,0 +1,75 @@
+
+<html>
+    <head>
+        <script>
+            function addMetaTagCspString(cspString){
+                var meta = document.createElement('meta');
+                meta.httpEquiv = 'Content-Security-Policy';
+                meta.content = cspString;
+                document.getElementsByTagName('head')[0].appendChild(meta);
+            }
+
+            function getDefaultCspString(){
+                return "default-src 'none'; base-uri 'none'; block-all-mixed-content; child-src 'none'; connect-src 'none'; font-src 'none'; form-action 'none'; frame-ancestors 'none'; frame-src 'none'; img-src 'none'; manifest-src 'none'; media-src 'none'; object-src 'none'; plugin-types 'none'; script-src 'none'; script-src-attr 'none'; script-src-elem 'none'; style-src 'none'; style-src-elem 'none'; style-src-attr 'none'; upgrade-insecure-requests; worker-src 'none'; sandbox"
+            }
+
+            // function parseCspString(cspString){
+            //     const directives = cspString.split(';');
+            //     return directives.map(directive => {
+            //         const splitBySpace = directive.split(' ');
+            //         return { 
+            //             directive: splitBySpace[0],
+            //             values: splitBySpace.slice(1)
+            //         }
+            //     });
+            // }
+
+            function saveCspTextAreaToLocalStorage(){
+                const cspTextArea = document.getElementById('cspTextArea');
+                const cspString = cspTextArea.value;
+                const withoutLinebreaks = cspString.split('\n').join('');
+                localStorage.setItem('cspString', withoutLinebreaks);
+                window.location.reload();
+            }
+
+            function getCspFromLocalStorage(){
+                return localStorage.getItem('cspString');
+            }
+
+            function clear(){
+                localStorage.removeItem('cspString');
+                window.location.reload();
+            }
+
+            function start(){
+                document.getElementById('saveToLocalStorage').addEventListener('click', saveCspTextAreaToLocalStorage);
+                document.getElementById('reset').addEventListener('click', clear);
+
+
+                const valueFromLocalStorage = getCspFromLocalStorage();
+                const valueToSet = valueFromLocalStorage || getDefaultCspString();
+                const cspTextArea = document.getElementById('cspTextArea');
+                const withLinebreaks = valueToSet.split(';').join(';\n');
+                cspTextArea.value = withLinebreaks;
+                addMetaTagCspString(valueToSet);
+            }
+        </script>
+    </head>
+<body>
+    <div>
+        This is the CSP Tester page.
+        <div><span id="span1">span 1</span> <span id="span2">span 2</span></div>
+    </div>
+    <div>
+        <textarea id="cspTextArea" rows="20" cols="80"></textarea>
+    </div>
+    <div>
+        <button id="saveToLocalStorage">Save and reload</button>
+        <button id="reset">Reset and reload</button>
+    </div>
+
+    <script>
+        start();
+    </script>
+</body>
+</html>   
