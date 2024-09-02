@@ -111,6 +111,10 @@ nav ul ul ul li {
 	top:-60px; 
 	left:170px;
 }
+	.scrollable-container{
+		    overflow-y: auto;
+    max-height: 260px;
+	}
 
 	
 /* Change this in order to change the Dropdown symbol */
@@ -191,7 +195,10 @@ button {
   justify-content: center;
 }
 
-
+.list{
+	display: flex;
+	flex-wrap: wrap;
+}
 
 #my-button {
 width: 500px;
@@ -327,20 +334,19 @@ cursor: pointer;
 </div> -->
 <h1 class="title">Player Test Page</h1>
 <div class="long">
-<div class="button-container">Element in vertical scroll</div>
-<div class="button-container">Element in vertical scroll</div>
-<div class="button-container">Element in vertical scroll</div>
-<div class="button-container">Element in vertical scroll</div>
+<div class="button-container">Element in horizontal scroll</div>
+<div class="button-container">Element in horizontal scroll</div>
+<div class="button-container">Element in horizontal scroll</div>
+<div class="button-container">Element in horizontal scroll</div>
 <div class="button-container" id="popup1" onclick="openPopup()">Click to open popup</div>
 <div class="button-container"><button class="popup" id="popup" onclick="window.close()">close popup</button></div>
 <div class="button-container"> <a href="https://getbootstrap.com/docs/4.0/components/forms/" target="_blank">getbootstrap</a></div>
 <div class="button-container"> <a href="https://getbootstrap.com/docs/4.0/components/forms/" target="_self">same tab getbootstrap</a></div>
-<div class="button-container">Element in vertical scroll</div>
-<div class="button-container">Element in vertical scroll</div>
-<div class="button-container">Element in vertical scroll</div>	
-<div class="button-container">Element in vertical scroll</div>	
-<div class="button-container">Element in vertical scroll</div>	
-<div class="button-container">Element in vertical scroll</div>	
+<div class="button-container">Element in horizontal scroll</div>
+<div class="button-container">Element in horizontal scroll</div>
+<div class="button-container">Element in horizontal scroll</div>	
+<div class="button-container">Element in horizontal scroll</div>	
+<div class="button-container">Element in horizontal scroll</div>	
 
 
 
@@ -387,6 +393,11 @@ title="iframe example"
 <li class="list-item" id="item8">Item Number 8</li>
 <li class="list-item" id="item9">Item Number 9</li>
 <li class="list-item" id="item10">Item Number 10</li>
+	<li class="list-item" id="item11">Item Number 11</li>
+	<li class="list-item" id="item12">Item Number 12</li>
+	<li class="list-item" id="item13">Item Number 13</li>
+	<li class="list-item" id="item14">Item Number 14</li>
+	<li class="list-item" id="item15">Item Number 15</li>
 </ul>
 </div>
 <div id="outside">
