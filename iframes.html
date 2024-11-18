@@ -476,43 +476,51 @@ title="iframe example"
     
       <!-- --------------------Text Areas------------------------------ -->
       
-      <fieldset>
-        <legend>Essay Section</legend>
-	                <p> In 50 words or more explain why you want to date my daughter</p>
-        <div>
-          <label for="msg">msg1</label><br>
-          <textarea id="msg" name="user_message" rows="4" cols="50" placeholder="Enter Text Here"></textarea>  
-	</div>
-        <div>
-          <label for="msg2">msg2 Please upload contact details for 2 references</label><br>
-          <textarea id="msg2" name="user_message2" rows="4" cols="50" placeholder="Enter Text Here">Hello, World</textarea>  
-	</div>
-	<div>
-          <label for="msg3">msg3 Please share more info</label><br>
-          <textarea id="msg3" name="user_message3" rows="4" cols="50" placeholder="Enter Text Here"></textarea>  
-	</div>
-	<div>
-          <label for="msg4">msg4 Anything Else?</label><br>
-          <textarea id="msg4" name="user_message4" rows="4" cols="50" placeholder="atat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>   
-	</div>
-	 <div>
-          <label for="msg5">msg5 Something Else?</label><br>
-          <textarea id="msg5" name="user_message3" rows="4" cols="50" placeholder="Enter Text Here"></textarea>  
-	</div>
-	<div>
-          <label for="msg6">msg 6 Want to add more info?</label><br>
-          <textarea id="msg6" name="user_message3" rows="4" cols="50" placeholder="Enter Text Here"></textarea>   
-	</div>
-	      
-        <p>Upload Police Clearance Certificate, Bank Statement and Medical Certifiates here:
-          <button>Attach Files</button></p>
-      </fieldset>
-    
-      <div id="submitbutton">
-        <button type="submit" id="submit">Send your application</button>   </div>
-    
-    </form>
-      </div>
+     <form action="/submit-endpoint" method="POST">
+  <fieldset>
+    <legend>Essay Section</legend>
+    <p>In 50 words or more, explain why you want to date my daughter:</p>
+
+    <div>
+      <label for="msg">msg1</label>
+      <textarea id="msg" name="user_message" rows="4" cols="50" placeholder="Enter Text Here"></textarea>
+    </div>
+
+    <div>
+      <label for="msg2">msg2: Please upload contact details for 2 references</label>
+      <textarea id="msg2" name="user_message2" rows="4" cols="50" placeholder="Enter Text Here"></textarea>
+    </div>
+
+    <div>
+      <label for="msg3">msg3: Please share more info</label>
+      <textarea id="msg3" name="user_message3" rows="4" cols="50" placeholder="Enter Text Here"></textarea>
+    </div>
+
+    <div>
+      <label for="msg4">msg4: Anything Else?</label>
+      <textarea id="msg4" name="user_message4" rows="4" cols="50" placeholder="Enter additional comments here"></textarea>
+    </div>
+
+    <div>
+      <label for="msg5">msg5: Something Else?</label>
+      <textarea id="msg5" name="user_message5" rows="4" cols="50" placeholder="Enter Text Here"></textarea>
+    </div>
+
+    <div>
+      <label for="msg6">msg6: Want to add more info?</label>
+      <textarea id="msg6" name="user_message6" rows="4" cols="50" placeholder="Enter Text Here"></textarea>
+    </div>
+
+    <p>Upload Police Clearance Certificate, Bank Statement, and Medical Certificates here:</p>
+    <input type="file" name="documents" multiple>
+
+  </fieldset>
+
+  <div id="submitbutton">
+    <button type="submit" id="submit">Send your application</button>
+  </div>
+</form>
+
     
     <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
 </body>
