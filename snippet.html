@@ -11,6 +11,28 @@
                     window.open("https://alex.arthurfurman.com/", "_blank", 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=600');
     }
     </script>
+<script>
+	window.walkmeLoaderConfig = { 
+  systemUrl: "https://cdn.walkme.com/users/f62b64f8cf3f4d9aab3103895a7b1a76/test/walkme_f62b64f8cf3f4d9aab3103895a7b1a76_https.js",
+  customerSystemUrl: "",
+  disableDefaultSystem: false,
+  disableAnalytics: false,
+  tenantId: "",
+  endUserId: "user",
+  language: "",
+  theme: ""
+};
+
+(function() {
+  var walkme = document.createElement('script'); 
+  walkme.type = 'text/javascript';
+  walkme.async = true;
+  walkme.src = 'https://cdn.walkme.com/SAP/WalkmeLoader/main_v1.js';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(walkme, s);
+ })()
+
+</script>
 <style>
 body {
 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
