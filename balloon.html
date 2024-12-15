@@ -67,10 +67,24 @@
     </dialog>
 
     <!-- Button to show the dialog -->
-    <button>Show dialog</button>
+    <button>Show the dialog</button>
 
     <script>
         // Get the dialog, button elements, and close button
         const dialog = document.querySelector("dialog");
         const showButton = document.querySelector("button");
-        const closeButton = document.querySelector(
+        const closeButton = document.querySelector("dialog button");
+
+        // "Show the dialog" button opens the dialog modally
+        showButton.addEventListener("click", () => {
+            dialog.showModal();
+        });
+
+        // "Close" button inside the dialog closes the dialog
+        closeButton.addEventListener("click", () => {
+            dialog.close();
+        });
+    </script>
+
+</body>
+</html>
