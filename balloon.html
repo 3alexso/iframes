@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dialog Test Page</title>
     <style>
-        /* Style for the backdrop of the second dialog */
+        /* Style for the backdrop of the dialog */
         ::backdrop {
             background-image: linear-gradient(
                 45deg,
@@ -16,7 +16,7 @@
             );
             opacity: 0.75;
         }
-        
+
         /* Basic styles for the page */
         body {
             font-family: Arial, sans-serif;
@@ -56,47 +56,21 @@
             background-color: white;
             max-width: 300px;
         }
-
-        dialog::backdrop {
-            background-color: rgba(0, 0, 0, 0.4);
-        }
     </style>
 </head>
 <body>
 
-    <!-- First dialog with a greeting -->
-    <dialog open>
-        <p>Greetings, one and all!</p>
-        <form method="dialog">
-            <button>OK</button>
-        </form>
-    </dialog>
-
-    <!-- Second dialog with a close button -->
+    <!-- Dialog box with a close button and groovy backdrop -->
     <dialog>
         <button autofocus>Close</button>
         <p>This modal dialog has a groovy backdrop!</p>
     </dialog>
 
-    <!-- Button to show the second dialog -->
+    <!-- Button to show the dialog -->
     <button>Show the dialog</button>
 
     <script>
         // Get the dialog, button elements, and close button
         const dialog = document.querySelector("dialog");
         const showButton = document.querySelector("button");
-        const closeButton = document.querySelector("dialog button");
-
-        // Add event listener to show the dialog when the button is clicked
-        showButton.addEventListener("click", () => {
-            dialog.showModal();
-        });
-
-        // Add event listener to close the dialog when the close button is clicked
-        closeButton.addEventListener("click", () => {
-            dialog.close();
-        });
-    </script>
-
-</body>
-</html>
+        const closeButton = document.querySelector(
