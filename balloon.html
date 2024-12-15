@@ -5,7 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dialog Test Page</title>
     <style>
+      
+        /* Style for the backdrop of the dialog */
+        ::backdrop {
+            background-image: linear-gradient(
+                45deg,
+                magenta,
+                rebeccapurple,
+                dodgerblue,
+                green
+            );
+            opacity: 0.75;
+        }
+
+        /* Basic styles for the page */
         body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #6200ea;
+            color: white;
+            border-radius: 4px;
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 3px 2px rgba(98, 0, 234, 0.5);
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        dialog {
+            border: solid 2px #6200ea;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: white;
+            max-width: 300px;
+        }
+          body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -61,57 +113,6 @@
 
         #contact {
             background-color: lightyellow;
-        }
-        /* Style for the backdrop of the dialog */
-        ::backdrop {
-            background-image: linear-gradient(
-                45deg,
-                magenta,
-                rebeccapurple,
-                dodgerblue,
-                green
-            );
-            opacity: 0.75;
-        }
-
-        /* Basic styles for the page */
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            margin: 0;
-            flex-direction: column;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            background-color: #6200ea;
-            color: white;
-            border-radius: 4px;
-        }
-
-        button:focus {
-            outline: none;
-            box-shadow: 0 0 3px 2px rgba(98, 0, 234, 0.5);
-        }
-
-        p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-
-        dialog {
-            border: solid 2px #6200ea;
-            border-radius: 8px;
-            padding: 20px;
-            background-color: white;
-            max-width: 300px;
         }
     </style>
 </head>
