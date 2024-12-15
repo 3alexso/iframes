@@ -59,32 +59,27 @@
     </style>
 </head>
 <body>
-
-    <!-- Dialog box with a close button and groovy backdrop -->
     <dialog>
-        <button autofocus>Close</button>
-        <p>This modal dialog has a groovy backdrop!</p>
-    </dialog>
+  <button autofocus="">Close</button>
+  <p>This modal dialog has a groovy backdrop!</p>
+</dialog>
+<button>Show the dialog</button>
 
-    <!-- Button to show the dialog -->
-    <button>Show the dialog</button>
+    <script>const dialog = document.querySelector("dialog");
+const showButton = document.querySelector("dialog + button");
+const closeButton = document.querySelector("dialog button");
 
-    <script>
-        // Get the dialog, button elements, and close button
-        const dialog = document.querySelector("dialog");
-        const showButton = document.querySelector("button");
-        const closeButton = document.querySelector("dialog button");
+// "Show the dialog" button opens the dialog modally
+showButton.addEventListener("click", () => {
+  dialog.showModal();
+});
 
-        // "Show the dialog" button opens the dialog modally
-        showButton.addEventListener("click", () => {
-            dialog.showModal();
-        });
-
-        // "Close" button inside the dialog closes the dialog
-        closeButton.addEventListener("click", () => {
-            dialog.close();
-        });
-    </script>
+// "Close" button closes the dialog
+closeButton.addEventListener("click", () => {
+  dialog.close();
+});
+</script>
+  
 
 </body>
 </html>
