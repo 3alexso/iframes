@@ -1,867 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" >
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Songs 50's and 60's</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>        $("#box1").on({
-            mouseenter: function () {
-                $("#box1").css({ "marginLeft": "0" });
-            },
-            mouseleave: function () {
-                $("#box1").css({ "marginLeft": "-200px" });
-            }
-        });
-        $("#box2").on({
-            mouseenter: function () {
-                $("#box2").css({ "marginLeft": "50px" });
-            },
-            mouseleave: function () {
-                $("#box2").css({ "marginLeft": "-150px" });
-            }
-        });
-        $("#box3").on({
-            mouseenter: function () {
-                $("#box3").css({ "marginLeft": "100px" });
-            },
-            mouseleave: function () {
-                $("#box3").css({ "marginLeft": "-100px" });
-            }
-        });
-        $("#box4").on({
-            mouseenter: function () {
-                $("#box4").css({ "marginLeft": "150px" });
-            },
-            mouseleave: function () {
-                $("#box4").css({ "marginLeft": "-50px" });
-            }
-        });
-        $("#box5").on({
-            mouseenter: function () {
-                $("#box5").css({ "marginLeft": "200px" });
-            },
-            mouseleave: function () {
-                $("#box5").css({ "marginLeft": "0px" });
-            }
-        });
-        $("#box6").on({
-            mouseenter: function () {
-                $("#box6").css({ "marginLeft": "250px" });
-            },
-            mouseleave: function () {
-                $("#box6").css({ "marginLeft": "50px" });
-            }
-        });
-        $("#box7").on({
-            mouseenter: function () {
-                $("#box7").css({ "marginLeft": "300px" });
-            },
-            mouseleave: function () {
-                $("#box7").css({ "marginLeft": "100px" });
-            }
-        });
-        $("#box8").on({
-            mouseenter: function () {
-                $("#box8").css({ "marginLeft": "350px" });
-            },
-            mouseleave: function () {
-                $("#box8").css({ "marginLeft": "150px" });
-            }
-        });
-
-        $("#box9").on({
-            mouseenter: function () {
-                $("#box9").css({ "marginRight": "0" });
-            },
-            mouseleave: function () {
-                $("#box9").css({ "marginRight": "-200px" });
-            }
-        });
-        $("#box10").on({
-            mouseenter: function () {
-                $("#box10").css({ "marginRight": "50px" });
-            },
-            mouseleave: function () {
-                $("#box10").css({ "marginRight": "-150px" });
-            }
-        });
-        $("#box11").on({
-            mouseenter: function () {
-                $("#box11").css({ "marginRight": "100px" });
-            },
-            mouseleave: function () {
-                $("#box11").css({ "marginRight": "-100px" });
-            }
-        });
-        $("#box12").on({
-            mouseenter: function () {
-                $("#box12").css({ "marginRight": "150px" });
-            },
-            mouseleave: function () {
-                $("#box12").css({ "marginRight": "-50px" });
-            }
-        });
-        $("#box13").on({
-            mouseenter: function () {
-                $("#box13").css({ "marginRight": "200px" });
-            },
-            mouseleave: function () {
-                $("#box13").css({ "marginRight": "0px" });
-            }
-        });
-        $("#box14").on({
-            mouseenter: function () {
-                $("#box14").css({ "marginRight": "250px" });
-            },
-            mouseleave: function () {
-                $("#box14").css({ "marginRight": "50px" });
-            }
-        });
-        $("#box15").on({
-            mouseenter: function () {
-                $("#box15").css({ "marginRight": "300px" });
-            },
-            mouseleave: function () {
-                $("#box15").css({ "marginRight": "100px" });
-            }
-        });
-        $("#box16").on({
-            mouseenter: function () {
-                $("#box16").css({ "marginRight": "350px" });
-            },
-            mouseleave: function () {
-                $("#box16").css({ "marginRight": "150px" });
-            }
-        });
-
-
-        var audio1 = $("#buzzer1")[0];
-        $('.therecord1').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord').droppable({
-            accept: '.therecord1',
-            drop: function (event, ui) {
-                $(".therecord1").css({ "width": "0" });
-                $(".on1").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord').toggleClass("on1");
-                audio1.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info51a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio2 = $("#buzzer2")[0];
-        $('.therecord2').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord2').droppable({
-            accept: '.therecord2',
-            drop: function (event, ui) {
-                $(".therecord2").css({ "width": "0" });
-                $(".on2").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord2').toggleClass("on2");
-                audio2.play();
-                audio1.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info52a").css({ "display": "block" });
-                $(".info51a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio3 = $("#buzzer3")[0];
-        $('.therecord3').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord3').droppable({
-            accept: '.therecord3',
-            drop: function (event, ui) {
-                $(".therecord3").css({ "width": "0" });
-                $(".on3").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord3').toggleClass("on3");
-                audio3.play();
-                audio2.pause();
-                audio1.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info53a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio4 = $("#buzzer4")[0];
-        $('.therecord4').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord4').droppable({
-            accept: '.therecord4',
-            drop: function (event, ui) {
-                $(".therecord4").css({ "width": "0" });
-                $(".on4").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord4').toggleClass("on4");
-                audio4.play();
-                audio2.pause();
-                audio3.pause();
-                audio1.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info54a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio5 = $("#buzzer5")[0];
-        $('.therecord5').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord5').droppable({
-            accept: '.therecord5',
-            drop: function (event, ui) {
-                $(".therecord5").css({ "width": "0" });
-                $(".on5").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord5').toggleClass("on5");
-                audio5.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio1.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info55a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio6 = $("#buzzer6")[0];
-        $('.therecord6').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord6').droppable({
-            accept: '.therecord6',
-            drop: function (event, ui) {
-                $(".therecord6").css({ "width": "0" });
-                $(".on6").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord6').toggleClass("on6");
-                audio6.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio1.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info56a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio7 = $("#buzzer7")[0];
-        $('.therecord7').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord7').droppable({
-            accept: '.therecord7',
-            drop: function (event, ui) {
-                $(".therecord7").css({ "width": "0" });
-                $(".on7").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord7').toggleClass("on7");
-                audio7.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio1.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info57a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio8 = $("#buzzer8")[0];
-        $('.therecord8').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord8').droppable({
-            accept: '.therecord8',
-            drop: function (event, ui) {
-                $(".therecord8").css({ "width": "0" });
-                $(".on8").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord8').toggleClass("on8");
-                audio8.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio1.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info58a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio9 = $("#buzzer9")[0];
-        $('.therecord9').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord9').droppable({
-            accept: '.therecord9',
-            drop: function (event, ui) {
-                $(".therecord9").css({ "width": "0" });
-                $(".on9").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord9').toggleClass("on9");
-                audio9.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio1.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info61a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio10 = $("#buzzer10")[0];
-        $('.therecord10').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord10').droppable({
-            accept: '.therecord10',
-            drop: function (event, ui) {
-                $(".therecord10").css({ "width": "0" });
-                $(".on10").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord10').toggleClass("on10");
-                audio10.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio1.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info62a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio11 = $("#buzzer11")[0];
-        $('.therecord11').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord11').droppable({
-            accept: '.therecord11',
-            drop: function (event, ui) {
-                $(".therecord11").css({ "width": "0" });
-                $(".on11").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord11').toggleClass("on11");
-                audio11.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio1.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info63a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio12 = $("#buzzer12")[0];
-        $('.therecord12').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord12').droppable({
-            accept: '.therecord12',
-            drop: function (event, ui) {
-                $(".therecord12").css({ "width": "0" });
-                $(".on12").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord12').toggleClass("on12");
-                audio12.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio1.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info64a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio13 = $("#buzzer13")[0];
-        $('.therecord13').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord13').droppable({
-            accept: '.therecord13',
-            drop: function (event, ui) {
-                $(".therecord13").css({ "width": "0" });
-                $(".on13").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord13').toggleClass("on13");
-                audio13.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio1.pause();
-                audio14.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info65a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio14 = $("#buzzer14")[0];
-        $('.therecord14').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord14').droppable({
-            accept: '.therecord14',
-            drop: function (event, ui) {
-                $(".therecord14").css({ "width": "0" });
-                $(".on14").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord14').toggleClass("on14");
-                audio14.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio1.pause();
-                audio15.pause();
-                audio16.pause();
-                $(".info66a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio15 = $("#buzzer15")[0];
-        $('.therecord15').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord15').droppable({
-            accept: '.therecord15',
-            drop: function (event, ui) {
-                $(".therecord15").css({ "width": "0" });
-                $(".on15").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord15').toggleClass("on15");
-                audio15.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio1.pause();
-                audio16.pause();
-                $(".info67a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-                $(".info68a").css({ "display": "none" });
-            }
-        });
-        var audio16 = $("#buzzer16")[0];
-        $('.therecord16').draggable({
-            drag: function (event, ui) {
-            }
-        });
-        $('.theplayerrecord16').droppable({
-            accept: '.therecord16',
-            drop: function (event, ui) {
-                $(".therecord16").css({ "width": "0" });
-                $(".on16").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
-                $('.theplayerrecord16').toggleClass("on16");
-                audio16.play();
-                audio2.pause();
-                audio3.pause();
-                audio4.pause();
-                audio5.pause();
-                audio6.pause();
-                audio7.pause();
-                audio8.pause();
-                audio9.pause();
-                audio10.pause();
-                audio11.pause();
-                audio12.pause();
-                audio13.pause();
-                audio14.pause();
-                audio15.pause();
-                audio1.pause();
-                $(".info68a").css({ "display": "block" });
-                $(".info52a").css({ "display": "none" });
-                $(".info53a").css({ "display": "none" });
-                $(".info54a").css({ "display": "none" });
-                $(".info55a").css({ "display": "none" });
-                $(".info56a").css({ "display": "none" });
-                $(".info57a").css({ "display": "none" });
-                $(".info58a").css({ "display": "none" });
-                $(".info61a").css({ "display": "none" });
-                $(".info62a").css({ "display": "none" });
-                $(".info63a").css({ "display": "none" });
-                $(".info64a").css({ "display": "none" });
-                $(".info65a").css({ "display": "none" });
-                $(".info66a").css({ "display": "none" });
-                $(".info67a").css({ "display": "none" });
-                $(".info51a").css({ "display": "none" });
-            }
-        });
-  </script>
-    <style>
-              body {
+  <meta charset="UTF-8">
+  <title>jquery Drag and Drop - (64mb)</title>
+<style>
+    body {
             background: rgb(0, 0, 0);
             background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(133, 133, 133, 1) 100%);
             overflow: hidden;
@@ -1885,12 +1028,11 @@
             display: none;
             width: 100%;
             height: 100%;
-        }
-    </style>
+        }</style>
 </head>
-
 <body>
-     <audio id="buzzer1" src="https://tim-school.com/codepen/record-player/51.mp3" preload="auto" loop></audio>
+<!-- partial:index.partial.html -->
+<audio id="buzzer1" src="https://tim-school.com/codepen/record-player/51.mp3" preload="auto" loop></audio>
     <audio id="buzzer2" src="https://tim-school.com/codepen/record-player/52.mp3" preload="auto" loop></audio>
     <audio id="buzzer3" src="https://tim-school.com/codepen/record-player/53.mp3" preload="auto" loop></audio>
     <audio id="buzzer4" src="https://tim-school.com/codepen/record-player/54.mp3" preload="auto" loop></audio>
@@ -2025,7 +1167,861 @@
         <div class="info67a">1967 - Respect - Aretha Franklin</div>
         <div class="info68a">1968 - Hey Jude - Beatles</div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- partial -->
+  <script>$("#box1").on({
+            mouseenter: function () {
+                $("#box1").css({ "marginLeft": "0" });
+            },
+            mouseleave: function () {
+                $("#box1").css({ "marginLeft": "-200px" });
+            }
+        });
+        $("#box2").on({
+            mouseenter: function () {
+                $("#box2").css({ "marginLeft": "50px" });
+            },
+            mouseleave: function () {
+                $("#box2").css({ "marginLeft": "-150px" });
+            }
+        });
+        $("#box3").on({
+            mouseenter: function () {
+                $("#box3").css({ "marginLeft": "100px" });
+            },
+            mouseleave: function () {
+                $("#box3").css({ "marginLeft": "-100px" });
+            }
+        });
+        $("#box4").on({
+            mouseenter: function () {
+                $("#box4").css({ "marginLeft": "150px" });
+            },
+            mouseleave: function () {
+                $("#box4").css({ "marginLeft": "-50px" });
+            }
+        });
+        $("#box5").on({
+            mouseenter: function () {
+                $("#box5").css({ "marginLeft": "200px" });
+            },
+            mouseleave: function () {
+                $("#box5").css({ "marginLeft": "0px" });
+            }
+        });
+        $("#box6").on({
+            mouseenter: function () {
+                $("#box6").css({ "marginLeft": "250px" });
+            },
+            mouseleave: function () {
+                $("#box6").css({ "marginLeft": "50px" });
+            }
+        });
+        $("#box7").on({
+            mouseenter: function () {
+                $("#box7").css({ "marginLeft": "300px" });
+            },
+            mouseleave: function () {
+                $("#box7").css({ "marginLeft": "100px" });
+            }
+        });
+        $("#box8").on({
+            mouseenter: function () {
+                $("#box8").css({ "marginLeft": "350px" });
+            },
+            mouseleave: function () {
+                $("#box8").css({ "marginLeft": "150px" });
+            }
+        });
+
+        $("#box9").on({
+            mouseenter: function () {
+                $("#box9").css({ "marginRight": "0" });
+            },
+            mouseleave: function () {
+                $("#box9").css({ "marginRight": "-200px" });
+            }
+        });
+        $("#box10").on({
+            mouseenter: function () {
+                $("#box10").css({ "marginRight": "50px" });
+            },
+            mouseleave: function () {
+                $("#box10").css({ "marginRight": "-150px" });
+            }
+        });
+        $("#box11").on({
+            mouseenter: function () {
+                $("#box11").css({ "marginRight": "100px" });
+            },
+            mouseleave: function () {
+                $("#box11").css({ "marginRight": "-100px" });
+            }
+        });
+        $("#box12").on({
+            mouseenter: function () {
+                $("#box12").css({ "marginRight": "150px" });
+            },
+            mouseleave: function () {
+                $("#box12").css({ "marginRight": "-50px" });
+            }
+        });
+        $("#box13").on({
+            mouseenter: function () {
+                $("#box13").css({ "marginRight": "200px" });
+            },
+            mouseleave: function () {
+                $("#box13").css({ "marginRight": "0px" });
+            }
+        });
+        $("#box14").on({
+            mouseenter: function () {
+                $("#box14").css({ "marginRight": "250px" });
+            },
+            mouseleave: function () {
+                $("#box14").css({ "marginRight": "50px" });
+            }
+        });
+        $("#box15").on({
+            mouseenter: function () {
+                $("#box15").css({ "marginRight": "300px" });
+            },
+            mouseleave: function () {
+                $("#box15").css({ "marginRight": "100px" });
+            }
+        });
+        $("#box16").on({
+            mouseenter: function () {
+                $("#box16").css({ "marginRight": "350px" });
+            },
+            mouseleave: function () {
+                $("#box16").css({ "marginRight": "150px" });
+            }
+        });
+
+
+        var audio1 = $("#buzzer1")[0];
+        $('.therecord1').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord').droppable({
+            accept: '.therecord1',
+            drop: function (event, ui) {
+                $(".therecord1").css({ "width": "0" });
+                $(".on1").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord').toggleClass("on1");
+                audio1.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info51a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio2 = $("#buzzer2")[0];
+        $('.therecord2').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord2').droppable({
+            accept: '.therecord2',
+            drop: function (event, ui) {
+                $(".therecord2").css({ "width": "0" });
+                $(".on2").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord2').toggleClass("on2");
+                audio2.play();
+                audio1.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info52a").css({ "display": "block" });
+                $(".info51a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio3 = $("#buzzer3")[0];
+        $('.therecord3').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord3').droppable({
+            accept: '.therecord3',
+            drop: function (event, ui) {
+                $(".therecord3").css({ "width": "0" });
+                $(".on3").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord3').toggleClass("on3");
+                audio3.play();
+                audio2.pause();
+                audio1.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info53a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio4 = $("#buzzer4")[0];
+        $('.therecord4').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord4').droppable({
+            accept: '.therecord4',
+            drop: function (event, ui) {
+                $(".therecord4").css({ "width": "0" });
+                $(".on4").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord4').toggleClass("on4");
+                audio4.play();
+                audio2.pause();
+                audio3.pause();
+                audio1.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info54a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio5 = $("#buzzer5")[0];
+        $('.therecord5').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord5').droppable({
+            accept: '.therecord5',
+            drop: function (event, ui) {
+                $(".therecord5").css({ "width": "0" });
+                $(".on5").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord5').toggleClass("on5");
+                audio5.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio1.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info55a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio6 = $("#buzzer6")[0];
+        $('.therecord6').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord6').droppable({
+            accept: '.therecord6',
+            drop: function (event, ui) {
+                $(".therecord6").css({ "width": "0" });
+                $(".on6").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord6').toggleClass("on6");
+                audio6.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio1.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info56a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio7 = $("#buzzer7")[0];
+        $('.therecord7').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord7').droppable({
+            accept: '.therecord7',
+            drop: function (event, ui) {
+                $(".therecord7").css({ "width": "0" });
+                $(".on7").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord7').toggleClass("on7");
+                audio7.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio1.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info57a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio8 = $("#buzzer8")[0];
+        $('.therecord8').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord8').droppable({
+            accept: '.therecord8',
+            drop: function (event, ui) {
+                $(".therecord8").css({ "width": "0" });
+                $(".on8").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord8').toggleClass("on8");
+                audio8.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio1.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info58a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio9 = $("#buzzer9")[0];
+        $('.therecord9').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord9').droppable({
+            accept: '.therecord9',
+            drop: function (event, ui) {
+                $(".therecord9").css({ "width": "0" });
+                $(".on9").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord9').toggleClass("on9");
+                audio9.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio1.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info61a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio10 = $("#buzzer10")[0];
+        $('.therecord10').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord10').droppable({
+            accept: '.therecord10',
+            drop: function (event, ui) {
+                $(".therecord10").css({ "width": "0" });
+                $(".on10").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord10').toggleClass("on10");
+                audio10.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio1.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info62a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio11 = $("#buzzer11")[0];
+        $('.therecord11').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord11').droppable({
+            accept: '.therecord11',
+            drop: function (event, ui) {
+                $(".therecord11").css({ "width": "0" });
+                $(".on11").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord11').toggleClass("on11");
+                audio11.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio1.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info63a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio12 = $("#buzzer12")[0];
+        $('.therecord12').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord12').droppable({
+            accept: '.therecord12',
+            drop: function (event, ui) {
+                $(".therecord12").css({ "width": "0" });
+                $(".on12").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord12').toggleClass("on12");
+                audio12.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio1.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info64a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio13 = $("#buzzer13")[0];
+        $('.therecord13').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord13').droppable({
+            accept: '.therecord13',
+            drop: function (event, ui) {
+                $(".therecord13").css({ "width": "0" });
+                $(".on13").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord13').toggleClass("on13");
+                audio13.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio1.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info65a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio14 = $("#buzzer14")[0];
+        $('.therecord14').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord14').droppable({
+            accept: '.therecord14',
+            drop: function (event, ui) {
+                $(".therecord14").css({ "width": "0" });
+                $(".on14").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord14').toggleClass("on14");
+                audio14.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio1.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info66a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio15 = $("#buzzer15")[0];
+        $('.therecord15').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord15').droppable({
+            accept: '.therecord15',
+            drop: function (event, ui) {
+                $(".therecord15").css({ "width": "0" });
+                $(".on15").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord15').toggleClass("on15");
+                audio15.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio1.pause();
+                audio16.pause();
+                $(".info67a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio16 = $("#buzzer16")[0];
+        $('.therecord16').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord16').droppable({
+            accept: '.therecord16',
+            drop: function (event, ui) {
+                $(".therecord16").css({ "width": "0" });
+                $(".on16").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord16').toggleClass("on16");
+                audio16.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio1.pause();
+                $(".info68a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+            }
+        });</script>
 
 </body>
-
 </html>
