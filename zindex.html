@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Songs 50's and 60's</title>
+  <script>        $("#box1").on({
+            mouseenter: function () {
+                $("#box1").css({ "marginLeft": "0" });
+            },
+            mouseleave: function () {
+                $("#box1").css({ "marginLeft": "-200px" });
+            }
+        });
+        $("#box2").on({
+            mouseenter: function () {
+                $("#box2").css({ "marginLeft": "50px" });
+            },
+            mouseleave: function () {
+                $("#box2").css({ "marginLeft": "-150px" });
+            }
+        });
+        $("#box3").on({
+            mouseenter: function () {
+                $("#box3").css({ "marginLeft": "100px" });
+            },
+            mouseleave: function () {
+                $("#box3").css({ "marginLeft": "-100px" });
+            }
+        });
+        $("#box4").on({
+            mouseenter: function () {
+                $("#box4").css({ "marginLeft": "150px" });
+            },
+            mouseleave: function () {
+                $("#box4").css({ "marginLeft": "-50px" });
+            }
+        });
+        $("#box5").on({
+            mouseenter: function () {
+                $("#box5").css({ "marginLeft": "200px" });
+            },
+            mouseleave: function () {
+                $("#box5").css({ "marginLeft": "0px" });
+            }
+        });
+        $("#box6").on({
+            mouseenter: function () {
+                $("#box6").css({ "marginLeft": "250px" });
+            },
+            mouseleave: function () {
+                $("#box6").css({ "marginLeft": "50px" });
+            }
+        });
+        $("#box7").on({
+            mouseenter: function () {
+                $("#box7").css({ "marginLeft": "300px" });
+            },
+            mouseleave: function () {
+                $("#box7").css({ "marginLeft": "100px" });
+            }
+        });
+        $("#box8").on({
+            mouseenter: function () {
+                $("#box8").css({ "marginLeft": "350px" });
+            },
+            mouseleave: function () {
+                $("#box8").css({ "marginLeft": "150px" });
+            }
+        });
+
+        $("#box9").on({
+            mouseenter: function () {
+                $("#box9").css({ "marginRight": "0" });
+            },
+            mouseleave: function () {
+                $("#box9").css({ "marginRight": "-200px" });
+            }
+        });
+        $("#box10").on({
+            mouseenter: function () {
+                $("#box10").css({ "marginRight": "50px" });
+            },
+            mouseleave: function () {
+                $("#box10").css({ "marginRight": "-150px" });
+            }
+        });
+        $("#box11").on({
+            mouseenter: function () {
+                $("#box11").css({ "marginRight": "100px" });
+            },
+            mouseleave: function () {
+                $("#box11").css({ "marginRight": "-100px" });
+            }
+        });
+        $("#box12").on({
+            mouseenter: function () {
+                $("#box12").css({ "marginRight": "150px" });
+            },
+            mouseleave: function () {
+                $("#box12").css({ "marginRight": "-50px" });
+            }
+        });
+        $("#box13").on({
+            mouseenter: function () {
+                $("#box13").css({ "marginRight": "200px" });
+            },
+            mouseleave: function () {
+                $("#box13").css({ "marginRight": "0px" });
+            }
+        });
+        $("#box14").on({
+            mouseenter: function () {
+                $("#box14").css({ "marginRight": "250px" });
+            },
+            mouseleave: function () {
+                $("#box14").css({ "marginRight": "50px" });
+            }
+        });
+        $("#box15").on({
+            mouseenter: function () {
+                $("#box15").css({ "marginRight": "300px" });
+            },
+            mouseleave: function () {
+                $("#box15").css({ "marginRight": "100px" });
+            }
+        });
+        $("#box16").on({
+            mouseenter: function () {
+                $("#box16").css({ "marginRight": "350px" });
+            },
+            mouseleave: function () {
+                $("#box16").css({ "marginRight": "150px" });
+            }
+        });
+
+
+        var audio1 = $("#buzzer1")[0];
+        $('.therecord1').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord').droppable({
+            accept: '.therecord1',
+            drop: function (event, ui) {
+                $(".therecord1").css({ "width": "0" });
+                $(".on1").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord').toggleClass("on1");
+                audio1.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info51a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio2 = $("#buzzer2")[0];
+        $('.therecord2').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord2').droppable({
+            accept: '.therecord2',
+            drop: function (event, ui) {
+                $(".therecord2").css({ "width": "0" });
+                $(".on2").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord2').toggleClass("on2");
+                audio2.play();
+                audio1.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info52a").css({ "display": "block" });
+                $(".info51a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio3 = $("#buzzer3")[0];
+        $('.therecord3').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord3').droppable({
+            accept: '.therecord3',
+            drop: function (event, ui) {
+                $(".therecord3").css({ "width": "0" });
+                $(".on3").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord3').toggleClass("on3");
+                audio3.play();
+                audio2.pause();
+                audio1.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info53a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio4 = $("#buzzer4")[0];
+        $('.therecord4').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord4').droppable({
+            accept: '.therecord4',
+            drop: function (event, ui) {
+                $(".therecord4").css({ "width": "0" });
+                $(".on4").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord4').toggleClass("on4");
+                audio4.play();
+                audio2.pause();
+                audio3.pause();
+                audio1.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info54a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio5 = $("#buzzer5")[0];
+        $('.therecord5').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord5').droppable({
+            accept: '.therecord5',
+            drop: function (event, ui) {
+                $(".therecord5").css({ "width": "0" });
+                $(".on5").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord5').toggleClass("on5");
+                audio5.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio1.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info55a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio6 = $("#buzzer6")[0];
+        $('.therecord6').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord6').droppable({
+            accept: '.therecord6',
+            drop: function (event, ui) {
+                $(".therecord6").css({ "width": "0" });
+                $(".on6").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord6').toggleClass("on6");
+                audio6.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio1.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info56a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio7 = $("#buzzer7")[0];
+        $('.therecord7').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord7').droppable({
+            accept: '.therecord7',
+            drop: function (event, ui) {
+                $(".therecord7").css({ "width": "0" });
+                $(".on7").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord7').toggleClass("on7");
+                audio7.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio1.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info57a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio8 = $("#buzzer8")[0];
+        $('.therecord8').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord8').droppable({
+            accept: '.therecord8',
+            drop: function (event, ui) {
+                $(".therecord8").css({ "width": "0" });
+                $(".on8").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord8').toggleClass("on8");
+                audio8.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio1.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info58a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio9 = $("#buzzer9")[0];
+        $('.therecord9').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord9').droppable({
+            accept: '.therecord9',
+            drop: function (event, ui) {
+                $(".therecord9").css({ "width": "0" });
+                $(".on9").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord9').toggleClass("on9");
+                audio9.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio1.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info61a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio10 = $("#buzzer10")[0];
+        $('.therecord10').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord10').droppable({
+            accept: '.therecord10',
+            drop: function (event, ui) {
+                $(".therecord10").css({ "width": "0" });
+                $(".on10").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord10').toggleClass("on10");
+                audio10.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio1.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info62a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio11 = $("#buzzer11")[0];
+        $('.therecord11').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord11').droppable({
+            accept: '.therecord11',
+            drop: function (event, ui) {
+                $(".therecord11").css({ "width": "0" });
+                $(".on11").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord11').toggleClass("on11");
+                audio11.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio1.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info63a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio12 = $("#buzzer12")[0];
+        $('.therecord12').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord12').droppable({
+            accept: '.therecord12',
+            drop: function (event, ui) {
+                $(".therecord12").css({ "width": "0" });
+                $(".on12").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord12').toggleClass("on12");
+                audio12.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio1.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info64a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio13 = $("#buzzer13")[0];
+        $('.therecord13').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord13').droppable({
+            accept: '.therecord13',
+            drop: function (event, ui) {
+                $(".therecord13").css({ "width": "0" });
+                $(".on13").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord13').toggleClass("on13");
+                audio13.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio1.pause();
+                audio14.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info65a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio14 = $("#buzzer14")[0];
+        $('.therecord14').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord14').droppable({
+            accept: '.therecord14',
+            drop: function (event, ui) {
+                $(".therecord14").css({ "width": "0" });
+                $(".on14").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord14').toggleClass("on14");
+                audio14.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio1.pause();
+                audio15.pause();
+                audio16.pause();
+                $(".info66a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio15 = $("#buzzer15")[0];
+        $('.therecord15').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord15').droppable({
+            accept: '.therecord15',
+            drop: function (event, ui) {
+                $(".therecord15").css({ "width": "0" });
+                $(".on15").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord15').toggleClass("on15");
+                audio15.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio1.pause();
+                audio16.pause();
+                $(".info67a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+                $(".info68a").css({ "display": "none" });
+            }
+        });
+        var audio16 = $("#buzzer16")[0];
+        $('.therecord16').draggable({
+            drag: function (event, ui) {
+            }
+        });
+        $('.theplayerrecord16').droppable({
+            accept: '.therecord16',
+            drop: function (event, ui) {
+                $(".therecord16").css({ "width": "0" });
+                $(".on16").css({ "backgroundImage": "url(https://tim-school.com/codepen/record-player/jazz.png)" });
+                $('.theplayerrecord16').toggleClass("on16");
+                audio16.play();
+                audio2.pause();
+                audio3.pause();
+                audio4.pause();
+                audio5.pause();
+                audio6.pause();
+                audio7.pause();
+                audio8.pause();
+                audio9.pause();
+                audio10.pause();
+                audio11.pause();
+                audio12.pause();
+                audio13.pause();
+                audio14.pause();
+                audio15.pause();
+                audio1.pause();
+                $(".info68a").css({ "display": "block" });
+                $(".info52a").css({ "display": "none" });
+                $(".info53a").css({ "display": "none" });
+                $(".info54a").css({ "display": "none" });
+                $(".info55a").css({ "display": "none" });
+                $(".info56a").css({ "display": "none" });
+                $(".info57a").css({ "display": "none" });
+                $(".info58a").css({ "display": "none" });
+                $(".info61a").css({ "display": "none" });
+                $(".info62a").css({ "display": "none" });
+                $(".info63a").css({ "display": "none" });
+                $(".info64a").css({ "display": "none" });
+                $(".info65a").css({ "display": "none" });
+                $(".info66a").css({ "display": "none" });
+                $(".info67a").css({ "display": "none" });
+                $(".info51a").css({ "display": "none" });
+            }
+        });</script>
+    <style>
+              body {
+            background: rgb(0, 0, 0);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(133, 133, 133, 1) 100%);
+            overflow: hidden;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        #box1 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            margin-left: -200px;
+            transition: 1s;
+            z-index: 50;
+            box-shadow: 7px 9px 15px -3px #000000;
+        }
+
+        #box2 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: calc(100% - 50px);
+            margin-left: -150px;
+            transition: 1s;
+            z-index: 49;
+            box-shadow: 7px 9px 15px -3px #000000;
+        }
+
+        #box3 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: calc(100% - 100px);
+            margin-left: -100px;
+            transition: 1s;
+            z-index: 48;
+            box-shadow: 7px 9px 15px -3px #000000;
+        }
+
+        #box4 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: calc(100% - 150px);
+            margin-left: -50px;
+            transition: 1s;
+            z-index: 47;
+            box-shadow: 7px 9px 15px -3px #000000;
+        }
+
+        #box5 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: calc(100% - 200px);
+            margin-left: 0;
+            transition: 1s;
+            z-index: 46;
+            box-shadow: 7px 9px 15px -3px #000000;
+        }
+
+        #box6 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: calc(100% - 250px);
+            margin-left: 50px;
+            transition: 1s;
+            z-index: 45;
+            box-shadow: 7px 9px 15px -3px #000000;
+        }
+
+        #box7 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: calc(100% - 300px);
+            margin-left: 100px;
+            transition: 1s;
+            z-index: 44;
+            box-shadow: 7px 9px 15px -3px #000000;
+        }
+
+        #box8 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: calc(100% - 350px);
+            margin-left: 150px;
+            transition: 1s;
+            z-index: 43;
+            box-shadow: 7px 9px 15px -3px #000000;
+        }
+
+        #box9 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
+            margin-right: -200px;
+            transition: 1s;
+            z-index: 50;
+            box-shadow: -6px 9px 15px -3px #000000;
+        }
+
+        #box10 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: calc(100% - 50px);
+            margin-right: -150px;
+            transition: 1s;
+            z-index: 49;
+            box-shadow: -6px 9px 15px -3px #000000;
+        }
+
+        #box11 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: calc(100% - 100px);
+            margin-right: -100px;
+            transition: 1s;
+            z-index: 48;
+            box-shadow: -6px 9px 15px -3px #000000;
+        }
+
+        #box12 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: calc(100% - 150px);
+            margin-right: -50px;
+            transition: 1s;
+            z-index: 47;
+            box-shadow: -6px 9px 15px -3px #000000;
+        }
+
+        #box13 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: calc(100% - 200px);
+            margin-right: 0;
+            transition: 1s;
+            z-index: 46;
+            box-shadow: -6px 9px 15px -3px #000000;
+        }
+
+        #box14 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: calc(100% - 250px);
+            margin-right: 50px;
+            transition: 1s;
+            z-index: 45;
+            box-shadow: -6px 9px 15px -3px #000000;
+        }
+
+        #box15 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: calc(100% - 300px);
+            margin-right: 100px;
+            transition: 1s;
+            z-index: 44;
+            box-shadow: -6px 9px 15px -3px #000000;
+        }
+
+        #box16 {
+            background-color: #272727;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: calc(100% - 350px);
+            margin-right: 150px;
+            transition: 1s;
+            z-index: 43;
+            box-shadow: -6px 9px 15px -3px #000000;
+        }
+
+        #main {
+            position: absolute;
+            bottom: 0;
+            left: 400px;
+            right: 400px;
+            height: 100%;
+            z-index: 40;
+            display: flex;
+            justify-content: center;
+        }
+
+        #recordplayer {
+            background-color: #2b2c14;
+            width: 350px;
+            height: 283px;
+            background-image: url(https://tim-school.com/codepen/record-player/record.png);
+            background-size: 100% 100%;
+        }
+
+        .dragme {
+            position: absolute;
+            top: 165px;
+            left: 50px;
+            width: 150px;
+            height: 40px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #727272;
+        }
+
+        .theplayerrecord {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord1 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on1 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on1 2s linear infinite;
+        }
+
+        @keyframes on1 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord2 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord2 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on2 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on2 2s linear infinite;
+        }
+
+        @keyframes on2 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord3 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord3 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on3 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on3 2s linear infinite;
+        }
+
+        @keyframes on3 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord4 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord4 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on4 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on4 2s linear infinite;
+        }
+
+        @keyframes on4 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord5 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord5 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on5 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on5 2s linear infinite;
+        }
+
+        @keyframes on5 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord6 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord6 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on6 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on6 2s linear infinite;
+        }
+
+        @keyframes on6 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord7 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord7 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on7 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on7 2s linear infinite;
+        }
+
+        @keyframes on7 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord8 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord8 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on8 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on8 2s linear infinite;
+        }
+
+        @keyframes on8 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord9 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord9 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on9 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on9 2s linear infinite;
+        }
+
+        @keyframes on9 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord10 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord10 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on10 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on10 2s linear infinite;
+        }
+
+        @keyframes on10 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord11 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord11 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on11 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on11 2s linear infinite;
+        }
+
+        @keyframes on11 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord12 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord12 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on12 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on12 2s linear infinite;
+        }
+
+        @keyframes on12 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord13 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord13 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on13 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on13 2s linear infinite;
+        }
+
+        @keyframes on13 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord14 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord14 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on14 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on14 2s linear infinite;
+        }
+
+        @keyframes on14 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord15 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord15 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on15 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on15 2s linear infinite;
+        }
+
+        @keyframes on15 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .theplayerrecord16 {
+            position: absolute;
+            top: 15px;
+            margin-left: 11px;
+            width: 253px;
+            height: 253px;
+            border-radius: 50%;
+        }
+
+        .therecord16 {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            border-radius: 50%;
+            filter: brightness(50%);
+            cursor: pointer;
+            transition: width 1s
+        }
+
+        .on16 {
+            background-image: url(https://tim-school.com/codepen/record-player/jazz.png);
+            background-size: 100% 100%;
+            animation: on16 2s linear infinite;
+        }
+
+        @keyframes on16 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .box1number,
+        .box2number,
+        .box3number,
+        .box4number,
+        .box5number,
+        .box6number,
+        .box7number,
+        .box8number {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 48px;
+            height: 68px;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            font-size: 24px;
+            color: #727272;
+        }
+
+        .box9number,
+        .box10number,
+        .box11number,
+        .box12number,
+        .box13number,
+        .box14number,
+        .box15number,
+        .box16number {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 48px;
+            height: 68px;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            font-size: 24px;
+            color: #727272;
+        }
+
+        .title {
+            position: absolute;
+            bottom: 150px;
+            left: 27%;
+            right: 27%;
+            height: 60px;
+            line-height: 60px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            font-size: 34px;
+            text-align: center;
+            clip-path: polygon(0 100%, 5% 0, 19% 17%, 31% 0, 40% 16%, 50% 0, 60% 15%, 70% 0, 82% 14%, 95% 0, 100% 100%);
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .info {
+            position: absolute;
+            bottom: 20px;
+            left: 20%;
+            right: 20%;
+            height: 100px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            font-size: 34px;
+            text-align: center;
+        }
+
+        .info51a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .info52a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .info53a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .info54a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info55a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info56a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info57a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info58a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info61a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info62a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info63a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info64a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info65a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info66a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info67a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .info68a {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box1">
+        <div class="therecord1"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box1number">51<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box2">
+        <div class="therecord2"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box2number">52<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box3">
+        <div class="therecord3"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box3number">53<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <!-- Add more boxes similarly... -->
+    <div id="main">
+        <div id="recordplayer">
+            <div class="theplayerrecord"></div>
+            <div class="theplayerrecord2"></div>
+            <div class="theplayerrecord3"></div>
+            <!-- Add more records similarly... -->
+        </div>
+    </div>
+    <div class="title">TOP SONGS 50's AND 60's</div>
+    <div class="info">
+        <div class="info51a">1951 - Sixty Minute Man - Dominoes</div>
+        <div class="info52a">1952 - Lawdy Miss Clawdy - Lloyd Price</div>
+        <div class="info53a">1953 - Money Honey - Drifters</div>
+        <div class="info54a">1954 - Rock Around The Clock - Bill Haley</div>
+        <div class="info55a">1955 - Tutti-Frutti - Little Richard</div>
+        <div class="info56a">1956 - Hound Dog - Elvis Presley</div>
+        <div class="info57a">1957 - Jailhouse Rock - Elvis Presley</div>
+        <div class="info58a">1958 - Johnny B. Goode - Chuck Berry</div>
+        <div class="info61a">1961 - Stand By Me - Ben E. King</div>
+        <div class="info62a">1962 - Green Onions - Booker T</div>
+        <div class="info63a">1963 - Louie Louie - Kingsmen</div>
+        <div class="info64a">1964 - My Girl - Temptations</div>
+        <div class="info65a">1965 - Satisfaction - Rolling Stones</div>
+        <div class="info66a">1966 - Good Vibrations - Beach Boys</div>
+        <div class="info67a">1967 - Respect - Aretha Franklin</div>
+        <div class="info68a">1968 - Hey Jude - Beatles</div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="buzzer1" src="https://tim-school.com/codepen/record-player/51.mp3" preload="auto" loop></audio>
+    <audio id="buzzer2" src="https://tim-school.com/codepen/record-player/52.mp3" preload="auto" loop></audio>
+    <audio id="buzzer3" src="https://tim-school.com/codepen/record-player/53.mp3" preload="auto" loop></audio>
+    <audio id="buzzer4" src="https://tim-school.com/codepen/record-player/54.mp3" preload="auto" loop></audio>
+    <audio id="buzzer5" src="https://tim-school.com/codepen/record-player/55.mp3" preload="auto" loop></audio>
+    <audio id="buzzer6" src="https://tim-school.com/codepen/record-player/56.mp3" preload="auto" loop></audio>
+    <audio id="buzzer7" src="https://tim-school.com/codepen/record-player/57.mp3" preload="auto" loop></audio>
+    <audio id="buzzer8" src="https://tim-school.com/codepen/record-player/58.mp3" preload="auto" loop></audio>
+    <audio id="buzzer9" src="https://tim-school.com/codepen/record-player/61.mp3" preload="auto" loop></audio>
+    <audio id="buzzer10" src="https://tim-school.com/codepen/record-player/62.mp3" preload="auto" loop></audio>
+    <audio id="buzzer11" src="https://tim-school.com/codepen/record-player/63.mp3" preload="auto" loop></audio>
+    <audio id="buzzer12" src="https://tim-school.com/codepen/record-player/64.mp3" preload="auto" loop></audio>
+    <audio id="buzzer13" src="https://tim-school.com/codepen/record-player/65.mp3" preload="auto" loop></audio>
+    <audio id="buzzer14" src="https://tim-school.com/codepen/record-player/66.mp3" preload="auto" loop></audio>
+    <audio id="buzzer15" src="https://tim-school.com/codepen/record-player/67.mp3" preload="auto" loop></audio>
+    <audio id="buzzer16" src="https://tim-school.com/codepen/record-player/68.mp3" preload="auto" loop></audio>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</body>
+
+</html>
