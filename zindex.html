@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top Songs 50's and 60's</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>        $("#box1").on({
             mouseenter: function () {
                 $("#box1").css({ "marginLeft": "0" });
@@ -855,7 +858,8 @@
                 $(".info67a").css({ "display": "none" });
                 $(".info51a").css({ "display": "none" });
             }
-        });</script>
+        });
+  </script>
     <style>
               body {
             background: rgb(0, 0, 0);
@@ -1886,6 +1890,22 @@
 </head>
 
 <body>
+     <audio id="buzzer1" src="https://tim-school.com/codepen/record-player/51.mp3" preload="auto" loop></audio>
+    <audio id="buzzer2" src="https://tim-school.com/codepen/record-player/52.mp3" preload="auto" loop></audio>
+    <audio id="buzzer3" src="https://tim-school.com/codepen/record-player/53.mp3" preload="auto" loop></audio>
+    <audio id="buzzer4" src="https://tim-school.com/codepen/record-player/54.mp3" preload="auto" loop></audio>
+    <audio id="buzzer5" src="https://tim-school.com/codepen/record-player/55.mp3" preload="auto" loop></audio>
+    <audio id="buzzer6" src="https://tim-school.com/codepen/record-player/56.mp3" preload="auto" loop></audio>
+    <audio id="buzzer7" src="https://tim-school.com/codepen/record-player/57.mp3" preload="auto" loop></audio>
+    <audio id="buzzer8" src="https://tim-school.com/codepen/record-player/58.mp3" preload="auto" loop></audio>
+    <audio id="buzzer9" src="https://tim-school.com/codepen/record-player/61.mp3" preload="auto" loop></audio>
+    <audio id="buzzer10" src="https://tim-school.com/codepen/record-player/62.mp3" preload="auto" loop></audio>
+    <audio id="buzzer11" src="https://tim-school.com/codepen/record-player/63.mp3" preload="auto" loop></audio>
+    <audio id="buzzer12" src="https://tim-school.com/codepen/record-player/64.mp3" preload="auto" loop></audio>
+    <audio id="buzzer13" src="https://tim-school.com/codepen/record-player/65.mp3" preload="auto" loop></audio>
+    <audio id="buzzer14" src="https://tim-school.com/codepen/record-player/66.mp3" preload="auto" loop></audio>
+    <audio id="buzzer15" src="https://tim-school.com/codepen/record-player/67.mp3" preload="auto" loop></audio>
+    <audio id="buzzer16" src="https://tim-school.com/codepen/record-player/68.mp3" preload="auto" loop></audio>
     <div id="box1">
         <div class="therecord1"></div>
         <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
@@ -1901,13 +1921,89 @@
         <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
         <div class="box3number">53<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
     </div>
-    <!-- Add more boxes similarly... -->
+    <div id="box4">
+        <div class="therecord4"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box4number">54<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box5">
+        <div class="therecord5"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box5number">55<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box6">
+        <div class="therecord6"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box6number">56<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box7">
+        <div class="therecord7"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box7number">57<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box8">
+        <div class="therecord8"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box8number">58<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box9">
+        <div class="therecord9"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box9number">61<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box10">
+        <div class="therecord10"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box10number">62<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box11">
+        <div class="therecord11"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box11number">63<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box12">
+        <div class="therecord12"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box12number">64<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box13">
+        <div class="therecord13"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box13number">65<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box14">
+        <div class="therecord14"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box14number">66<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box15">
+        <div class="therecord15"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box15number">67<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
+    <div id="box16">
+        <div class="therecord16"></div>
+        <div class="dragme">DRAG TO THE RECORD PLAYER<br></div>
+        <div class="box16number">68<br><img src="https://tim-school.com/codepen/record-player/icon.png" width="25px" height="25px" alt="music"></div>
+    </div>
     <div id="main">
         <div id="recordplayer">
             <div class="theplayerrecord"></div>
             <div class="theplayerrecord2"></div>
             <div class="theplayerrecord3"></div>
-            <!-- Add more records similarly... -->
+            <div class="theplayerrecord4"></div>
+            <div class="theplayerrecord5"></div>
+            <div class="theplayerrecord6"></div>
+            <div class="theplayerrecord7"></div>
+            <div class="theplayerrecord8"></div>
+            <div class="theplayerrecord9"></div>
+            <div class="theplayerrecord10"></div>
+            <div class="theplayerrecord11"></div>
+            <div class="theplayerrecord12"></div>
+            <div class="theplayerrecord13"></div>
+            <div class="theplayerrecord14"></div>
+            <div class="theplayerrecord15"></div>
+            <div class="theplayerrecord16"></div>
         </div>
     </div>
     <div class="title">TOP SONGS 50's AND 60's</div>
@@ -1930,28 +2026,6 @@
         <div class="info68a">1968 - Hey Jude - Beatles</div>
     </div>
 
-    <!-- Audio Elements -->
-    <audio id="buzzer1" src="https://tim-school.com/codepen/record-player/51.mp3" preload="auto" loop></audio>
-    <audio id="buzzer2" src="https://tim-school.com/codepen/record-player/52.mp3" preload="auto" loop></audio>
-    <audio id="buzzer3" src="https://tim-school.com/codepen/record-player/53.mp3" preload="auto" loop></audio>
-    <audio id="buzzer4" src="https://tim-school.com/codepen/record-player/54.mp3" preload="auto" loop></audio>
-    <audio id="buzzer5" src="https://tim-school.com/codepen/record-player/55.mp3" preload="auto" loop></audio>
-    <audio id="buzzer6" src="https://tim-school.com/codepen/record-player/56.mp3" preload="auto" loop></audio>
-    <audio id="buzzer7" src="https://tim-school.com/codepen/record-player/57.mp3" preload="auto" loop></audio>
-    <audio id="buzzer8" src="https://tim-school.com/codepen/record-player/58.mp3" preload="auto" loop></audio>
-    <audio id="buzzer9" src="https://tim-school.com/codepen/record-player/61.mp3" preload="auto" loop></audio>
-    <audio id="buzzer10" src="https://tim-school.com/codepen/record-player/62.mp3" preload="auto" loop></audio>
-    <audio id="buzzer11" src="https://tim-school.com/codepen/record-player/63.mp3" preload="auto" loop></audio>
-    <audio id="buzzer12" src="https://tim-school.com/codepen/record-player/64.mp3" preload="auto" loop></audio>
-    <audio id="buzzer13" src="https://tim-school.com/codepen/record-player/65.mp3" preload="auto" loop></audio>
-    <audio id="buzzer14" src="https://tim-school.com/codepen/record-player/66.mp3" preload="auto" loop></audio>
-    <audio id="buzzer15" src="https://tim-school.com/codepen/record-player/67.mp3" preload="auto" loop></audio>
-    <audio id="buzzer16" src="https://tim-school.com/codepen/record-player/68.mp3" preload="auto" loop></audio>
-
-    <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </body>
 
 </html>
