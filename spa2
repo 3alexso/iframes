@@ -35,11 +35,11 @@
     <h1>Dynamic Page Content Example</h1>
 
     <ul>
-        <li><a href="./spa.html#page1">Page 1</a></li>
-        <li><a href="./spa.html#page2">Page 2</a></li>
-        <li><a href="./spa.html#page3">Page 3</a></li>
-        <li><a href="./spa.html#page4">Page 4</a></li>
-       <li><a href="./spa.html#page5">Page 5</a></li>
+        <li><a href="./spa2.html#page1">Page 1</a></li>
+        <li><a href="./spa2.html#page2">Page 2</a></li>
+        <li><a href="./spa2.html#page3">Page 3</a></li>
+        <li><a href="./spa2.html#page4">Page 4</a></li>
+       <li><a href="./spa2.html#page5">Page 5</a></li>
     </ul>
 
     <h3>Current Location</h3>
