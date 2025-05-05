@@ -360,7 +360,18 @@ name="my-iframe" id="my-iframe" class="my-iframe"
 src="https://www.wikipedia.org/"
 title="iframe example">
 </iframe>
+ <button id="removeIframeBtn">Remove Bootstrap iframe</button>
+	 <script>
+    // Get the button and iframe elements
+    const removeIframeBtn = document.getElementById('removeIframeBtn');
+    const iframe = document.getElementById('my-iframe1');
 
+    // Event listener to remove iframe when the button is clicked
+    removeIframeBtn.addEventListener('click', () => {
+      // Remove the iframe from the DOM
+      iframe.remove();
+    });
+  </script>
 <iframe
 name="my-iframe1" id="my-iframe1"  class="my-iframe"
 src="https://getbootstrap.com/docs/4.0/components/forms/"
