@@ -544,17 +544,36 @@ title="iframe example"
     <button type="submit" id="submit">Send your application</button>
   </div>
 </form>
- <script>
-    // Get the button and iframe elements
-    const removeIframeBtn = document.getElementById('removeIframeBtn');
-    const iframe = document.getElementById('my-iframe1');
+<script>
+  const removeIframeBtn = document.getElementById('removeIframeBtn');
+  const iframeContainer = removeIframeBtn.parentElement; // get container to re-add iframe
+  let iframe = document.getElementById('my-iframe1');
 
-    // Event listener to remove iframe when the button is clicked
-    removeIframeBtn.addEventListener('click', () => {
-      // Remove the iframe from the DOM
+  let isIframeVisible = true;
+
+  removeIframeBtn.addEventListener('click', () => {
+    if (isIframeVisible) {
+      // Remove the iframe
       iframe.remove();
-    });
-  </script>
+      removeIframeBtn.textContent = 'Add Bootstrap iframe';
+    } else {
+      // Recreate and re-add the iframe
+      const newIframe = document.createElement('iframe');
+      newIframe.name = 'my-iframe1';
+      newIframe.id = 'my-iframe1';
+      newIframe.src = 'https://getbootstrap.com/docs/5.2/forms/overview/';
+      newIframe.title = 'iframe example';
+      newIframe.style.height = '600px';
+      newIframe.style.width = '100%';
+
+      iframeContainer.insertBefore(newIframe, removeIframeBtn);
+      iframe = newIframe;
+      removeIframeBtn.textContent = 'Remove Bootstrap iframe';
+    }
+
+    isIframeVisible = !isIframeVisible;
+  });
+</script>
     
     <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
 </body>
