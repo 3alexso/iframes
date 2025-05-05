@@ -27,7 +27,14 @@ h1 {
 	text-align: center;
 	color: #FFF;
 }	
+.iframe-container{
+	position: relative;
+}
 
+.remove-btn{
+	left: 50%;
+	transform: translateX(-50%);
+}	
 h3 {
 	font-size: 30px;
 	text-align: center;
@@ -355,13 +362,13 @@ cursor: pointer;
 
 
 </div>
-<div>
+<div><div>
 <iframe
 name="my-iframe" id="my-iframe" class="my-iframe"
 src="https://www.wikipedia.org/"
 title="iframe example">
 </iframe>
-	
+	<div class="iframe-container">
 <iframe
 name="my-iframe1" id="my-iframe1"  class="my-iframe"
 src="https://getbootstrap.com/docs/4.0/components/forms/"
@@ -369,7 +376,7 @@ title="iframe example">
 </iframe> 
 <button id="removeIframeBtn">Remove Bootstrap iframe</button>
 
-
+</div></div>
 <!-- <iframe
 name="my-iframe2" id="my-iframe2"  class="my-iframe"
 src="https://arthurfurman.github.io/test/"
