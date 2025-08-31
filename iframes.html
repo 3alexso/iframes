@@ -12,9 +12,16 @@
     }
     </script>
 	<script>
-    function openPopover() {
-                    window.open("https://3alexso.github.io/iframes/popover.html", "_blank", 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=600');
-    }
+   function openPopover() {
+  const w = screen.availWidth;
+  const h = screen.availHeight;
+  window.open(
+    "https://3alexso.github.io/iframes/popover.html",
+    "_blank",
+    `toolbar=no,location=no,directories=no,status=no,menubar=no,
+     scrollbars=yes,resizable=yes,width=${w},height=${h},top=0,left=0`
+  );
+}
     </script>
 <style>
 	.modal {
