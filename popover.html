@@ -1,172 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>4-Layer Popover Wizard</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #0f172a;
-      color: #f1f5f9;
-      margin: 0;
-      padding: 2rem;
-    }
-
-    button {
-      padding: 0.6em 1.2em;
-      font-size: 1rem;
-      border: 1px solid #3b82f6;
-      border-radius: 6px;
-      background-color: #1e293b;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #334155;
-    }
-
-    [popover] {
-      padding: 20px;
-      background: #1e293b;
-      border: 1px solid #475569;
-      border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      max-width: 400px;
-      z-index: 1001;
-      position: relative;
-    }
-
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-    }
-
-    /* Overlay */
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 1000;
-      display: none;
-    }
-
-    .overlay.active {
-      display: block;
-    }
-
-    .hidden-popover {
-      display: none !important;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>4-Layer Popover Test</h1>
-  <button popovertarget="popover1">Start Wizard</button>
-
-  <!-- Fullscreen overlay -->
-  <div class="overlay" id="overlay"></div>
-
-  <!-- Popover 1 -->
-  <div id="popover1" popover>
-    <h2>Step 1</h2>
-    <p>This is the first popover.</p>
-    <div class="footer">
-      <span></span>
-      <button popovertarget="popover2">Next →</button>
-    </div>
-  </div>
-
-  <!-- Popover 2 -->
-  <div id="popover2" popover>
-    <h2>Step 2</h2>
-    <p>This is the second popover.</p>
-    <div class="footer">
-      <button popovertarget="popover2" popovertargetaction="hide">← Back</button>
-      <button popovertarget="popover3">Next →</button>
-    </div>
-  </div>
-
-  <!-- Popover 3 -->
-  <div id="popover3" popover>
-    <h2>Step 3</h2>
-    <p>This is the third popover.</p>
-    <div class="footer">
-      <button popovertarget="popover3" popovertargetaction="hide">← Back</button>
-      <button popovertarget="popover4">Next →</button>
-    </div>
-  </div>
-
-  <!-- Popover 4 -->
-  <div id="popover4" popover>
-    <h2>Step 4</h2>
-    <p>This is the final popover.</p>
-    <div class="footer">
-      <button popovertarget="popover4" popovertargetaction="hide">← Back</button>
-      <button id="closeAll">Close</button>
-    </div>
-  </div>
-
-  <script>
-    const overlay = document.getElementById('overlay');
-    const popovers = document.querySelectorAll('[popover]');
-
-    // Track currently open popover stack
-    let popoverStack = [];
-
-    function showOverlay() {
-      overlay.classList.add('active');
-    }
-
-    function hideOverlayIfNoPopovers() {
-      if (popoverStack.length === 0) {
-        overlay.classList.remove('active');
-      }
-    }
-
-    popovers.forEach(pop => {
-      pop.addEventListener('beforetoggle', (e) => {
-        const isOpening = e.newState === 'open';
-
-        if (isOpening) {
-          // Hide all other open popovers visually
-          popovers.forEach(p => {
-            if (p !== pop && p.matches(':popover-open')) {
-              p.classList.add('hidden-popover');
-            }
-          });
-
-          // Add to stack
-          popoverStack.push(pop);
-          showOverlay();
-        } else {
-          // Pop from stack
-          popoverStack = popoverStack.filter(p => p !== pop);
-
-          // Remove hidden class from previous if any
-          setTimeout(() => {
-            const last = popoverStack[popoverStack.length - 1];
-            if (last) {
-              last.classList.remove('hidden-popover');
-            }
-            hideOverlayIfNoPopovers();
-          }, 10);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scattered Popovers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the page and popovers */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark gray background */
+            color: #f3f4f6;
+            overflow-x: hidden;
         }
-      });
-    });
 
-    document.getElementById('closeAll').addEventListener('click', () => {
-      popovers.forEach(p => {
-        p.hidePopover();
-        p.classList.remove('hidden-popover');
-      });
-      popoverStack = [];
-      overlay.classList.remove('active');
-    });
-  </script>
+        /* Styling for the popover content */
+        [popover] {
+            /* Base styles */
+            border: none;
+            box-shadow: 0 -15px 40px -15px rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            background-color: #1f2937;
+            text-align: center;
+            color: #f3f4f6;
+
+            /* Positioning and Sizing for bottom banner */
+            inset: auto 0 0 0; /* Stick to bottom */
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            border-radius: 1.5rem 1.5rem 0 0; /* Rounded top corners */
+        }
+        
+        /* The backdrop is now transparent */
+        [popover]::backdrop {
+            background-color: rgba(0, 0, 0, 0.0);
+            backdrop-filter: none;
+        }
+
+        /* Style for the trigger buttons */
+        .popover-trigger {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 9999px; /* rounded-full */
+            border: none;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .popover-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+        }
+
+    </style>
+</head>
+<body class="relative">
+
+    <div id="main-container" class="relative w-full" style="min-height: 400vh;">
+        <!-- Popover Triggers and Content will be dynamically inserted here -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center p-8 bg-gray-900/50 rounded-2xl backdrop-blur-sm">
+            <h1 class="text-4xl md:text-6xl font-bold text-white">Scattered Popovers</h1>
+            <p class="mt-4 text-lg text-gray-300">Scroll down to see elements scattered around the page.</p>
+            <p class="mt-2 text-sm text-gray-400">A random popover will open every few seconds.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('main-container');
+            const numberOfElements = 60;
+            const popoverElements = [];
+            const colors = [
+                'bg-rose-600', 'bg-purple-600', 'bg-violet-600', 'bg-indigo-600',
+                'bg-blue-600', 'bg-cyan-600', 'bg-teal-600', 'bg-emerald-600',
+                'bg-lime-600', 'bg-amber-600', 'bg-orange-600'
+            ];
+
+            // --- 1. Dynamically create all popover elements and their triggers ---
+            for (let i = 0; i < numberOfElements; i++) {
+                // Create the trigger button
+                const trigger = document.createElement('button');
+                const popoverId = `popover-${i}`;
+                trigger.id = `trigger-${i}`;
+                trigger.classList.add('popover-trigger');
+                trigger.setAttribute('popovertarget', popoverId);
+                trigger.textContent = `${i + 1}`;
+
+                // Assign random position and color
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                const randomTop = Math.random() * 380 + 15; // From 15vh to 395vh
+                const randomLeft = Math.random() * 90 + 5; // From 5% to 95%
+                
+                trigger.classList.add(randomColor);
+                trigger.style.top = `${randomTop}vh`;
+                trigger.style.left = `${randomLeft}%`;
+
+                // Create the popover content
+                const popover = document.createElement('div');
+                popover.id = popoverId;
+                popover.setAttribute('popover', 'auto');
+                popover.innerHTML = `
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-xl font-bold text-white mb-2">Popover #${i + 1}</h3>
+                        <p class="text-gray-300">This is the content for popover number ${i + 1}. It was triggered automatically and will close soon.</p>
+                        <button popovertarget="${popoverId}" popovertargetaction="hide" class="mt-4 px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded-lg text-white font-semibold transition-colors">
+                            Close
+                        </button>
+                    </div>
+                `;
+
+                // Add to the container and keep a reference
+                container.appendChild(trigger);
+                container.appendChild(popover);
+                popoverElements.push(popover);
+            }
+
+            // --- 2. Set up the interval to automatically show/hide popovers ---
+            const cycleInterval = 5000; // 5 seconds
+            let currentPopover = null;
+
+            const cyclePopovers = () => {
+                // Hide any currently open popover
+                if (currentPopover) {
+                    try {
+                        currentPopover.hidePopover();
+                    } catch (e) {
+                        // This can happen if the user manually closes it. It's safe to ignore.
+                    }
+                }
+                
+                // Select a new random popover to show
+                const randomIndex = Math.floor(Math.random() * popoverElements.length);
+                const randomPopover = popoverElements[randomIndex];
+                
+                // Show the new popover and set it as the current one
+                randomPopover.showPopover();
+                currentPopover = randomPopover;
+            };
+
+            // Start the cycle
+            setInterval(cyclePopovers, cycleInterval);
+        });
+    </script>
+
 </body>
 </html>
