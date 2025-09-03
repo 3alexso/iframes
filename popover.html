@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nested Popovers with Spotlight</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>4-Layer Popover Wizard</title>
   <style>
     body {
       font-family: sans-serif;
@@ -13,21 +13,14 @@
       padding: 2rem;
     }
 
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-
     button {
-      cursor: pointer;
       padding: 0.6em 1.2em;
       font-size: 1rem;
       border: 1px solid #3b82f6;
       border-radius: 6px;
-      color: #fff;
       background-color: #1e293b;
-      z-index: 1002;
-      position: relative;
+      color: #fff;
+      cursor: pointer;
     }
 
     button:hover {
@@ -35,14 +28,13 @@
     }
 
     [popover] {
-      border: 1px solid #475569;
-      border-radius: 10px;
       padding: 20px;
       background: #1e293b;
-      color: #f1f5f9;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 1px solid #475569;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
       max-width: 400px;
-      z-index: 1003;
+      z-index: 1001;
       position: relative;
     }
 
@@ -52,125 +44,127 @@
       margin-top: 1rem;
     }
 
-    .spotlight-overlay {
+    /* Overlay */
+    .overlay {
       position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
       z-index: 1000;
       display: none;
     }
 
-    .spotlight-overlay.active {
+    .overlay.active {
       display: block;
     }
 
-    /* Visually hide popover but not remove from DOM */
     .hidden-popover {
       display: none !important;
     }
   </style>
 </head>
 <body>
-  <h1>Nested Popovers (5 Levels)</h1>
-  <button popovertarget="pop1">Open Level 1 Popover</button>
 
-  <!-- Overlay -->
-  <div class="spotlight-overlay" id="overlay"></div>
+  <h1>4-Layer Popover Test</h1>
+  <button popovertarget="popover1">Start Wizard</button>
 
-  <!-- Level 1 -->
-  <div id="pop1" popover>
-    <h2>Level 1</h2>
+  <!-- Fullscreen overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Popover 1 -->
+  <div id="popover1" popover>
+    <h2>Step 1</h2>
     <p>This is the first popover.</p>
     <div class="footer">
-      <button popovertarget="pop1" popovertargetaction="hide">Close</button>
-      <button popovertarget="pop2">Next →</button>
+      <span></span>
+      <button popovertarget="popover2">Next →</button>
     </div>
   </div>
 
-  <!-- Level 2 -->
-  <div id="pop2" popover>
-    <h2>Level 2</h2>
-    <p>Second level popover.</p>
+  <!-- Popover 2 -->
+  <div id="popover2" popover>
+    <h2>Step 2</h2>
+    <p>This is the second popover.</p>
     <div class="footer">
-      <button popovertarget="pop2" popovertargetaction="hide">Back</button>
-      <button popovertarget="pop3">Next →</button>
+      <button popovertarget="popover2" popovertargetaction="hide">← Back</button>
+      <button popovertarget="popover3">Next →</button>
     </div>
   </div>
 
-  <!-- Level 3 -->
-  <div id="pop3" popover>
-    <h2>Level 3</h2>
-    <p>Third level popover.</p>
+  <!-- Popover 3 -->
+  <div id="popover3" popover>
+    <h2>Step 3</h2>
+    <p>This is the third popover.</p>
     <div class="footer">
-      <button popovertarget="pop3" popovertargetaction="hide">Back</button>
-      <button popovertarget="pop4">Next →</button>
+      <button popovertarget="popover3" popovertargetaction="hide">← Back</button>
+      <button popovertarget="popover4">Next →</button>
     </div>
   </div>
 
-  <!-- Level 4 -->
-  <div id="pop4" popover>
-    <h2>Level 4</h2>
-    <p>Fourth level popover.</p>
+  <!-- Popover 4 -->
+  <div id="popover4" popover>
+    <h2>Step 4</h2>
+    <p>This is the final popover.</p>
     <div class="footer">
-      <button popovertarget="pop4" popovertargetaction="hide">Back</button>
-      <button popovertarget="pop5">Next →</button>
-    </div>
-  </div>
-
-  <!-- Level 5 -->
-  <div id="pop5" popover>
-    <h2>Level 5</h2>
-    <p>Final level popover.</p>
-    <div class="footer">
-      <button popovertarget="pop5" popovertargetaction="hide">Back</button>
-      <button id="closeAll">Close All</button>
+      <button popovertarget="popover4" popovertargetaction="hide">← Back</button>
+      <button id="closeAll">Close</button>
     </div>
   </div>
 
   <script>
     const overlay = document.getElementById('overlay');
-    const allPopovers = document.querySelectorAll('[popover]');
+    const popovers = document.querySelectorAll('[popover]');
 
-    // Show overlay and hide all others except current
-    function spotlightPopover(popoverId) {
-      allPopovers.forEach(pop => {
-        if (pop.id !== popoverId && pop.matches(':popover-open')) {
-          pop.classList.add('hidden-popover');
-        }
-      });
+    // Track currently open popover stack
+    let popoverStack = [];
+
+    function showOverlay() {
       overlay.classList.add('active');
     }
 
-    // When a popover opens, spotlight it
-    allPopovers.forEach(pop => {
+    function hideOverlayIfNoPopovers() {
+      if (popoverStack.length === 0) {
+        overlay.classList.remove('active');
+      }
+    }
+
+    popovers.forEach(pop => {
       pop.addEventListener('beforetoggle', (e) => {
         const isOpening = e.newState === 'open';
 
         if (isOpening) {
-          spotlightPopover(pop.id);
-        } else {
-          // On close, check if any popovers remain open
-          setTimeout(() => {
-            const openPopovers = Array.from(allPopovers).filter(p => p.matches(':popover-open'));
-            if (openPopovers.length === 0) {
-              overlay.classList.remove('active');
-            } else {
-              // Reveal the previous popover again
-              openPopovers.at(-1).classList.remove('hidden-popover');
+          // Hide all other open popovers visually
+          popovers.forEach(p => {
+            if (p !== pop && p.matches(':popover-open')) {
+              p.classList.add('hidden-popover');
             }
+          });
+
+          // Add to stack
+          popoverStack.push(pop);
+          showOverlay();
+        } else {
+          // Pop from stack
+          popoverStack = popoverStack.filter(p => p !== pop);
+
+          // Remove hidden class from previous if any
+          setTimeout(() => {
+            const last = popoverStack[popoverStack.length - 1];
+            if (last) {
+              last.classList.remove('hidden-popover');
+            }
+            hideOverlayIfNoPopovers();
           }, 10);
         }
       });
     });
 
-    // Close all popovers
     document.getElementById('closeAll').addEventListener('click', () => {
-      allPopovers.forEach(p => {
+      popovers.forEach(p => {
         p.hidePopover();
         p.classList.remove('hidden-popover');
       });
+      popoverStack = [];
       overlay.classList.remove('active');
     });
   </script>
