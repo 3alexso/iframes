@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nested Popovers (Top Layer, 5 Levels)</title>
+  <title>Nested Popovers with Spotlight</title>
   <style>
     body {
       font-family: sans-serif;
@@ -12,7 +12,12 @@
       margin: 0;
       padding: 2rem;
     }
-    h1 { font-size: 1.8rem; margin-bottom: 1rem; }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
     button {
       cursor: pointer;
       padding: 0.6em 1.2em;
@@ -21,8 +26,13 @@
       border-radius: 6px;
       color: #fff;
       background-color: #1e293b;
+      z-index: 1002;
+      position: relative;
     }
-    button:hover { background-color: #334155; }
+
+    button:hover {
+      background-color: #334155;
+    }
 
     [popover] {
       border: 1px solid #475569;
@@ -32,7 +42,7 @@
       color: #f1f5f9;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       max-width: 400px;
-      z-index: 1001;
+      z-index: 1003;
       position: relative;
     }
 
@@ -42,21 +52,23 @@
       margin-top: 1rem;
     }
 
-    /* Overlay style */
-    .popover-overlay {
+    .spotlight-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.8);
       z-index: 1000;
-      pointer-events: none;
       display: none;
     }
 
-    .popover-overlay.active {
+    .spotlight-overlay.active {
       display: block;
+    }
+
+    /* Visually hide popover but not remove from DOM */
+    .hidden-popover {
+      display: none !important;
     }
   </style>
 </head>
@@ -64,8 +76,8 @@
   <h1>Nested Popovers (5 Levels)</h1>
   <button popovertarget="pop1">Open Level 1 Popover</button>
 
-  <!-- Overlay spotlight -->
-  <div class="popover-overlay" id="popoverOverlay"></div>
+  <!-- Overlay -->
+  <div class="spotlight-overlay" id="overlay"></div>
 
   <!-- Level 1 -->
   <div id="pop1" popover>
@@ -118,35 +130,48 @@
   </div>
 
   <script>
-    const overlay = document.getElementById("popoverOverlay");
+    const overlay = document.getElementById('overlay');
+    const allPopovers = document.querySelectorAll('[popover]');
 
-    // Observe all popovers
-    const popovers = document.querySelectorAll("[popover]");
-
-    popovers.forEach(pop => {
-      pop.addEventListener("beforetoggle", (e) => {
-        // Show overlay when popover is about to open
-        if (e.newState === "open") {
-          overlay.classList.add("active");
+    // Show overlay and hide all others except current
+    function spotlightPopover(popoverId) {
+      allPopovers.forEach(pop => {
+        if (pop.id !== popoverId && pop.matches(':popover-open')) {
+          pop.classList.add('hidden-popover');
         }
+      });
+      overlay.classList.add('active');
+    }
 
-        // Hide overlay if no more popovers are open after closing
-        if (e.newState === "closed") {
-          // Delay to ensure popover is fully closed
+    // When a popover opens, spotlight it
+    allPopovers.forEach(pop => {
+      pop.addEventListener('beforetoggle', (e) => {
+        const isOpening = e.newState === 'open';
+
+        if (isOpening) {
+          spotlightPopover(pop.id);
+        } else {
+          // On close, check if any popovers remain open
           setTimeout(() => {
-            const openPopovers = document.querySelectorAll("[popover]:popover-open");
+            const openPopovers = Array.from(allPopovers).filter(p => p.matches(':popover-open'));
             if (openPopovers.length === 0) {
-              overlay.classList.remove("active");
+              overlay.classList.remove('active');
+            } else {
+              // Reveal the previous popover again
+              openPopovers.at(-1).classList.remove('hidden-popover');
             }
-          }, 50);
+          }, 10);
         }
       });
     });
 
-    // Close all popovers and hide overlay
-    document.getElementById("closeAll").addEventListener("click", () => {
-      document.querySelectorAll("[popover]:popover-open").forEach(el => el.hidePopover());
-      overlay.classList.remove("active");
+    // Close all popovers
+    document.getElementById('closeAll').addEventListener('click', () => {
+      allPopovers.forEach(p => {
+        p.hidePopover();
+        p.classList.remove('hidden-popover');
+      });
+      overlay.classList.remove('active');
     });
   </script>
 </body>
