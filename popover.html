@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nested Popovers (5 Levels)</title>
+  <title>Nested Popovers (Native, 5 Levels)</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -24,29 +24,14 @@
       cursor: pointer;
     }
     .btn:hover { background: #334155; }
-    .popover {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-    }
-    .popover[data-open="true"] { display: flex; }
-    .popover__backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-    }
-    .popover__panel {
-      position: relative;
-      background: #1e293b;
+
+    [popover] {
       border: 1px solid #475569;
       border-radius: 12px;
       padding: 20px;
+      background: #1e293b;
       max-width: 500px;
       width: 90%;
-      z-index: 2;
       box-shadow: 0 10px 40px rgba(0,0,0,0.6);
     }
     .popover__title { margin: 0 0 10px; font-size: 1.2rem; }
@@ -58,149 +43,64 @@
   </style>
 </head>
 <body>
-  <h1>Nested Popovers (5 Levels)</h1>
-  <button class="btn" data-popover-root>Open Level 1 Popover</button>
+  <h1>Nested Popovers (Native, 5 Levels)</h1>
+  <button class="btn" popovertarget="pop1">Open Level 1 Popover</button>
 
   <!-- Level 1 -->
-  <div class="popover" data-level="1" aria-hidden="true">
-    <div class="popover__backdrop"></div>
-    <div class="popover__panel">
-      <h2 class="popover__title">Level 1</h2>
-      <p>This is the first popover.</p>
-      <div class="popover__footer">
-        <button class="btn" data-popover-close>Close</button>
-        <button class="btn" data-popover-next>Next →</button>
-      </div>
-
-      <!-- Level 2 -->
-      <div class="popover" data-level="2" aria-hidden="true">
-        <div class="popover__backdrop"></div>
-        <div class="popover__panel">
-          <h2 class="popover__title">Level 2</h2>
-          <p>Second level popover.</p>
-          <div class="popover__footer">
-            <button class="btn" data-popover-close>Back</button>
-            <button class="btn" data-popover-next>Next →</button>
-          </div>
-
-          <!-- Level 3 -->
-          <div class="popover" data-level="3" aria-hidden="true">
-            <div class="popover__backdrop"></div>
-            <div class="popover__panel">
-              <h2 class="popover__title">Level 3</h2>
-              <p>Third level popover.</p>
-              <div class="popover__footer">
-                <button class="btn" data-popover-close>Back</button>
-                <button class="btn" data-popover-next>Next →</button>
-              </div>
-
-              <!-- Level 4 -->
-              <div class="popover" data-level="4" aria-hidden="true">
-                <div class="popover__backdrop"></div>
-                <div class="popover__panel">
-                  <h2 class="popover__title">Level 4</h2>
-                  <p>Fourth level popover.</p>
-                  <div class="popover__footer">
-                    <button class="btn" data-popover-close>Back</button>
-                    <button class="btn" data-popover-next>Next →</button>
-                  </div>
-
-                  <!-- Level 5 -->
-                  <div class="popover" data-level="5" aria-hidden="true">
-                    <div class="popover__backdrop"></div>
-                    <div class="popover__panel">
-                      <h2 class="popover__title">Level 5</h2>
-                      <p>Final level popover.</p>
-                      <div class="popover__footer">
-                        <button class="btn" data-popover-close>Back</button>
-                        <button class="btn" data-popover-close-all>Close All</button>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /Level 5 -->
-                </div>
-              </div>
-              <!-- /Level 4 -->
-            </div>
-          </div>
-          <!-- /Level 3 -->
-        </div>
-      </div>
-      <!-- /Level 2 -->
+  <div id="pop1" popover>
+    <h2 class="popover__title">Level 1</h2>
+    <p>This is the first popover.</p>
+    <div class="popover__footer">
+      <button class="btn" popovertarget="pop1" popovertargetaction="hide">Close</button>
+      <button class="btn" popovertarget="pop2">Next →</button>
     </div>
   </div>
-  <!-- /Level 1 -->
+
+  <!-- Level 2 -->
+  <div id="pop2" popover>
+    <h2 class="popover__title">Level 2</h2>
+    <p>Second level popover.</p>
+    <div class="popover__footer">
+      <button class="btn" popovertarget="pop2" popovertargetaction="hide">Back</button>
+      <button class="btn" popovertarget="pop3">Next →</button>
+    </div>
+  </div>
+
+  <!-- Level 3 -->
+  <div id="pop3" popover>
+    <h2 class="popover__title">Level 3</h2>
+    <p>Third level popover.</p>
+    <div class="popover__footer">
+      <button class="btn" popovertarget="pop3" popovertargetaction="hide">Back</button>
+      <button class="btn" popovertarget="pop4">Next →</button>
+    </div>
+  </div>
+
+  <!-- Level 4 -->
+  <div id="pop4" popover>
+    <h2 class="popover__title">Level 4</h2>
+    <p>Fourth level popover.</p>
+    <div class="popover__footer">
+      <button class="btn" popovertarget="pop4" popovertargetaction="hide">Back</button>
+      <button class="btn" popovertarget="pop5">Next →</button>
+    </div>
+  </div>
+
+  <!-- Level 5 -->
+  <div id="pop5" popover>
+    <h2 class="popover__title">Level 5</h2>
+    <p>Final level popover.</p>
+    <div class="popover__footer">
+      <button class="btn" popovertarget="pop5" popovertargetaction="hide">Back</button>
+      <button class="btn" id="closeAll">Close All</button>
+    </div>
+  </div>
 
   <script>
-    (function(){
-      const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-      const openStack = [];
-
-      function getFocusable(el){
-        return Array.from(el.querySelectorAll(FOCUSABLE)).filter(n => n.offsetParent !== null || n === document.activeElement);
-      }
-      function computeZ(level){ return 100 + level*10; }
-
-      function openPopover(pop){
-        if(!pop) return;
-        const level = Number(pop.getAttribute('data-level') || 1);
-        pop.style.zIndex = computeZ(level);
-        pop.dataset.open = 'true';
-        pop.setAttribute('aria-hidden','false');
-        openStack.push(pop);
-        const panel = pop.querySelector('.popover__panel');
-        const first = getFocusable(panel)[0] || panel;
-        setTimeout(()=>first.focus(),0);
-      }
-
-      function closeTopPopover(){
-        const pop = openStack.pop();
-        if(!pop) return;
-        pop.dataset.open = 'false';
-        pop.setAttribute('aria-hidden','true');
-        if(openStack.length){
-          const prev = openStack[openStack.length-1];
-          const panel = prev.querySelector('.popover__panel');
-          (getFocusable(panel)[0]||panel).focus();
-        }
-      }
-      function closeAll(){ while(openStack.length) closeTopPopover(); }
-
-      document.addEventListener('click',(e)=>{
-        if(e.target.closest('[data-popover-root]')){
-          const first = document.querySelector('.popover[data-level="1"]');
-          openPopover(first);
-        }
-        if(e.target.closest('[data-popover-next]')){
-          const current = e.target.closest('.popover');
-          const next = current.querySelector('.popover[data-level="'+(Number(current.dataset.level)+1)+'"]');
-          openPopover(next);
-        }
-        if(e.target.closest('[data-popover-close]')){ closeTopPopover(); }
-        if(e.target.closest('[data-popover-close-all]')){ closeAll(); }
-      });
-
-      // No click-outside handler → clicking backdrop does nothing
-
-      document.addEventListener('keydown',(e)=>{
-        if(!openStack.length) return;
-        if(e.key==='Escape'){ e.preventDefault(); closeTopPopover(); }
-        if(e.key==='Tab'){
-          const top=openStack[openStack.length-1];
-          const panel=top.querySelector('.popover__panel');
-          const f=getFocusable(panel);
-          if(!f.length) return;
-          const first=f[0], last=f[f.length-1];
-          const active=document.activeElement;
-          if(e.shiftKey && active===first){ e.preventDefault(); last.focus(); }
-          else if(!e.shiftKey && active===last){ e.preventDefault(); first.focus(); }
-        }
-      });
-
-      document.querySelectorAll('.popover').forEach(p=>{
-        p.dataset.open='false'; p.setAttribute('aria-hidden','true');
-      });
-    })();
+    // Example: "Close All" manually hides every popover
+    document.getElementById("closeAll").addEventListener("click", () => {
+      document.querySelectorAll("[popover]:popover-open").forEach(pop => pop.hidePopover());
+    });
   </script>
 </body>
 </html>
