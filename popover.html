@@ -3,39 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nested Popovers (Native, 5 Levels)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Nested Popovers (Top Layer, 5 Levels)</title>
   <style>
     body {
-      font-family: Inter, sans-serif;
+      font-family: sans-serif;
       background: #0f172a;
       color: #f1f5f9;
       margin: 0;
       padding: 2rem;
     }
     h1 { font-size: 1.8rem; margin-bottom: 1rem; }
-    .btn {
-      padding: 10px 16px;
-      border-radius: 10px;
-      border: 1px solid #3b82f6;
-      background: #1e293b;
-      color: #f1f5f9;
-      font-weight: 600;
+    button {
       cursor: pointer;
+      padding: 0.6em 1.2em;
+      font-size: 1rem;
+      border: 1px solid #3b82f6;
+      border-radius: 6px;
+      color: #fff;
+      background-color: #1e293b;
     }
-    .btn:hover { background: #334155; }
+    button:hover { background-color: #334155; }
 
     [popover] {
       border: 1px solid #475569;
-      border-radius: 12px;
+      border-radius: 10px;
       padding: 20px;
       background: #1e293b;
-      max-width: 500px;
-      width: 90%;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      color: #f1f5f9;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      max-width: 400px;
     }
-    .popover__title { margin: 0 0 10px; font-size: 1.2rem; }
-    .popover__footer {
+
+    .footer {
       display: flex;
       justify-content: space-between;
       margin-top: 1rem;
@@ -43,63 +42,63 @@
   </style>
 </head>
 <body>
-  <h1>Nested Popovers (Native, 5 Levels)</h1>
-  <button class="btn" popovertarget="pop1">Open Level 1 Popover</button>
+  <h1>Nested Popovers (5 Levels)</h1>
+  <button popovertarget="pop1">Open Level 1 Popover</button>
 
   <!-- Level 1 -->
   <div id="pop1" popover>
-    <h2 class="popover__title">Level 1</h2>
+    <h2>Level 1</h2>
     <p>This is the first popover.</p>
-    <div class="popover__footer">
-      <button class="btn" popovertarget="pop1" popovertargetaction="hide">Close</button>
-      <button class="btn" popovertarget="pop2">Next →</button>
+    <div class="footer">
+      <button popovertarget="pop1" popovertargetaction="hide">Close</button>
+      <button popovertarget="pop2">Next →</button>
     </div>
   </div>
 
   <!-- Level 2 -->
   <div id="pop2" popover>
-    <h2 class="popover__title">Level 2</h2>
+    <h2>Level 2</h2>
     <p>Second level popover.</p>
-    <div class="popover__footer">
-      <button class="btn" popovertarget="pop2" popovertargetaction="hide">Back</button>
-      <button class="btn" popovertarget="pop3">Next →</button>
+    <div class="footer">
+      <button popovertarget="pop2" popovertargetaction="hide">Back</button>
+      <button popovertarget="pop3">Next →</button>
     </div>
   </div>
 
   <!-- Level 3 -->
   <div id="pop3" popover>
-    <h2 class="popover__title">Level 3</h2>
+    <h2>Level 3</h2>
     <p>Third level popover.</p>
-    <div class="popover__footer">
-      <button class="btn" popovertarget="pop3" popovertargetaction="hide">Back</button>
-      <button class="btn" popovertarget="pop4">Next →</button>
+    <div class="footer">
+      <button popovertarget="pop3" popovertargetaction="hide">Back</button>
+      <button popovertarget="pop4">Next →</button>
     </div>
   </div>
 
   <!-- Level 4 -->
   <div id="pop4" popover>
-    <h2 class="popover__title">Level 4</h2>
+    <h2>Level 4</h2>
     <p>Fourth level popover.</p>
-    <div class="popover__footer">
-      <button class="btn" popovertarget="pop4" popovertargetaction="hide">Back</button>
-      <button class="btn" popovertarget="pop5">Next →</button>
+    <div class="footer">
+      <button popovertarget="pop4" popovertargetaction="hide">Back</button>
+      <button popovertarget="pop5">Next →</button>
     </div>
   </div>
 
   <!-- Level 5 -->
   <div id="pop5" popover>
-    <h2 class="popover__title">Level 5</h2>
+    <h2>Level 5</h2>
     <p>Final level popover.</p>
-    <div class="popover__footer">
-      <button class="btn" popovertarget="pop5" popovertargetaction="hide">Back</button>
-      <button class="btn" id="closeAll">Close All</button>
+    <div class="footer">
+      <button popovertarget="pop5" popovertargetaction="hide">Back</button>
+      <button id="closeAll">Close All</button>
     </div>
   </div>
 
   <script>
-    // Example: "Close All" manually hides every popover
+    // Close all open popovers when "Close All" is clicked
     document.getElementById("closeAll").addEventListener("click", () => {
-      document.querySelectorAll("[popover]:popover-open").forEach(pop => pop.hidePopover());
+      document.querySelectorAll("[popover]:popover-open").forEach(el => el.hidePopover());
     });
   </script>
 </body>
