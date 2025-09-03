@@ -32,6 +32,8 @@
       color: #f1f5f9;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       max-width: 400px;
+      z-index: 1001;
+      position: relative;
     }
 
     .footer {
@@ -39,11 +41,31 @@
       justify-content: space-between;
       margin-top: 1rem;
     }
+
+    /* Overlay style */
+    .popover-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      pointer-events: none;
+      display: none;
+    }
+
+    .popover-overlay.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
   <h1>Nested Popovers (5 Levels)</h1>
   <button popovertarget="pop1">Open Level 1 Popover</button>
+
+  <!-- Overlay spotlight -->
+  <div class="popover-overlay" id="popoverOverlay"></div>
 
   <!-- Level 1 -->
   <div id="pop1" popover>
@@ -96,9 +118,35 @@
   </div>
 
   <script>
-    // Close all open popovers when "Close All" is clicked
+    const overlay = document.getElementById("popoverOverlay");
+
+    // Observe all popovers
+    const popovers = document.querySelectorAll("[popover]");
+
+    popovers.forEach(pop => {
+      pop.addEventListener("beforetoggle", (e) => {
+        // Show overlay when popover is about to open
+        if (e.newState === "open") {
+          overlay.classList.add("active");
+        }
+
+        // Hide overlay if no more popovers are open after closing
+        if (e.newState === "closed") {
+          // Delay to ensure popover is fully closed
+          setTimeout(() => {
+            const openPopovers = document.querySelectorAll("[popover]:popover-open");
+            if (openPopovers.length === 0) {
+              overlay.classList.remove("active");
+            }
+          }, 50);
+        }
+      });
+    });
+
+    // Close all popovers and hide overlay
     document.getElementById("closeAll").addEventListener("click", () => {
       document.querySelectorAll("[popover]:popover-open").forEach(el => el.hidePopover());
+      overlay.classList.remove("active");
     });
   </script>
 </body>
