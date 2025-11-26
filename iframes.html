@@ -204,6 +204,13 @@ h1 {
 	#bottom-iframes{
 		display: flex;
 	}
+	#top-iframes,
+#bottom-iframes {
+    display: flex;
+    justify-content: space-evenly; /* space evenly between iframes */
+    flex-wrap: wrap; /* allows iframes to go to the next line if needed */
+}
+
 #survey-form {
   background-color: white;
 }
@@ -324,31 +331,30 @@ color: whitesmoke;
 font-size: 20px;
 }
 
-.my-iframe{
-  height: 600px;
-width: 40%;
-margin: 30px;
+
+	.my-iframe {
+    width: 45%;   /* choose a percentage or fixed px, e.g., 600px */
+    height: 600px;
+    margin: 30px;
+    box-sizing: border-box; /* ensures padding/margin don't break layout */
 }
+
 
 #my-iframe {
 height: 600px;
-width: 40%;
 margin: 30px;
 }
 
 #my-iframe1 {
 height: 600px;
-width: 100%;
 }
 
 	#my-iframe3 {
 height: 600px;
-width: 40%;
 }
 
 	#my-iframe4 {
 height: 600px;
-width: 100%;
 		margin: 30px;
 
 }
@@ -684,7 +690,7 @@ class SameDomainIframeInShadow extends HTMLElement {
         iframe.id = 'my-iframe4';  // set ID like your other iframes
         iframe.className = 'my-iframe'; // same class as the others
         iframe.title = 'iframe example 4';
-        iframe.style.setProperty('width', '100%');
+        iframe.style.setProperty('width', '45%');
         iframe.style.setProperty('height', '600px');
 		 iframe.style.setProperty('margin', '30px');
 
