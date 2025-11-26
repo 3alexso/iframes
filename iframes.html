@@ -332,12 +332,18 @@ font-size: 20px;
 }
 
 
-	.my-iframe {
-    width: 45%;   /* choose a percentage or fixed px, e.g., 600px */
+.my-iframe {
+    width: calc(45% - 60px); /* subtract horizontal margins so total space is even */
     height: 600px;
     margin: 30px;
-    box-sizing: border-box; /* ensures padding/margin don't break layout */
+    box-sizing: border-box; /* include padding and border in width */
 }
+
+.iframe-container {
+    width: calc(45% - 60px); /* same as iframe inside it */
+    box-sizing: border-box;
+}
+
 
 
 #my-iframe {
@@ -690,7 +696,7 @@ class SameDomainIframeInShadow extends HTMLElement {
         iframe.id = 'my-iframe4';  // set ID like your other iframes
         iframe.className = 'my-iframe'; // same class as the others
         iframe.title = 'iframe example 4';
-        iframe.style.setProperty('width', '45%');
+iframe.style.setProperty('width', 'calc(45% - 60px)');
         iframe.style.setProperty('height', '600px');
 		 iframe.style.setProperty('margin', '30px');
 
