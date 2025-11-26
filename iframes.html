@@ -205,12 +205,20 @@ h1 {
 		display: flex;
 	}
 	#top-iframes,
+#top-iframes,
 #bottom-iframes {
-    display: flex;
-    justify-content: space-evenly; /* space evenly between iframes */
-    flex-wrap: wrap; /* allows iframes to go to the next line if needed */
+    display: block; /* Override display:flex to avoid conflicts */
+    margin: 0;
+    padding: 0;
 }
-
+#iframe-grid-container {
+    display: grid;
+    /* Define two columns: First is 30% width, second is 70% width */
+    grid-template-columns: 30% 70%;
+    gap: 10px; /* Space between iframes */
+    width: 90%; 
+    margin: 30px auto; 
+}
 #survey-form {
   background-color: white;
 }
@@ -331,7 +339,21 @@ color: whitesmoke;
 font-size: 20px;
 }
 
+.my-iframe,
+.iframe-container.my-iframe,
+same-domain-iframe-in-shadow {
+    /* Make the iframe/container fill its assigned grid cell */
+    width: 100% !important; 
+    margin: 0 !important; 
+    height: 600px; 
+    box-sizing: border-box; 
+}
 
+	.iframe-container.my-iframe iframe {
+    width: 100% !important;
+    height: calc(100% - 40px) !important; /* adjust for button */
+    display: block;
+}
 .my-iframe {
     width: calc(45% - 60px); /* subtract horizontal margins so total space is even */
     height: 600px;
@@ -443,39 +465,29 @@ cursor: pointer;
 
 
 </div>
-<div>
-	<div id="top-iframes">
-<iframe
-name="my-iframe" id="my-iframe" class="my-iframe"
-src="https://www.wikipedia.org/"
-title="iframe example">
-</iframe>
-	<div class="iframe-container my-iframe">
-<iframe
-name="my-iframe1" id="my-iframe1" 
-src="https://getbootstrap.com/docs/5.2/forms/overview/"
-title="iframe example">
-</iframe> 
-<button id="removeIframeBtn">Remove Bootstrap iframe</button>
-
-</div>
-	</div>
-	<div id="bottom-iframes">
-<!-- <iframe
-name="my-iframe2" id="my-iframe2"  class="my-iframe"
-src="https://arthurfurman.github.io/test/"
-title="iframe example">
-</iframe> -->
-
-<iframe
-name="my-iframe3" id="my-iframe3"   class="my-iframe"
-src="test1.html"
-title="iframe example"
-></iframe>
-	
-<same-domain-iframe-in-shadow></same-domain-iframe-in-shadow>
-</div>
-	
+<div id="iframe-grid-container">
+    <iframe
+    name="my-iframe" id="my-iframe" class="my-iframe"
+    src="https://www.wikipedia.org/"
+    title="iframe example">
+    </iframe>
+    
+    <div class="iframe-container my-iframe">
+        <iframe
+        name="my-iframe1" id="my-iframe1" 
+        src="https://getbootstrap.com/docs/5.2/forms/overview/"
+        title="iframe example">
+        </iframe> 
+        <button id="removeIframeBtn">Remove Bootstrap iframe</button>
+    </div>
+    
+    <iframe
+    name="my-iframe3" id="my-iframe3" class="my-iframe"
+    src="test1.html"
+    title="iframe example"
+    ></iframe>
+    
+    <same-domain-iframe-in-shadow></same-domain-iframe-in-shadow>
 </div>
 <div class="scrollable-container">
 <ul class="list">
