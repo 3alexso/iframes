@@ -705,9 +705,7 @@ class SameDomainIframeInShadow extends HTMLElement {
         iframe.id = 'my-iframe4';  // set ID like your other iframes
         iframe.className = 'my-iframe'; // same class as the others
         iframe.title = 'iframe example 4';
-iframe.style.setProperty('width', 'calc(45% - 60px)');
-        iframe.style.setProperty('height', '600px');
-		 iframe.style.setProperty('margin', '30px');
+
 
         const shadow = this.attachShadow({ mode: 'open' });
         shadow.appendChild(iframe);
