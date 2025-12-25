@@ -52,12 +52,13 @@
 
     <script>
         // Function to update the content based on the hash in the URL
-        function updateContent() {
-            var hash = window.location.hash.substring(1); // Get the hash without the #
-            var contentDiv = document.getElementById('content');
-            var contentText = "";
-// 🔹 RESET ID first (important)
-    contentDiv.id = "content";
+     function updateContent() {
+    var hash = window.location.hash.substring(1) || "default";
+
+    // ✅ ALWAYS find the content div, even after ID changes
+    var contentDiv = document.querySelector('[id^="content"]');
+
+    var contentText = "";
 
     // 🔹 SET UNIQUE ID per page
     contentDiv.id = "content-" + hash;
