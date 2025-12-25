@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Page Content</title>
+    <title>Dynamic SPA Example</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            padding-bottom: 100px; /* Extra space so footer doesn't block text */
         }
         ul {
             list-style-type: none;
@@ -15,18 +16,34 @@
         }
         ul li {
             margin-bottom: 10px;
+            display: inline-block;
+            margin-right: 15px;
+        }
+        ul li a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        ul li a:hover {
+            text-decoration: underline;
         }
         #location {
             margin-top: 20px;
             font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
         }
+        /* Stable Container Style */
         #content {
             margin-top: 20px;
             font-size: 1.2em;
+            line-height: 1.6;
             z-index: 10;
             position: relative;
             margin-bottom: 300px;
-            width: 80%;
+            width: 90%;
+            max-width: 800px;
         }
     </style>
 </head>
@@ -39,9 +56,9 @@
         <li><a href="./spa.html#page2">Page 2</a></li>
         <li><a href="./spa.html#page3">Page 3</a></li>
         <li><a href="./spa.html#page4">Page 4</a></li>
-       <li><a href="./spa.html#page5">Page 5</a></li>
+        <li><a href="./spa.html#page5">Page 5</a></li>
         <li><a href="./spa.html#page6">Page 6</a></li>
-         <li><a href="./spa.html#page7">Page 7</a></li>
+        <li><a href="./spa.html#page7">Page 7</a></li>
     </ul>
 
     <h3>Current Location</h3>
@@ -51,212 +68,207 @@
     <div id="content">Select a page from the menu above.</div>
 
     <script>
-        // Function to update the content based on the hash in the URL
-     function updateContent() {
-    var hash = window.location.hash.substring(1) || "default";
+        // Data Store (Separating data from logic makes it cleaner)
+        const contentData = {
+            "page1": "John is 34 years old and has two kids—a 7-year-old son, Ethan, and a 4-year-old daughter, Lily. He works as a software engineer at a fast-paced tech startup, where he’s been for about five years. His focus is on mobile app development, and he’s really passionate about creating apps that help people in their daily lives. Over the years, he’s learned to balance his demanding job with family life. His wife, Rachel, works as a project manager at a marketing firm, and the two of them share a love for technology and innovation. John grew up in a small town in central Texas, the youngest of three siblings. He was always a curious kid, tinkering with gadgets and computer parts in his free time. After high school, he decided to move to Austin to attend the University of Texas, where he studied computer science. That’s where he met Rachel—they were both in the same group for a software project during their sophomore year. The connection was instant, and they started dating shortly afterward. After graduating, John stayed in Austin to pursue his career, and Rachel, originally from a neighboring town, moved there too. They got married two years later. Soon after their wedding, John received an offer from a startup that was growing quickly, and he jumped at the opportunity to be part of something big. Their first child, Ethan, came along not long after, followed by Lily a couple of years later. As a father, John is deeply involved in his kids' lives. He loves spending weekends with them in the park, flying kites or playing soccer. He’s also the type of dad who’ll spend hours tinkering with old computer parts to build his kids a robot toy. In the evenings, the family often cooks dinner together—Rachel’s specialty is homemade pizza, while John enjoys experimenting with new recipes. When it comes to vacations, they enjoy weekend road trips, with John dreaming of a future trip to Japan. Although John works long hours, he makes sure to set aside time for his family. He believes in creating lasting memories, and even though the kids are still young, he wants them to look back and remember a childhood full of adventure and love. His current project at work is an AI-driven app that helps parents track their kids’ academic progress, which he hopes will allow him to combine his passion for technology with his love for family life.",
+            "page2": "At 42 years old, Sarah has dedicated much of her life to teaching. She has one child, a daughter named Emily, who just turned 18 and is about to start her first year of college. Sarah has been an English literature teacher for 15 years, and she’s passionate about helping students develop a love for reading and writing. Her students often come to her for guidance, and she takes great pride in the bonds she forms with them over the years. In addition to her teaching duties, she’s also the head of the literature club at her school, organizing book discussions, writing workshops, and even field trips to literary festivals. Sarah’s career started out of a love for reading. As a child, she spent hours in her local library, getting lost in novels by authors like Jane Austen and Charles Dickens. Her mother was a teacher as well, and she inspired Sarah to follow in her footsteps. Sarah attended university where she majored in English, and after graduating, she began teaching at a local high school. She’s been there ever since, enjoying the classroom and the opportunity to inspire future generations of writers and thinkers. Sarah met her husband, Tim, during a summer literature course in grad school. He’s a graphic designer, and while their fields seem different, they share a deep appreciation for creativity and storytelling. They’ve been married for 20 years, and while Sarah’s career has always been her primary focus, they’ve managed to make time for each other over the years, whether it’s a quiet dinner at home or a weekend getaway. Her daughter Emily, who was a surprise pregnancy, grew up surrounded by books and stories. Sarah always encouraged her daughter’s passion for the arts, and Emily is now pursuing a degree in creative writing. Sarah couldn’t be prouder. As an empty-nester, Sarah is feeling the shift in her life. She’s looking forward to traveling more, especially to literary landmarks, and she dreams of eventually writing a book of her own. In the meantime, she continues to nurture young minds, knowing that her work will leave a lasting impact on her students.",
+            "page3": "Michael, 50 years old, is a successful architect, and his life has been a balancing act between a demanding career, a busy family life, and his personal passions. He and his wife, Lisa, have three children: two sons, Ryan (21) and Ben (18), and a daughter, Emma (15). Michael has been in the architectural field for over 25 years and is well-regarded for his innovative designs that blend modern aesthetics with functional spaces. He works at a well-established firm, where he’s taken on projects for high-rise commercial buildings and luxurious residential complexes. Lately, he’s been mentoring younger architects, helping them refine their skills and develop their careers in the industry. Growing up in a small town, Michael always knew he wanted to create something lasting. As a teenager, he spent hours sketching buildings and structures, fascinated by how spaces could influence people’s lives. After high school, he went to a prestigious architecture school, where he earned his degree. His career began with smaller residential projects, but over time, he proved himself as someone with a unique vision and a great deal of practical experience. Michael’s wife, Lisa, is a nurse at a local hospital, and she works long hours. Their children have always been a central part of their lives. Ryan, their oldest, is studying engineering at university, while Ben is finishing his senior year of high school. Emma, their youngest, still enjoys spending time with her father on weekends, often helping him with DIY projects around the house. The family is very close, and though life is busy, they make time for family vacations and outdoor activities. In his free time, Michael enjoys woodworking. Over the years, he’s learned how to build custom furniture and has turned their home into a showcase of his creations. His dream is to one day build a cabin in the woods where the family can spend long weekends together. Michael also loves to take road trips with Lisa, especially to explore different architectural landmarks around the country. He’s passionate about learning how different cultures and environments shape their buildings. Despite his success in his career, Michael remains grounded and focused on the things that matter most—his family, his work, and his love for design. He hopes that his children will continue to explore their own passions, just as he did, and that they’ll find ways to leave their own mark on the world.",
+            "page4": `שם-טוב נולד בשכונת הגבעה הצרפתית בירושלים ליעקב וז'נט שעלו לישראל מאיראן. ילד שני בין חמישה אחים ואחיות.<br><br>את שירותו הצבאי עשה כקצין קרבי בפלוגת "עורב" של הנח"ל, ובהמשך שירותו, כמפקד צוות בגדוד גפן בבה"ד 1. במהלך שירותו הצבאי היה עד לטבח מערת המכפלה ב-1994, ולמות חייל מפגיעת פצצת מרגמה ברצועת הביטחון בדרום לבנון. לדבריו, לאירועים אלו הייתה השפעה טראומטית עליו במשך שנים.<br><br>את עבודתו הראשונה עם ילדים עשה בתחילת שנות התשעים, עוד בהיותו בגרעין נח"ל, כגנן בגן ילדים. בשנת 1998, לאחר שחרורו מצה"ל, עבד כליצן בימי הולדת בשם "יובל הליצן" ואחר כך "יובל המבולבל", בצוותי בידור, בהופעות ובקניונים עם הדמות שאותה גילם. הוא כתב והלחין את שירו הראשון, "שלום לכם ילדים וילדות אני יובל המבולבל", באותה שנה.`,
+            "page5": "Emily is a 29-year-old digital marketing strategist with a passion for her work, creativity, and growth. Currently, she is working for a large global e-commerce company where she is responsible for a variety of essential tasks. From creating dynamic online campaigns to analyzing vast amounts of customer data, Emily plays a crucial role in the company’s digital presence. She has a natural flair for digital marketing and enjoys the challenge of staying ahead of the curve, always keeping a keen eye on the latest trends in the digital landscape. Her main focus in her current role involves designing and executing online campaigns that not only attract potential customers but also encourage engagement and loyalty. She spends a significant portion of her day analyzing data to understand customer behavior and optimize existing strategies. One of her favorite tasks is experimenting with different tactics, especially on social media platforms, which are constantly evolving. Emily thrives in the fast-paced world of digital marketing, where each day presents new opportunities to try innovative approaches and test fresh strategies. Her creative thinking is what sets her apart from many others in her field. Emily is always looking for unique ways to engage with audiences, whether that means developing eye-catching content, collaborating with influencers, or using emerging technologies like artificial intelligence and automation to streamline processes. Her ultimate goal is to increase brand visibility, build strong relationships with customers, and, of course, boost revenue for her company. She knows that the digital space is constantly changing, which is why she remains dedicated to adapting to new tools, techniques, and platforms. Originally from a small, quiet town, Emily moved to the city when she was 22 to attend college. Her journey into the world of digital marketing began when she chose to pursue a degree in marketing and communications. Growing up in a smaller community, she had always been curious about the way businesses interacted with customers, and this curiosity led her to study how marketing could shape consumer behavior. It was during her time at university that she realized her love for all things digital—particularly the dynamic nature of online marketing and the ability to reach people across the world through a screen. After completing her degree, Emily jumped straight into her career, starting at a small digital agency. In this role, she gained a valuable experience and learned the ropes of the industry. It was here that she honed her skills in creating online content, working with clients, and crafting detailed marketing strategies. Emily's work was quickly noticed by a larger company, and she made the leap to a much bigger organization, where she’s been for the past three years. At her current job, she has truly blossomed and made a significant impact on the company's digital marketing efforts. Her campaigns have consistently achieved impressive results, and she’s gained a reputation as someone who gets things done. Ambition is one of Emily’s driving forces. She is always looking for ways to improve her skills, enhance her knowledge, and take on new challenges. Every project she works on is an opportunity for growth, and she actively seeks out experiences that will push her to the next level. Whether it’s mastering new software, attending workshops, or collaborating with cross-functional teams, Emily knows that expanding her skill set is key to remaining competitive in her industry. Even though she is deeply dedicated to her career, Emily makes sure to find balance by nurturing her personal life as well. She enjoys living in the heart of the city, where there’s always something exciting happening. There’s never a dull moment for Emily, who loves the energy of urban life. She’s often found exploring art galleries or visiting local museums to unwind after a busy week at work. Yoga has become another outlet for Emily, as it helps her stay grounded and focused, providing both mental and physical benefits that complement her hectic work schedule. On weekends, you might find her experimenting with new recipes in the kitchen, a hobby she’s developed over the years. Cooking is something she finds therapeutic, and it’s a creative outlet that allows her to unwind and enjoy the process of making something from scratch. Emily also loves the sense of achievement that comes with perfecting a new dish, and she often shares her culinary creations with her friends and family. While Emily is currently single, she’s made the conscious decision to focus on her career during this stage of her life. She believes that dedicating her time and energy to personal and professional growth is essential to her long-term goals. However, she remains open to the idea of building a meaningful relationship in the future. She values emotional connections and understands the importance of a supportive partnership, but right now, her priority is to create a solid foundation for her career. Personal growth is another area of passion for Emily. She’s not just focused on her career, but also on becoming a better version of herself. She actively seeks out opportunities to improve, and that’s why she frequently attends workshops, conferences, and webinars related to digital marketing. By learning from industry leaders and networking with other professionals, she ensures that she stays ahead of emerging trends and technologies. In addition to her work and professional development, Emily has always dreamed of one day starting her own business. She’s been toying with the idea of opening a digital marketing consultancy, one that helps smaller businesses with their marketing strategies. Emily is particularly passionate about helping startups and local businesses navigate the digital space, as she knows how difficult it can be to break through the noise when you’re just starting out. She hopes to one day use her expertise to empower other entrepreneurs to build and grow their businesses effectively. Travel is another major aspect of Emily’s life that brings her joy and inspiration. She dreams of one day working remotely while traveling the world. The idea of combining her love for digital marketing with her passion for exploration excites her, as it would allow her to experience new cultures and gain unique perspectives that she could bring back to her work. One place she’s particularly eager to visit is Bali. Emily has been researching Bali for months and plans to take some time off to recharge and reflect on her personal and professional goals. She looks forward to exploring the island’s rich culture, its beautiful landscapes, and finding new inspiration for her work. While Emily is still in the early stages of her career, her achievements thus far have proven her to be a forward-thinking, creative, and highly dedicated professional. She has already built a solid reputation in the digital marketing industry and continues to earn the respect of her colleagues and clients. Her journey is only just beginning, and she is determined to continue growing in her field. Emily’s ultimate goal is to lead a team of digital marketing experts or even run her own successful business one day, where she can help others achieve their marketing goals just as she has done throughout her own career. Looking ahead, Emily is excited about the future. She’s driven by a strong sense of purpose and remains focused on her vision for both her career and personal life. Every day is an opportunity to learn, grow, and expand her horizons, and she’s ready to embrace whatever challenges and opportunities come her way.",
+            "page6": "David, 50 years old",
+            "page7": "Moses, 50 years old",
+            "default": "Select a page from the menu above."
+        };
 
-    // ✅ ALWAYS find the content div, even after ID changes
-    var contentDiv = document.querySelector('[id^="content"]');
+        function updateContent() {
+            var hash = window.location.hash.substring(1) || "default";
+            
+            // ✅ STABLE SELECTION: We always get the same div by ID
+            var contentDiv = document.getElementById('content');
 
-    var contentText = "";
+            // 1. REMOVE: Clear the current HTML inside the div
+            contentDiv.innerHTML = "";
 
-    // 🔹 SET UNIQUE ID per page
-    contentDiv.id = "content-" + hash + "-a";
-            // Change content based on the hash
-switch(hash) {
-    case "page1":
-        contentText = "John is 34 years old and has two kids—a 7-year-old son, Ethan, and a 4-year-old daughter, Lily. He works as a software engineer at a fast-paced tech startup, where he’s been for about five years. His focus is on mobile app development, and he’s really passionate about creating apps that help people in their daily lives. Over the years, he’s learned to balance his demanding job with family life. His wife, Rachel, works as a project manager at a marketing firm, and the two of them share a love for technology and innovation. John grew up in a small town in central Texas, the youngest of three siblings. He was always a curious kid, tinkering with gadgets and computer parts in his free time. After high school, he decided to move to Austin to attend the University of Texas, where he studied computer science. That’s where he met Rachel—they were both in the same group for a software project during their sophomore year. The connection was instant, and they started dating shortly afterward. After graduating, John stayed in Austin to pursue his career, and Rachel, originally from a neighboring town, moved there too. They got married two years later. Soon after their wedding, John received an offer from a startup that was growing quickly, and he jumped at the opportunity to be part of something big. Their first child, Ethan, came along not long after, followed by Lily a couple of years later. As a father, John is deeply involved in his kids' lives. He loves spending weekends with them in the park, flying kites or playing soccer. He’s also the type of dad who’ll spend hours tinkering with old computer parts to build his kids a robot toy. In the evenings, the family often cooks dinner together—Rachel’s specialty is homemade pizza, while John enjoys experimenting with new recipes. When it comes to vacations, they enjoy weekend road trips, with John dreaming of a future trip to Japan. Although John works long hours, he makes sure to set aside time for his family. He believes in creating lasting memories, and even though the kids are still young, he wants them to look back and remember a childhood full of adventure and love. His current project at work is an AI-driven app that helps parents track their kids’ academic progress, which he hopes will allow him to combine his passion for technology with his love for family life.";
-        break;
-    case "page2":
-        contentText = "At 42 years old, Sarah has dedicated much of her life to teaching. She has one child, a daughter named Emily, who just turned 18 and is about to start her first year of college. Sarah has been an English literature teacher for 15 years, and she’s passionate about helping students develop a love for reading and writing. Her students often come to her for guidance, and she takes great pride in the bonds she forms with them over the years. In addition to her teaching duties, she’s also the head of the literature club at her school, organizing book discussions, writing workshops, and even field trips to literary festivals. Sarah’s career started out of a love for reading. As a child, she spent hours in her local library, getting lost in novels by authors like Jane Austen and Charles Dickens. Her mother was a teacher as well, and she inspired Sarah to follow in her footsteps. Sarah attended university where she majored in English, and after graduating, she began teaching at a local high school. She’s been there ever since, enjoying the classroom and the opportunity to inspire future generations of writers and thinkers. Sarah met her husband, Tim, during a summer literature course in grad school. He’s a graphic designer, and while their fields seem different, they share a deep appreciation for creativity and storytelling. They’ve been married for 20 years, and while Sarah’s career has always been her primary focus, they’ve managed to make time for each other over the years, whether it’s a quiet dinner at home or a weekend getaway. Her daughter Emily, who was a surprise pregnancy, grew up surrounded by books and stories. Sarah always encouraged her daughter’s passion for the arts, and Emily is now pursuing a degree in creative writing. Sarah couldn’t be prouder. As an empty-nester, Sarah is feeling the shift in her life. She’s looking forward to traveling more, especially to literary landmarks, and she dreams of eventually writing a book of her own. In the meantime, she continues to nurture young minds, knowing that her work will leave a lasting impact on her students.";
-        break;
-    case "page3":
-        contentText = "Michael, 50 years old, is a successful architect, and his life has been a balancing act between a demanding career, a busy family life, and his personal passions. He and his wife, Lisa, have three children: two sons, Ryan (21) and Ben (18), and a daughter, Emma (15). Michael has been in the architectural field for over 25 years and is well-regarded for his innovative designs that blend modern aesthetics with functional spaces. He works at a well-established firm, where he’s taken on projects for high-rise commercial buildings and luxurious residential complexes. Lately, he’s been mentoring younger architects, helping them refine their skills and develop their careers in the industry. Growing up in a small town, Michael always knew he wanted to create something lasting. As a teenager, he spent hours sketching buildings and structures, fascinated by how spaces could influence people’s lives. After high school, he went to a prestigious architecture school, where he earned his degree. His career began with smaller residential projects, but over time, he proved himself as someone with a unique vision and a great deal of practical experience. Michael’s wife, Lisa, is a nurse at a local hospital, and she works long hours. Their children have always been a central part of their lives. Ryan, their oldest, is studying engineering at university, while Ben is finishing his senior year of high school. Emma, their youngest, still enjoys spending time with her father on weekends, often helping him with DIY projects around the house. The family is very close, and though life is busy, they make time for family vacations and outdoor activities. In his free time, Michael enjoys woodworking. Over the years, he’s learned how to build custom furniture and has turned their home into a showcase of his creations. His dream is to one day build a cabin in the woods where the family can spend long weekends together. Michael also loves to take road trips with Lisa, especially to explore different architectural landmarks around the country. He’s passionate about learning how different cultures and environments shape their buildings. Despite his success in his career, Michael remains grounded and focused on the things that matter most—his family, his work, and his love for design. He hopes that his children will continue to explore their own passions, just as he did, and that they’ll find ways to leave their own mark on the world.";
-        break;
-    case "page4":
-        contentText = `שם-טוב נולד בשכונת הגבעה הצרפתית בירושלים ליעקב וז'נט שעלו לישראל מאיראן. ילד שני בין חמישה אחים ואחיות.
+            // 2. ADD: Insert the new HTML based on the hash
+            if (contentData[hash]) {
+                contentDiv.innerHTML = contentData[hash];
+            } else {
+                contentDiv.innerHTML = contentData["default"];
+            }
 
-את שירותו הצבאי עשה כקצין קרבי בפלוגת "עורב" של הנח"ל, ובהמשך שירותו, כמפקד צוות בגדוד גפן בבה"ד 1. במהלך שירותו הצבאי היה עד לטבח מערת המכפלה ב-1994, ולמות חייל מפגיעת פצצת מרגמה ברצועת הביטחון בדרום לבנון. לדבריו, לאירועים אלו הייתה השפעה טראומטית עליו במשך שנים.
-
-את עבודתו הראשונה עם ילדים עשה בתחילת שנות התשעים, עוד בהיותו בגרעין נח"ל, כגנן בגן ילדים. בשנת 1998, לאחר שחרורו מצה"ל, עבד כליצן בימי הולדת בשם "יובל הליצן" ואחר כך "יובל המבולבל", בצוותי בידור, בהופעות ובקניונים עם הדמות שאותה גילם. הוא כתב והלחין את שירו הראשון, "שלום לכם ילדים וילדות אני יובל המבולבל", באותה שנה.
-
-ביולי 2004 זכה שם-טוב לפרסום כאשר גילם את "יובל המבולבל" ב-DVD לילדים בשם זה. בעקבות ההצלחה זכה לסדרה משלו בערוץ הופ! בת שלוש עונות, ובמקביל השתתף בפסטיגלים של שנת 2006 ו-2007.
-
-ב-2006 הוציא סרט ילדים בעקבות מלחמת לבנון השנייה בשם "יובל המבולבל - המסע אל הכוכב". הסרט הופץ ב-DVD וכן הועלה לאתר יוטיוב, שם זכה ליותר מ-11.5 מיליון צפיות. ב-2008 הוא גילם שוב את יובל המבולבל בתוכניות מיוחדת ליום העצמאות ה-60 למדינת ישראל בערוץ הופ! "יום הולדת למדינה", והשתתף גם בסדרת הטלוויזיה "הפיג'מות" בתפקידים שונים.
-
-ב-2009 יצאה סדרת מוצרי מזון בחסותו, ובאותה שנה שר שירים, דיבב, והופיע בפרסומות ובתוכניות טלוויזיה רבות לילדים.`;
-        break;
-
-    case "page5":
-        contentText = "Emily is a 29-year-old digital marketing strategist with a passion for her work, creativity, and growth. Currently, she is working for a large global e-commerce company where she is responsible for a variety of essential tasks. From creating dynamic online campaigns to analyzing vast amounts of customer data, Emily plays a crucial role in the company’s digital presence. She has a natural flair for digital marketing and enjoys the challenge of staying ahead of the curve, always keeping a keen eye on the latest trends in the digital landscape. Her main focus in her current role involves designing and executing online campaigns that not only attract potential customers but also encourage engagement and loyalty. She spends a significant portion of her day analyzing data to understand customer behavior and optimize existing strategies. One of her favorite tasks is experimenting with different tactics, especially on social media platforms, which are constantly evolving. Emily thrives in the fast-paced world of digital marketing, where each day presents new opportunities to try innovative approaches and test fresh strategies. Her creative thinking is what sets her apart from many others in her field. Emily is always looking for unique ways to engage with audiences, whether that means developing eye-catching content, collaborating with influencers, or using emerging technologies like artificial intelligence and automation to streamline processes. Her ultimate goal is to increase brand visibility, build strong relationships with customers, and, of course, boost revenue for her company. She knows that the digital space is constantly changing, which is why she remains dedicated to adapting to new tools, techniques, and platforms. Originally from a small, quiet town, Emily moved to the city when she was 22 to attend college. Her journey into the world of digital marketing began when she chose to pursue a degree in marketing and communications. Growing up in a smaller community, she had always been curious about the way businesses interacted with customers, and this curiosity led her to study how marketing could shape consumer behavior. It was during her time at university that she realized her love for all things digital—particularly the dynamic nature of online marketing and the ability to reach people across the world through a screen. After completing her degree, Emily jumped straight into her career, starting at a small digital agency. In this role, she gained valuable experience and learned the ropes of the industry. It was here that she honed her skills in creating online content, working with clients, and crafting detailed marketing strategies. Emily's work was quickly noticed by a larger company, and she made the leap to a much bigger organization, where she’s been for the past three years. At her current job, she has truly blossomed and made a significant impact on the company's digital marketing efforts. Her campaigns have consistently achieved impressive results, and she’s gained a reputation as someone who gets things done. Ambition is one of Emily’s driving forces. She is always looking for ways to improve her skills, enhance her knowledge, and take on new challenges. Every project she works on is an opportunity for growth, and she actively seeks out experiences that will push her to the next level. Whether it’s mastering new software, attending workshops, or collaborating with cross-functional teams, Emily knows that expanding her skill set is key to remaining competitive in her industry. Even though she is deeply dedicated to her career, Emily makes sure to find balance by nurturing her personal life as well. She enjoys living in the heart of the city, where there’s always something exciting happening. There’s never a dull moment for Emily, who loves the energy of urban life. She’s often found exploring art galleries or visiting local museums to unwind after a busy week at work. Yoga has become another outlet for Emily, as it helps her stay grounded and focused, providing both mental and physical benefits that complement her hectic work schedule. On weekends, you might find her experimenting with new recipes in the kitchen, a hobby she’s developed over the years. Cooking is something she finds therapeutic, and it’s a creative outlet that allows her to unwind and enjoy the process of making something from scratch. Emily also loves the sense of achievement that comes with perfecting a new dish, and she often shares her culinary creations with her friends and family. While Emily is currently single, she’s made the conscious decision to focus on her career during this stage of her life. She believes that dedicating her time and energy to personal and professional growth is essential to her long-term goals. However, she remains open to the idea of building a meaningful relationship in the future. She values emotional connections and understands the importance of a supportive partnership, but right now, her priority is to create a solid foundation for her career. Personal growth is another area of passion for Emily. She’s not just focused on her career, but also on becoming a better version of herself. She actively seeks out opportunities to improve, and that’s why she frequently attends workshops, conferences, and webinars related to digital marketing. By learning from industry leaders and networking with other professionals, she ensures that she stays ahead of emerging trends and technologies. In addition to her work and professional development, Emily has always dreamed of one day starting her own business. She’s been toying with the idea of opening a digital marketing consultancy, one that helps smaller businesses with their marketing strategies. Emily is particularly passionate about helping startups and local businesses navigate the digital space, as she knows how difficult it can be to break through the noise when you’re just starting out. She hopes to one day use her expertise to empower other entrepreneurs to build and grow their businesses effectively. Travel is another major aspect of Emily’s life that brings her joy and inspiration. She dreams of one day working remotely while traveling the world. The idea of combining her love for digital marketing with her passion for exploration excites her, as it would allow her to experience new cultures and gain unique perspectives that she could bring back to her work. One place she’s particularly eager to visit is Bali. Emily has been researching Bali for months and plans to take some time off to recharge and reflect on her personal and professional goals. She looks forward to exploring the island’s rich culture, its beautiful landscapes, and finding new inspiration for her work. While Emily is still in the early stages of her career, her achievements thus far have proven her to be a forward-thinking, creative, and highly dedicated professional. She has already built a solid reputation in the digital marketing industry and continues to earn the respect of her colleagues and clients. Her journey is only just beginning, and she is determined to continue growing in her field. Emily’s ultimate goal is to lead a team of digital marketing experts or even run her own successful business one day, where she can help others achieve their marketing goals just as she has done throughout her own career. Looking ahead, Emily is excited about the future. She’s driven by a strong sense of purpose and remains focused on her vision for both her career and personal life. Every day is an opportunity to learn, grow, and expand her horizons, and she’s ready to embrace whatever challenges and opportunities come her way.";
-        break;
-          case "page6":
-        contentText = "David, 50 years old";
-        break;
-         case "page7":
-        contentText = "Moses, 50 years old";        break;
-    default:
-            contentText = "Select a page from the menu above.";
-            contentDiv.id = "content-default";
-}
-
-
-            contentDiv.innerHTML = contentText;
+            // Optional: Scroll to top of content
+            window.scrollTo(0, 0);
         }
 
-        // Update the current location and content on page load or hash change
+        // Initialize on load and hash change
         window.onhashchange = window.onload = function(evt) {
-            document.getElementById('location').innerHTML = window.location.href + ' (' + window.location.pathname + ')';
+            document.getElementById('location').innerHTML = window.location.href;
             updateContent();
         };
 
-        // Handle custom link navigation without reloading the page
+        // Custom Link Handling (Prevents reload)
         (function() {
             var anchors = document.getElementsByTagName('a');
             var historyState = {};
             var base = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
             
-            // Loop through all anchor tags
             for (var i = 0; i < anchors.length; i++) {
-                if (anchors[i].href.substring(0, location.origin.length) !== location.origin) {
-                    continue; // Skip external links
-                }
-                
-                // Add click event listener to each link
+                if (anchors[i].href.indexOf('#') === -1) continue; // Only affect hash links
+
                 anchors[i].addEventListener('click', function(evt) {
-                    evt.preventDefault(); // Prevent default link behavior
-                    var newPage = window.location.href + '#' + evt.target.href.replace(base, ''); // Generate new URL with hash
-                    window.location.href = newPage; // Change the URL with the new hash
+                    evt.preventDefault();
+                    var targetHash = evt.target.getAttribute('href').split('#')[1];
+                    var newUrl = window.location.pathname + '#' + targetHash;
                     
-                    if (history && history.pushState) {
-                        history.pushState(historyState, evt.target.innerHTML, evt.target.href) // Update browser history
+                    // Push to history
+                    if (history.pushState) {
+                        history.pushState(historyState, null, newUrl);
+                    } else {
+                        window.location.hash = targetHash;
                     }
+
+                    // Manually trigger update since pushState doesn't trigger onhashchange automatically
+                    window.dispatchEvent(new Event('hashchange'));
                 });
             }
         })();
     </script>
-<div id="shared-area">
-<!-- Shared Membership Form (fixed bottom) -->
-<div id="membership-form" class="membership-form">
-  <div class="form-header" onclick="toggleForm()">
-    <strong>Join Our Membership</strong>
-    <span id="toggle-icon">▲</span>
-  </div>
 
-  <form id="registerForm" class="form-body">
-    <div class="form-grid">
-      <input type="text" name="name" placeholder="Full Name" required />
-      <input type="text" name="address" placeholder="Address" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="number" name="age" placeholder="Age" min="1" required />
-      <input type="password" name="password" placeholder="Password" minlength="6" required />
-        <textarea name="comments 1" placeholder="Additional Information" rows="3"></textarea>
-        <textarea name="comments 2" placeholder="" rows="3"></textarea>
-        <textarea name="comments 3" placeholder="Additional Information" rows="3">Tell us more about yourself or your interests...</textarea>
+    <div id="shared-area">
+        <div id="membership-form" class="membership-form collapsed">
+            <div class="form-header" onclick="toggleForm()">
+                <strong>Join Our Membership</strong>
+                <span id="toggle-icon">▲</span>
+            </div>
+
+            <form id="registerForm" class="form-body">
+                <div class="form-grid">
+                    <input type="text" name="name" placeholder="Full Name" required />
+                    <input type="text" name="address" placeholder="Address" required />
+                    <input type="email" name="email" placeholder="Email" required />
+                    <input type="number" name="age" placeholder="Age" min="1" required />
+                    <input type="password" name="password" placeholder="Password" minlength="6" required />
+                    <textarea name="comments 1" placeholder="Additional Information" rows="3"></textarea>
+                    <textarea name="comments 2" placeholder="" rows="3"></textarea>
+                    <textarea name="comments 3" placeholder="Tell us more about yourself..." rows="3"></textarea>
+                </div>
+                <button type="submit">Register</button>
+                <p id="message"></p>
+            </form>
+        </div>
     </div>
-    <button type="submit">Register</button>
-    <p id="message"></p>
-  </form>
-</div>
 
-<style>
-  /* --- Fixed bottom container --- */
-  .membership-form {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #ffffff;
-    border-top: 1px solid #ddd;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    font-family: sans-serif;
-    z-index: 1000;
-      margin-bottom: 45px;
-  }
+    <style>
+        /* --- Fixed bottom container --- */
+        .membership-form {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            font-family: sans-serif;
+            z-index: 1000;
+        }
 
-  .form-header {
-    padding: 12px 20px;
-    background: #007bff;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    font-size: 16px;
-  }
+        .form-header {
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-  .form-body {
-    padding: 16px 20px;
-    display: block;
-  }
+        .form-body {
+            padding: 16px 20px;
+            display: block;
+            max-height: 400px;
+            overflow-y: auto;
+        }
 
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 10px;
-  }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
 
-  .form-body input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    width: 100%;
-  }
+        .form-body input, .form-body textarea {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-  button {
-    margin-top: 12px;
-    width: 100%;
-    padding: 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
+        button {
+            margin-top: 12px;
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
 
-  button:hover {
-    background: #0056b3;
-  }
+        button:hover {
+            background: #218838;
+        }
 
-  #message {
-    margin-top: 10px;
-    font-weight: 600;
-    color: green;
-  }
+        #message {
+            margin-top: 10px;
+            font-weight: 600;
+            color: green;
+            text-align: center;
+        }
 
-  /* --- Collapsed state --- */
-  .collapsed .form-body {
-    display: none;
-  }
-  .collapsed #toggle-icon {
-    transform: rotate(180deg);
-  }
-</style>
+        /* --- Collapsed state logic --- */
+        .membership-form.collapsed .form-body {
+            display: none;
+        }
+        
+        /* Rotate arrow when collapsed */
+        .membership-form.collapsed #toggle-icon {
+            transform: rotate(0deg); 
+        }
+        #toggle-icon {
+            transform: rotate(180deg);
+            transition: transform 0.3s;
+        }
+    </style>
 
-<script>
-  function toggleForm() {
-    const form = document.getElementById("membership-form");
-    form.classList.toggle("collapsed");
-  }
+    <script>
+        // Toggle the form visibility
+        function toggleForm() {
+            const form = document.getElementById("membership-form");
+            form.classList.toggle("collapsed");
+        }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("registerForm");
-    const message = document.getElementById("message");
+        // Handle form submission
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("registerForm");
+            const message = document.getElementById("message");
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const user = Object.fromEntries(formData.entries());
-      console.log("User registered:", user);
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const formData = new FormData(form);
+                const user = Object.fromEntries(formData.entries());
+                console.log("User registered:", user);
 
-      message.textContent = `Welcome, ${user.name}!`;
-      form.reset();
-    });
-  });
-</script>
-
-</div>
+                message.textContent = `Welcome, ${user.name}!`;
+                form.reset();
+                
+                // Optional: Automatically collapse after registering
+                setTimeout(() => toggleForm(), 1500);
+            });
+        });
+    </script>
 
 </body>
 </html>
