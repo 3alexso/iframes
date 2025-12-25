@@ -56,7 +56,11 @@
             var hash = window.location.hash.substring(1); // Get the hash without the #
             var contentDiv = document.getElementById('content');
             var contentText = "";
+// 🔹 RESET ID first (important)
+    contentDiv.id = "content";
 
+    // 🔹 SET UNIQUE ID per page
+    contentDiv.id = "content-" + hash;
             // Change content based on the hash
 switch(hash) {
     case "page1":
