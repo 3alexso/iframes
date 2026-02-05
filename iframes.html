@@ -397,14 +397,6 @@ cursor: pointer;
 }
 </style>
 <script>
-	let seconds = 0;
-const timerElement = document.getElementById('timer');
-
-// The function runs every 1 second
-setInterval(() => {
-    seconds++;
-    timerElement.innerText = seconds;
-}, 1000);
 </script>
 </head>
 <body id="body">
@@ -729,7 +721,15 @@ if (!customElements.get('same-domain-iframe-in-shadow')) {
     customElements.define('same-domain-iframe-in-shadow', SameDomainIframeInShadow);
 }
 </script>
+<script>
+        let seconds = 0;
+        const timerElement = document.getElementById('timer');
 
+        setInterval(() => {
+            seconds++;
+            timerElement.innerText = seconds;
+        }, 1000);
+    </script>
     <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
 </body>
 </html>
