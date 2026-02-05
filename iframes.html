@@ -396,7 +396,16 @@ color: red;
 cursor: pointer;
 }
 </style>
-<script></script>
+<script>
+	let seconds = 0;
+const timerElement = document.getElementById('timer');
+
+// The function runs every 1 second
+setInterval(() => {
+    seconds++;
+    timerElement.innerText = seconds;
+}, 1000);
+</script>
 </head>
 <body id="body">
     <nav>
@@ -445,7 +454,7 @@ cursor: pointer;
 </div> -->
 <h1 class="title">Player Test Page</h1>
 <div class="long">
-<div class="button-container">Element in horizontal scroll</div>
+<div class="button-container">Time on page: <span id="timer">0</span> seconds</div>
 <div class="button-container">Element in horizontal scroll</div>
 <div class="button-container">Element in horizontal scroll</div>
 <div class="button-container" id="openModalBtn">Open Modal</div>
