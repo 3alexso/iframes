@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>walkme long title for testing, walkme long title for testing, walkme long title for testing🌭🕹🍔🛵🍟🖥🍕🚦</title>
+<link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/8528/8528476.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anaheim:wght@400..800&display=swap" rel="stylesheet">
+<script>
+    function openPopup() {
+                    window.open("http://3alexso.github.io/iframes/popup.html", "_blank", 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=600');
+    }
+    </script>
+	<script>
+   function openPopover() {
+  const w = screen.availWidth;
+  const h = screen.availHeight;
+  window.open(
+    "https://3alexso.github.io/iframes/popover.html",
+    "_blank",
+    `toolbar=no,location=no,directories=no,status=no,menubar=no,
+     scrollbars=yes,resizable=yes,width=${w},height=${h},top=0,left=0`
+  );
+}
+    </script>
+<style>
+	.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 999; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.5); 
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 30px;
+  border: 1px solid #888;
+  width: 50%;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+}
+	
+body {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body {
+  font-family: 'Anaheim';
+  font-size: 1.2em;
+}
+h1 {
+	font-size: 60px;
+	text-align: center;
+	color: #FFF;
+}	
+.iframe-container{
+	position: relative;
+}
+
+.remove-btn{
+	left: 50%;
+	transform: translateX(-50%);
+}	
+h3 {
+	font-size: 30px;
+	text-align: center;
+	color: #FFF;
+}
+
+h3 a {
+	color: #FFF;
+}
+
+a {
+	color: red;
+}
+
+h1 {
+	margin-top: 100px;
+	text-align:center;
+	font-size:60px;
+	font-family: 'Bree Serif', 'serif';
+	}
+
+#container {
+	margin: 0 auto;
+}
+
+p {
+	text-align: center;
+}
+
+nav {
+	margin: 50px 0;
+	background-color: #E64A19;
+}
+
+nav ul {
+	padding: 0;
+  margin: 0;
+	list-style: none;
+	position: relative;
+	}
+	
+nav ul li {
+	display:inline-block;
+	background-color: #E64A19;
+	}
+
+nav a {
+	display:block;
+	padding:0 10px;	
+	color:#FFF;
+	font-size:20px;
+	line-height: 60px;
+	text-decoration:none;
+}
+
+nav a:hover { 
+	background-color: #000000; 
+}
+
+/* Hide Dropdowns by Default */
+nav ul ul {
+	display: none;
+	position: absolute; 
+	top: 60px; /* the height of the main nav */
+}
+	
+/* Display Dropdowns on Hover */
+nav ul li:hover > ul {
+	display:inherit;
+}
+	
+/* Fisrt Tier Dropdown */
+nav ul ul li {
+	width:170px;
+	float:none;
+	display:list-item;
+	position: relative;
+}
+
+/* Second, Third and more Tiers	*/
+nav ul ul ul li {
+	position: relative;
+	top:-60px; 
+	left:170px;
+}
+	.scrollable-container{
+		    overflow-y: auto;
+    max-height: 260px;
+	}
+
+	
+/* Change this in order to change the Dropdown symbol */
+li > a:after { content:  ' +'; }
+li > a:only-child:after { content: ''; }
+
+#outside {
+  background-color: lightgoldenrodyellow;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+h1 {
+  font-size: 1.5em;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+#survey-form {
+  /* Just to center the form on the page */
+  margin: 0 auto;
+  width: 70%;
+  /* To see the limits of the form */
+  padding: 1em;
+  border: 1px solid #CCC;
+  border-radius: 1em;
+  
+}
+	#top-iframes{
+		display: flex;
+	}
+	#bottom-iframes{
+		display: flex;
+	}
+	#top-iframes,
+#top-iframes,
+#bottom-iframes {
+    display: block; /* Override display:flex to avoid conflicts */
+    margin: 0;
+    padding: 0;
+}
+#iframe-grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 10px; /* Space between iframes */
+    width: 90%; 
+    margin: 30px auto; 
+}
+#survey-form {
+  background-color: white;
+}
+
+fieldset { 
+  border:1px solid lightgray;
+  margin: 10px;
+ }
+
+legend {
+  font-weight: 700;
+}
+
+#number {
+  width: 150px;
+}
+
+
+
+
+
+
+
+input:focus, textarea:focus {
+  border-color: OrangeRed;
+}
+
+textarea {
+  vertical-align: top;
+  height: 5em;
+}
+
+.button {
+  padding-left: 90px; /* same size as the label elements */
+}
+
+button {
+  margin: .5em;
+  font-size: 1em;
+  background-color: aqua;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  text-transform: capitalize;
+}
+
+#submitbutton {
+  display: flex; 
+  justify-content: center;
+}
+
+.list{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#my-button {
+width: 500px;
+height: 500px;
+position: absolute;
+left: 100px;
+top: 200px;
+}
+
+.title {
+margin: 0px;
+}
+
+.long {
+display: flex;
+width: 100%;
+height: 200px;
+background-color: teal;
+justify-content: space-evenly;
+overflow: scroll;
+}
+
+.button-container {
+background-color: aqua;
+min-width: 110px;
+height: 60px;
+padding: 20px;
+border: 1px black dashed;
+margin: 20px;
+}
+.box {
+background-color: dodgerblue;
+width: 90vw;
+height: 30vh;
+margin: 30px;
+padding: 30px;
+font-size: 200px;
+color: whitesmoke;
+box-shadow: 0px 0px 20px 11px rgba(0, 0, 0, 0.35);
+}
+
+.scrollable-container {
+border: 10px solid yellowgreen;
+box-shadow: 0px 0px 20px 11px rgba(0, 0, 0, 0.35);
+}
+
+.list {
+display: flex;
+overflow: scroll;
+}
+
+.scrollable-container .list-item {
+width: 150px;
+height: 200px;
+flex-shrink: 0;
+background-color: tomato;
+border: 5px solid black;
+margin: 10px;
+padding: 5px;
+list-style: none;
+color: whitesmoke;
+font-size: 20px;
+}
+
+.my-iframe,
+.iframe-container.my-iframe,
+same-domain-iframe-in-shadow {
+    /* Make the iframe/container fill its assigned grid cell */
+    width: 100% !important; 
+    height: 600px; 
+    box-sizing: border-box; 
+}
+
+	.iframe-container.my-iframe iframe {
+    width: 100% !important;
+    height: calc(100% - 40px) !important; /* adjust for button */
+    display: block;
+}
+.my-iframe {
+    width: calc(45% - 60px); /* subtract horizontal margins so total space is even */
+    height: 600px;
+    margin: 30px;
+    box-sizing: border-box; /* include padding and border in width */
+}
+
+.iframe-container {
+    width: calc(45% - 60px); /* same as iframe inside it */
+    box-sizing: border-box;
+}
+
+
+
+#my-iframe {
+height: 600px;
+margin: 30px;
+	    margin-left: -30px;
+}
+
+#my-iframe1 {
+height: 600px;
+}
+
+	#my-iframe3 {
+height: 600px;
+		    margin-left: -30px;
+}
+
+	#my-iframe4 {
+height: 600px;
+		margin: 30px;
+
+}
+	
+#popup{
+color: red;
+cursor: pointer;
+}
+
+#popup1{
+color: red;
+cursor: pointer;
+}
+</style>
+<script>
+</script>
+</head>
+<body id="body">
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">WordPress</a>
+            <!-- First Tier Drop Down -->
+            <ul>
+                <li><a href="#">Themes</a></li>
+                <li><a href="#">Plugins</a></li>
+                <li><a href="#">Tutorials</a></li>
+            </ul>        
+            </li>
+            <li><a href="#">Web Design</a>
+            <!-- First Tier Drop Down -->
+            <ul>
+                <li><a href="#">Resources</a></li>
+                <li><a href="#">Links</a></li>
+                <li><a href="#">Tutorials</a>
+            	<!-- Second Tier Drop Down -->
+                <ul>
+                    <li><a href="#">HTML/CSS</a></li>
+                    <li><a href="#">jQuery</a></li>
+                    <li><a href="#">Other</a>
+                        <!-- Third Tier Drop Down -->
+                        <ul>
+                            <li><a href="#">Stuff</a></li>
+                            <li><a href="#">Things</a></li>
+                            <li><a href="#">Other Stuff</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                </li>
+            </ul>
+            </li>
+            <li><a href="#">Graphic Design</a></li>
+            <li><a href="#">Inspiration</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+<!-- <div class="container-first">
+<div class="container-second">
+<button id="my-button">CLICK HERE</button>
+</div>
+</div> -->
+<h1 class="title">Player Test Page</h1>
+<div class="long">
+<div class="button-container"><span id="timer">0</span> </div>
+<div class="button-container">Element in horizontal scroll</div>
+<div class="button-container">Element in horizontal scroll</div>
+<div class="button-container" id="openModalBtn">Open Modal</div>
+<div class="button-container" id="popup1" onclick="openPopup()">Click to open popup</div>
+<div class="button-container"><button class="popup" id="popup" onclick="window.close()">close popup</button></div>
+<div class="button-container"> <a href="https://getbootstrap.com/docs/5.2/forms/overview" target="_blank">getbootstrap</a></div>
+<div class="button-container"> <a href="https://getbootstrap.com/docs/5.2/forms/overview" target="_self">same tab getbootstrap</a></div>
+<div class="button-container"> <a href="https://3alexso.github.io/iframes/spa.html" target="_self">Single Page Application</a></div>
+<div class="button-container"> <a href="https://forms.office.com/Pages/DesignPageV2.aspx?origin=Marketing" target="_blank">Office</a></div>
+<div class="button-container"> <a href="https://3alexso.github.io/iframes/frameset.html" target="_blank">Frameset</a></div>
+<div class="button-container" id="popover" onclick="openPopover()">Click to open popover</div>
+	<div class="button-container">Element in horizontal scroll</div>	
+
+
+
+
+
+</div>
+<div id="iframe-grid-container">
+    <iframe
+    name="my-iframe" id="my-iframe" class="my-iframe"
+    src="https://www.wikipedia.org/"
+    title="iframe example">
+    </iframe>
+    
+    <div class="iframe-container my-iframe">
+        <iframe
+        name="my-iframe1" id="my-iframe1" 
+        src="https://getbootstrap.com/docs/5.0/forms/input-group/"
+        title="iframe example">
+        </iframe> 
+        <button id="removeIframeBtn">Remove Bootstrap iframe</button>
+    </div>
+    
+    <iframe
+    name="my-iframe3" id="my-iframe3" class="my-iframe"
+    src="test1.html"
+    title="iframe example"
+    ></iframe>
+    
+    <same-domain-iframe-in-shadow></same-domain-iframe-in-shadow>
+</div>
+<div class="scrollable-container">
+<div id="csp-tester-container" style="border: 2px solid #ccc; padding: 20px; margin: 30px auto; border-radius: 10px; background-color: #f9f9f9; text-align: left; color: #000; width: 90%; box-sizing: border-box;">
+    <h2 style="text-align: center; color: #333; font-size: 24px; margin-bottom: 5px;">CSP Configuration Tester</h2>
+    <p style="text-align: center; margin-bottom: 20px; color: #555;">Select the CSP directives you want to apply. By default, CSP is disabled.</p>
+    
+    <div id="csp-checkboxes" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin-bottom: 20px;">
+        </div>
+    
+    <div style="display: flex; justify-content: center; gap: 20px;">
+        <button id="saveCspBtn" style="background-color: dodgerblue; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Save and reload</button>
+        <button id="resetCspBtn" style="background-color: tomato; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Reset and reload</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // List of all CSP options
+        const cspOptions = [
+            "default-src 'none'", "base-uri 'none'", "block-all-mixed-content",
+            "child-src 'none'", "connect-src 'none'", "font-src 'none'",
+            "form-action 'none'", "frame-ancestors 'none'", "frame-src 'none'",
+            "img-src 'none'", "manifest-src 'none'", "media-src 'none'",
+            "object-src 'none'", "plugin-types 'none'", "script-src 'none'",
+            "script-src-attr 'none'", "script-src-elem 'none'", "style-src 'none'",
+            "style-src-elem 'none'", "style-src-attr 'none'", "upgrade-insecure-requests",
+            "worker-src 'none'", "sandbox"
+        ];
+
+        function addMetaTagCspString(cspString){
+            const meta = document.createElement('meta');
+            meta.httpEquiv = 'Content-Security-Policy';
+            meta.content = cspString;
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        }
+
+        function initCspTester() {
+            const container = document.getElementById('csp-checkboxes');
+            const savedCsp = localStorage.getItem('cspString') || "";
+            const savedDirectives = savedCsp.split(';').map(s => s.trim());
+
+            // 1. Apply the CSP immediately if it exists in LocalStorage
+            if (savedCsp) {
+                addMetaTagCspString(savedCsp);
+            }
+
+            // 2. Generate Checkboxes dynamically
+            cspOptions.forEach(option => {
+                const label = document.createElement('label');
+                label.style.display = 'flex';
+                label.style.alignItems = 'center';
+                label.style.gap = '8px';
+                label.style.fontSize = '16px';
+                label.style.cursor = 'pointer';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = option;
+                
+                // Check the box if it was previously saved
+                if (savedDirectives.includes(option)) {
+                    checkbox.checked = true;
+                }
+
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(option));
+                container.appendChild(label);
+            });
+
+            // 3. Save Button Logic
+            document.getElementById('saveCspBtn').addEventListener('click', () => {
+                const checkboxes = container.querySelectorAll('input[type="checkbox"]:checked');
+                const selectedCsp = Array.from(checkboxes).map(cb => cb.value).join('; ');
+                
+                if (selectedCsp) {
+                    localStorage.setItem('cspString', selectedCsp);
+                } else {
+                    localStorage.removeItem('cspString'); // Clear if they unchecked everything but hit save
+                }
+                window.location.reload();
+            });
+
+            // 4. Reset Button Logic
+            document.getElementById('resetCspBtn').addEventListener('click', () => {
+                localStorage.removeItem('cspString');
+                window.location.reload();
+            });
+        }
+
+        // Run the initialization
+        initCspTester();
+    })();
+</script>
+</div>
+<div id="outside">
+    <form id="survey-form" action="/my-handling-form-page" method="post">
+      <p id="description"><b>Note:</b> Form is to be completed at least 21 days prior to date</p>
+      
+      <!-- ------------------Personal Details---------------------------- -->
+      <fieldset>
+        <!-- groups of widgets that share the same purpose, for styling and semantic purposes -->
+        <legend>Personal Details</legend>
+        <!-- formally describes the purpose of the fieldset it is included inside. -->
+        <div>
+          <label id="name-label" for="name">Name:</label>
+          <input type="text" required id="name" name="user_name" placeholder="Enter name here">   </div>
+        <div>
+          <label for="address-label">Address:</label>
+          <input type="Address" id="address" name="Address" placeholder="Enter address here">   </div>
+        <div>
+          <label id="email-label" for="Email">Email:</label>
+          <input type="email" required id="email" name="user_email" placeholder="Enter email here">   </div>
+        <div>
+          <label id="number-label" for="phone">Phone Number:</label>
+          <input type="number" id="number" name="user_name" placeholder="Enter 10 digit number" min="1" max="9">  </div>
+        <div>
+          <label id="iq-label" for="iq">IQ:</label>
+          <input type="number" id="iq" name="iq" placeholder="Enter IQ here">   </div>
+	 <div>
+          <label id="password-label" for="password">Password:</label>
+          <input type="password" id="password" name="password" placeholder="Enter password here">   </div>
+    
+        <!-- ------------------Radio Buttons-------------------------------- -->
+        <div>
+          <label for="Gender">Gender</label>
+          <p>
+            <input type="radio" name="gender" value="male" checked> Male<br>
+            <input type="radio" name="gender" value="female"> Female<br>
+          </p>
+        </div>
+        <label for="date-label">Proposed Date:</label>
+        <input type="date" name="bday">
+      
+      </fieldset>
+      <!-- ------------------Checkboxes-------------------------------- -->
+      <fieldset>
+        <label for="Gender">Check All That Apply</label>
+        <p>
+          <input type="checkbox" name="work" value="work" checked> I work full-time<br>
+          <input type="checkbox" name="rich" value="rich" checked> My parents are rich<br>
+        </p>
+      </fieldset>
+      
+    
+      <!-- --------------------Text Areas------------------------------ -->
+      
+     <form action="/submit-endpoint" method="POST">
+  <fieldset>
+    <legend>Essay Section</legend>
+    <p>In 50 words or more, explain:</p>
+
+    <div>
+      <label for="msg">msg1</label><br>
+      <textarea id="msg" name="user_message" rows="4" cols="50" placeholder="Enter Text Here"></textarea>
+    </div>
+
+    <div>
+      <label for="msg2">msg2: contact details </label><br>
+      <textarea id="msg2" name="user_message2" rows="4" cols="50" placeholder="Enter Text Here">Hello, World</textarea>
+    </div>
+
+    <div>
+      <label for="msg3">msg3: Please share more info</label><br>
+      <textarea id="msg3" name="user_message3" rows="4" cols="50" placeholder="Enter Text Here"></textarea>
+    </div>
+
+    <div>
+      <label for="msg4">msg4: Anything Else?</label><br>
+      <textarea id="msg4" name="user_message4" rows="4" cols="50" placeholder="Enter additional comments here"></textarea>
+    </div>
+
+    <div>
+      <label for="msg5">msg5: Something Else?</label><br>
+      <textarea id="msg5" name="user_message5" rows="4" cols="50" placeholder="Enter Text Here"></textarea>
+    </div>
+
+    <div>
+      <label for="msg6">msg6: Want to add more info?</label><br>
+      <textarea id="msg6" name="user_message6" rows="4" cols="50" placeholder="Enter Text Here"></textarea>
+    </div>
+
+    <p>Upload Medical Certificates here:</p>
+    <input type="file" name="documents" multiple>
+
+  </fieldset>
+
+  <div id="submitbutton">
+    <button type="submit" id="submit">Send your application</button>
+  </div>
+</form>
+<script>
+  const removeIframeBtn = document.getElementById('removeIframeBtn');
+  const iframeContainer = removeIframeBtn.parentElement; // get container to re-add iframe
+  let iframe = document.getElementById('my-iframe1');
+
+  let isIframeVisible = true;
+
+  removeIframeBtn.addEventListener('click', () => {
+    if (isIframeVisible) {
+      // Remove the iframe
+      iframe.remove();
+      removeIframeBtn.textContent = 'Add Bootstrap iframe';
+    } else {
+      // Recreate and re-add the iframe
+      const newIframe = document.createElement('iframe');
+      newIframe.name = 'my-iframe1';
+      newIframe.id = 'my-iframe1';
+      newIframe.src = 'https://getbootstrap.com/docs/5.2/forms/overview/';
+      newIframe.title = 'iframe example';
+      newIframe.style.height = '600px';
+      newIframe.style.width = '100%';
+
+      iframeContainer.insertBefore(newIframe, removeIframeBtn);
+      iframe = newIframe;
+      removeIframeBtn.textContent = 'Remove Bootstrap iframe';
+    }
+
+    isIframeVisible = !isIframeVisible;
+  });
+</script>
+    <!-- Modal -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>This is a modal!</h2>
+    <p>You clicked the 'Element in horizontal scroll' button.</p>
+  </div>
+</div>
+	    <script>
+  const modal = document.getElementById("myModal");
+  const btn = document.getElementById("openModalBtn");
+  const span = document.querySelector(".close");
+
+  btn.onclick = function () {
+    modal.style.display = "block";
+  }
+
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+		<script>
+class SameDomainIframeInShadow extends HTMLElement {
+    __initialized = false;
+
+    constructor() {
+        super();
+    }
+
+    connectedCallback() {
+        if (this.__initialized) return;
+        this.__initialized = true;
+
+        const iframe = document.createElement('iframe');
+        iframe.src = 'test2.html'; // change URL if needed
+        iframe.id = 'my-iframe4';  // set ID like your other iframes
+        iframe.className = 'my-iframe'; // same class as the others
+        iframe.title = 'iframe example 4';
+iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.margin = '30px'; // Ensure no inline margin is added
+
+        const shadow = this.attachShadow({ mode: 'open' });
+        shadow.appendChild(iframe);
+    }
+}
+
+if (!customElements.get('same-domain-iframe-in-shadow')) {
+    customElements.define('same-domain-iframe-in-shadow', SameDomainIframeInShadow);
+}
+</script>
+<script>
+        let seconds = 0;
+        const timerElement = document.getElementById('timer');
+
+        setInterval(() => {
+            seconds++;
+            timerElement.innerText = seconds;
+        }, 1000);
+    </script>
+    <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
+</body>
+</html>
