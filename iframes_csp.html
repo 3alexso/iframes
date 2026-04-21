@@ -496,6 +496,9 @@ cursor: pointer;
     <h2 style="text-align: center; color: #333; font-size: 24px; margin-bottom: 5px;">CSP Configuration Tester</h2>
     <p style="text-align: center; margin-bottom: 20px; color: #555;">Select the CSP directives you want to apply. By default, CSP is disabled.</p>
     
+    <div id="select-all-container" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd; font-weight: bold;">
+        </div>
+
     <div id="csp-checkboxes" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin-bottom: 20px;">
         </div>
     
@@ -528,6 +531,7 @@ cursor: pointer;
 
         function initCspTester() {
             const container = document.getElementById('csp-checkboxes');
+            const selectAllContainer = document.getElementById('select-all-container');
             const savedCsp = localStorage.getItem('cspString') || "";
             const savedDirectives = savedCsp.split(';').map(s => s.trim());
 
@@ -536,7 +540,22 @@ cursor: pointer;
                 addMetaTagCspString(savedCsp);
             }
 
-            // 2. Generate Checkboxes dynamically
+            // 2. Create the "Select All" Checkbox
+            const selectAllLabel = document.createElement('label');
+            selectAllLabel.style.display = 'flex';
+            selectAllLabel.style.alignItems = 'center';
+            selectAllLabel.style.gap = '8px';
+            selectAllLabel.style.cursor = 'pointer';
+            
+            const selectAllCheckbox = document.createElement('input');
+            selectAllCheckbox.type = 'checkbox';
+            selectAllCheckbox.id = 'selectAllToggle';
+            
+            selectAllLabel.appendChild(selectAllCheckbox);
+            selectAllLabel.appendChild(document.createTextNode('Select / Clear All'));
+            selectAllContainer.appendChild(selectAllLabel);
+
+            // 3. Generate Individual Checkboxes dynamically
             cspOptions.forEach(option => {
                 const label = document.createElement('label');
                 label.style.display = 'flex';
@@ -548,6 +567,7 @@ cursor: pointer;
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.value = option;
+                checkbox.className = 'csp-option-cb'; // Class for easy selection
                 
                 // Check the box if it was previously saved
                 if (savedDirectives.includes(option)) {
@@ -559,9 +579,34 @@ cursor: pointer;
                 container.appendChild(label);
             });
 
-            // 3. Save Button Logic
+            // 4. Handle Checkbox Sync Logic
+            const allOptionCheckboxes = container.querySelectorAll('.csp-option-cb');
+            
+            // Function to evaluate if "Select All" should be checked based on children
+            const updateSelectAllState = () => {
+                const checkedCount = container.querySelectorAll('.csp-option-cb:checked').length;
+                selectAllCheckbox.checked = (checkedCount === allOptionCheckboxes.length) && (allOptionCheckboxes.length > 0);
+            };
+
+            // Set initial state of "Select All" on load
+            updateSelectAllState();
+
+            // When "Select All" is clicked, toggle all others
+            selectAllCheckbox.addEventListener('change', (e) => {
+                const isChecked = e.target.checked;
+                allOptionCheckboxes.forEach(cb => {
+                    cb.checked = isChecked;
+                });
+            });
+
+            // When any individual checkbox is clicked, evaluate "Select All" state
+            allOptionCheckboxes.forEach(cb => {
+                cb.addEventListener('change', updateSelectAllState);
+            });
+
+            // 5. Save Button Logic
             document.getElementById('saveCspBtn').addEventListener('click', () => {
-                const checkboxes = container.querySelectorAll('input[type="checkbox"]:checked');
+                const checkboxes = container.querySelectorAll('.csp-option-cb:checked');
                 const selectedCsp = Array.from(checkboxes).map(cb => cb.value).join('; ');
                 
                 if (selectedCsp) {
@@ -572,7 +617,7 @@ cursor: pointer;
                 window.location.reload();
             });
 
-            // 4. Reset Button Logic
+            // 6. Reset Button Logic
             document.getElementById('resetCspBtn').addEventListener('click', () => {
                 localStorage.removeItem('cspString');
                 window.location.reload();
