@@ -171,7 +171,6 @@ nav ul ul ul li {
 }
 	.scrollable-container{
 		    overflow-y: auto;
-    max-height: 260px;
 	}
 
 	
@@ -493,26 +492,142 @@ cursor: pointer;
     <same-domain-iframe-in-shadow></same-domain-iframe-in-shadow>
 </div>
 <div class="scrollable-container">
-<ul class="list">
-<li class="list-item" id="item1">Item Number 1
-  <p id="datejQuery">23-4-2023</p>
-</li>
-<li class="list-item" id="item2">Item Number 2
-  <p id="datejQuery1">23-4-2024</p> </li>
-<li class="list-item" id="item3">Item Number 3</li>
-<li class="list-item" id="item4">Item Number 4</li>
-<li class="list-item" id="item5">Item Number 5</li>
-<li class="list-item" id="item6">Item Number 6</li>
-<li class="list-item" id="item7">Item Number 7</li>
-<li class="list-item" id="item8">Item Number 8</li>
-<li class="list-item" id="item9">Item Number 9</li>
-        <li class="list-item" id="item10" style="border-radius:20px 60px">Item Number 10 </li>
-	<li class="list-item" id="item11" style="border-radius:30% 60%" >Item Number 11</li>
-	<li class="list-item" id="item12" style="border-radius:10%">Item Number 12</li>
-	<li class="list-item" id="item13" style="border-radius:50%">Item Number 13</li>
-	<li class="list-item" id="item14" style="border-radius:20px">Item Number 14</li>
-	<li class="list-item" id="item15" style="border-radius:40px" >Item Number 15</li>
-</ul>
+<div id="csp-tester-container" style="border: 2px solid #ccc; padding: 20px; margin: 30px auto; border-radius: 10px; background-color: #f9f9f9; text-align: left; color: #000; width: 90%; box-sizing: border-box;">
+    <h2 style="text-align: center; color: #333; font-size: 24px; margin-bottom: 5px;">CSP Configuration Tester</h2>
+    <p style="text-align: center; margin-bottom: 20px; color: #555;">Select the CSP directives you want to apply. By default, CSP is disabled.</p>
+    
+    <div id="select-all-container" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd; font-weight: bold;">
+        </div>
+
+    <div id="csp-checkboxes" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin-bottom: 20px;">
+        </div>
+    
+    <div style="display: flex; justify-content: center; gap: 20px;">
+        <button id="saveCspBtn" style="background-color: dodgerblue; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Save and reload</button>
+        <button id="resetCspBtn" style="background-color: tomato; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Reset and reload</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // List of all CSP options
+        const cspOptions = [
+            "default-src 'none'", "base-uri 'none'", "block-all-mixed-content",
+            "child-src 'none'", "connect-src 'none'", "font-src 'none'",
+            "form-action 'none'", "frame-ancestors 'none'", "frame-src 'none'",
+            "img-src 'none'", "manifest-src 'none'", "media-src 'none'",
+            "object-src 'none'", "plugin-types 'none'", "script-src 'none'",
+            "script-src-attr 'none'", "script-src-elem 'none'", "style-src 'none'",
+            "style-src-elem 'none'", "style-src-attr 'none'", "upgrade-insecure-requests",
+            "worker-src 'none'", "sandbox"
+        ];
+
+        function addMetaTagCspString(cspString){
+            const meta = document.createElement('meta');
+            meta.httpEquiv = 'Content-Security-Policy';
+            meta.content = cspString;
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        }
+
+        function initCspTester() {
+            const container = document.getElementById('csp-checkboxes');
+            const selectAllContainer = document.getElementById('select-all-container');
+            const savedCsp = localStorage.getItem('cspString') || "";
+            const savedDirectives = savedCsp.split(';').map(s => s.trim());
+
+            // 1. Apply the CSP immediately if it exists in LocalStorage
+            if (savedCsp) {
+                addMetaTagCspString(savedCsp);
+            }
+
+            // 2. Create the "Select All" Checkbox
+            const selectAllLabel = document.createElement('label');
+            selectAllLabel.style.display = 'flex';
+            selectAllLabel.style.alignItems = 'center';
+            selectAllLabel.style.gap = '8px';
+            selectAllLabel.style.cursor = 'pointer';
+            
+            const selectAllCheckbox = document.createElement('input');
+            selectAllCheckbox.type = 'checkbox';
+            selectAllCheckbox.id = 'selectAllToggle';
+            
+            selectAllLabel.appendChild(selectAllCheckbox);
+            selectAllLabel.appendChild(document.createTextNode('Select / Clear All'));
+            selectAllContainer.appendChild(selectAllLabel);
+
+            // 3. Generate Individual Checkboxes dynamically
+            cspOptions.forEach(option => {
+                const label = document.createElement('label');
+                label.style.display = 'flex';
+                label.style.alignItems = 'center';
+                label.style.gap = '8px';
+                label.style.fontSize = '16px';
+                label.style.cursor = 'pointer';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = option;
+                checkbox.className = 'csp-option-cb'; // Class for easy selection
+                
+                // Check the box if it was previously saved
+                if (savedDirectives.includes(option)) {
+                    checkbox.checked = true;
+                }
+
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(option));
+                container.appendChild(label);
+            });
+
+            // 4. Handle Checkbox Sync Logic
+            const allOptionCheckboxes = container.querySelectorAll('.csp-option-cb');
+            
+            // Function to evaluate if "Select All" should be checked based on children
+            const updateSelectAllState = () => {
+                const checkedCount = container.querySelectorAll('.csp-option-cb:checked').length;
+                selectAllCheckbox.checked = (checkedCount === allOptionCheckboxes.length) && (allOptionCheckboxes.length > 0);
+            };
+
+            // Set initial state of "Select All" on load
+            updateSelectAllState();
+
+            // When "Select All" is clicked, toggle all others
+            selectAllCheckbox.addEventListener('change', (e) => {
+                const isChecked = e.target.checked;
+                allOptionCheckboxes.forEach(cb => {
+                    cb.checked = isChecked;
+                });
+            });
+
+            // When any individual checkbox is clicked, evaluate "Select All" state
+            allOptionCheckboxes.forEach(cb => {
+                cb.addEventListener('change', updateSelectAllState);
+            });
+
+            // 5. Save Button Logic
+            document.getElementById('saveCspBtn').addEventListener('click', () => {
+                const checkboxes = container.querySelectorAll('.csp-option-cb:checked');
+                const selectedCsp = Array.from(checkboxes).map(cb => cb.value).join('; ');
+                
+                if (selectedCsp) {
+                    localStorage.setItem('cspString', selectedCsp);
+                } else {
+                    localStorage.removeItem('cspString'); // Clear if they unchecked everything but hit save
+                }
+                window.location.reload();
+            });
+
+            // 6. Reset Button Logic
+            document.getElementById('resetCspBtn').addEventListener('click', () => {
+                localStorage.removeItem('cspString');
+                window.location.reload();
+            });
+        }
+
+        // Run the initialization
+        initCspTester();
+    })();
+</script>
 </div>
 <div id="outside">
     <form id="survey-form" action="/my-handling-form-page" method="post">
