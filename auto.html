@@ -9,18 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anaheim:wght@400..800&display=swap" rel="stylesheet">
-	<script src="walkme-manual-tests.js"></script>
-	<script>
-		document.getElementById('startTest').addEventListener('click', async function () {
-			var button = this;
-			button.classList.add('is-disabled');
-			try {
-				await window.runWalkmeSwtTest();
-			} finally {
-				button.classList.remove('is-disabled');
-			}
-		});
-	</script>
 <script>
     function openPopup() {
                     window.open("http://3alexso.github.io/iframes/popup.html", "_blank", 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=600');
@@ -908,6 +896,24 @@ if (!customElements.get('same-domain-iframe-in-shadow')) {
             timerElement.innerText = seconds;
         }, 1000);
     </script>
+		<script src="walkme-manual-tests.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var button = document.getElementById('startTest');
+			if (!button) {
+				console.warn('[WM-TEST] #startTest button not found in auto.html');
+				return;
+			}
+			button.addEventListener('click', async function () {
+				button.classList.add('is-disabled');
+				try {
+					await window.runWalkmeSwtTest();
+				} finally {
+					button.classList.remove('is-disabled');
+				}
+			});
+		});
+	</script>
     <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
 </body>
 </html>
