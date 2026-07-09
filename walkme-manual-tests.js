@@ -12,7 +12,7 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 	const CONFIG_BY_ENV = {
 		US: {
 			aiActionBar: {
-				snippetUrl: 'https://cdn.walkme.com/users/f62b64f8cf3f4d9aab3103895a7b1a76/test/walkme_f62b64f8cf3f4d9aab3103895a7b1a76_https.js'
+				snippetUrl: 'https://cdn.walkme.com/users/9a345b0fa50e4f5396ede47f241d05df/test/walkme_9a345b0fa50e4f5396ede47f241d05df_https.js'
 			},
 			noAiActionBar: {
 				snippetUrl: 'https://cdn.walkme.com/users/8b982176173a47f7a79459d1a6c3a0e0/test/walkme_8b982176173a47f7a79459d1a6c3a0e0_https.js',
@@ -20,8 +20,8 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 			}
 		},
 		EU: {
-			aiActionBar: { snippetUrl: 'REPLACE_WITH_EU00_AI_SNIPPET_URL' },
-			noAiActionBar: { snippetUrl: 'REPLACE_WITH_EU_NON_AI_SNIPPET_URL', launcherId: 'REPLACE_WITH_EU_NON_AI_LAUNCHER_ID' }
+			aiActionBar: { snippetUrl: 'https://eu-cdn.walkme.com/users/1e7db03a0db44069a8973a35d623694b/test/walkme_1e7db03a0db44069a8973a35d623694b_https.js' },
+			noAiActionBar: { snippetUrl: 'https://eu-cdn.walkme.com/users/72bf67c6a9ed4d8fa83a6d71d55eb42f/test/walkme_72bf67c6a9ed4d8fa83a6d71d55eb42f_https.js', launcherId: '1000113013' }
 		},
 		'Canada (prod2)': {
 			aiActionBar: { snippetUrl: 'REPLACE_WITH_CANADA_AI_SNIPPET_URL' },
