@@ -67,9 +67,9 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 
 	const TIMEOUTS = {
 		player: 30000,
-		menu: 15000,
-		aiResponse: 45000,
-		balloonOpen: 20000,
+		menu: 10000,
+		aiResponse: 20000,
+		balloonOpen: 10000,
 		quickAction: 15000
 	};
 
