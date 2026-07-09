@@ -617,5 +617,5 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 // button (e.g. auto.html), skip auto-run and let that page's click handler call
 // window.runWalkmeSwtTest() instead.
 if (!document.getElementById('startTest')) {
-	window.runWalkmeSwtTest();
+	window.runWalkmeSwtTest().catch(e => console.warn('%c[WM-TEST]', 'color:#e17055;font-weight:bold', e.message));
 }
