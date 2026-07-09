@@ -27,10 +27,40 @@
 }
     </script>
 <style>
+
+	/* 1. Define the animation */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0; /* Button becomes invisible halfway through */
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Optional hover state */
+.blinking-button:hover {
+  background-color: #0056b3;
+}
 #startTest{
 	cursor: pointer;
 	font-weight: bold;
 	background-color: yellow;
+	 /* Keeps the pointer hand sign from before */
+  cursor: pointer;
+  
+  /* Basic styling */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+
+  /* Apply the blinking animation */
+  animation: blink 1s step-start infinite; 
 }
 
 	#startTest:hover {
