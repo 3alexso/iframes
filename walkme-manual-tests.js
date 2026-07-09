@@ -95,6 +95,14 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 		return mode === 'AI Action Bar' ? 'aiActionBar' : 'noAiActionBar';
 	}
 
+	// Snippet URLs look like https://cdn.walkme.com/users/{guid}/{env}/walkme_{guid}_https.js —
+	// pull the account guid and the url's env segment (e.g. "test") back out of that shape.
+	function parseSnippetUrl(url) {
+		if (isPlaceholder(url)) return { guid: undefined, urlEnv: undefined };
+		const match = url.match(/\/users\/([^/]+)\/([^/]+)\//);
+		return { guid: match?.[1], urlEnv: match?.[2] };
+	}
+
 	// Builds a labeled group of radio buttons under `name`, greying out (disabling) any option
 	// in `disabledOptions`. The first non-disabled option is checked by default.
 	function buildRadioGroup(title, options, name, disabledOptions = []) {
@@ -198,8 +206,39 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 				updateRadioGroupDisabled(modeGroup, 'wm-test-mode', disabledModes);
 			}
 
+			const guidSection = document.createElement('div');
+			guidSection.style.marginBottom = '16px';
+
+			const guidHeading = document.createElement('div');
+			guidHeading.textContent = 'System Guid';
+			guidHeading.style.fontWeight = 'bold';
+			guidHeading.style.marginBottom = '8px';
+			guidSection.appendChild(guidHeading);
+
+			const guidValue = document.createElement('div');
+			const envValue = document.createElement('div');
+			guidSection.append(guidValue, envValue);
+
+			// Read-only info for the currently selected env/mode — pulled from the snippet url
+			// itself rather than typed separately, so it can't drift out of sync with CONFIG_BY_ENV.
+			function refreshGuidInfo() {
+				const selectedEnv = envGroup.querySelector('input[name="wm-test-env"]:checked')?.value;
+				const selectedMode = modeGroup.querySelector('input[name="wm-test-mode"]:checked')?.value;
+				const { guid, urlEnv } =
+					selectedEnv && selectedMode
+						? parseSnippetUrl(configByEnv[selectedEnv][getModeConfigKey(selectedMode)].snippetUrl)
+						: {};
+				guidValue.textContent = `Guid: ${guid || '—'}`;
+				envValue.textContent = `Env: ${urlEnv || '—'}`;
+			}
+
 			refreshModeDisabling();
-			envGroup.addEventListener('change', refreshModeDisabling);
+			refreshGuidInfo();
+			envGroup.addEventListener('change', () => {
+				refreshModeDisabling();
+				refreshGuidInfo();
+			});
+			modeGroup.addEventListener('change', refreshGuidInfo);
 
 			const buttonRow = document.createElement('div');
 			buttonRow.style.display = 'flex';
@@ -215,7 +254,7 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 			submitBtn.style.padding = '6px 12px';
 
 			buttonRow.append(cancelBtn, submitBtn);
-			modal.append(envGroup, modeGroup, buttonRow);
+			modal.append(envGroup, modeGroup, guidSection, buttonRow);
 			overlay.append(modal);
 			document.body.append(overlay);
 
