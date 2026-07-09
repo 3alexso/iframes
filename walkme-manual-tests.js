@@ -611,3 +611,11 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 
 	return results;
 };
+
+// Auto-run when this file is pasted directly into devtools on an arbitrary page (no #startTest
+// button present). When loaded via <script src> on a host page that has its own #startTest
+// button (e.g. auto.html), skip auto-run and let that page's click handler call
+// window.runWalkmeSwtTest() instead.
+if (!document.getElementById('startTest')) {
+	window.runWalkmeSwtTest();
+}
