@@ -25,9 +25,9 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 		},
 		'Canada (prod2)': {
 			aiActionBar: { snippetUrl: 'REPLACE_WITH_CANADA_AI_SNIPPET_URL' },
-			noAiActionBar: { snippetUrl: 'REPLACE_WITH_CANADA_NON_AI_SNIPPET_URL', launcherId: 'REPLACE_WITH_CANADA_NON_AI_LAUNCHER_ID' }
+			noAiActionBar: { snippetUrl: 'https://cdn-ca1.walkmedap.com/users/3d2e6a01a59e4624a1a916ad475b59b2/test/walkme_3d2e6a01a59e4624a1a916ad475b59b2_https.js', launcherId: '196354' }
 		},
-		'Fedramp (prod2)': {
+		'Fedramp (prod1)': {
 			aiActionBar: { snippetUrl: 'REPLACE_WITH_FEDRAMP_AI_SNIPPET_URL' },
 			noAiActionBar: { snippetUrl: 'https://cdn.walkmegov.com/users/430d9ab7a46d425492af84f6de798f13/test/walkme_430d9ab7a46d425492af84f6de798f13_https.js', launcherId: '198072' }
 		},
@@ -67,7 +67,7 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 
 	const TIMEOUTS = {
 		player: 30000,
-		menu: 10000,
+		menu: 18000,
 		aiResponse: 20000,
 		balloonOpen: 10000,
 		quickAction: 15000
@@ -75,6 +75,13 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 
 	// How long to leave the menu open before closing it again in the menu-triggered flow.
 	const MENU_OPEN_DURATION = 4000;
+
+	// isMenuOpen()/the wrapper iframe's own layout flip true the instant toggleMenu() runs —
+	// well before the cross-origin workstation app has actually painted inside it (confirmed:
+	// there's no postMessage/load handshake for that). No signal exists to detect the real paint
+	// from the host page, so this is a fixed grace period after the open is detected, matching
+	// the fixed-timer approach the player's own SDK loader uses internally for the same problem.
+	const MENU_RENDER_GRACE_MS = 1500;
 
 	// How long to leave the SWT balloon open before closing it in the NO AI Action Bar flow.
 	const BALLOON_OPEN_DURATION = 4000;
@@ -342,6 +349,19 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 		return el.length > 0 && el.is(':visible');
 	}
 
+	// isMenuOpen() flips true synchronously the instant toggleMenu() runs — before the cross-origin
+	// workstation app inside the nested iframe has actually painted anything (confirmed: there's no
+	// postMessage/load handshake gating it). The wrapper iframe itself, though, is same-origin
+	// (src="about:blank") and is reachable/measurable from the host page, so checking that it's
+	// actually laid out on screen catches the case where toggleMenu() fired but nothing rendered.
+	function isMenuIframeRendered() {
+		const iframe = document.getElementById('wm-application-wrapper-workstation-web');
+		if (!iframe) return false;
+		const rect = iframe.getBoundingClientRect();
+		const style = window.getComputedStyle(iframe);
+		return rect.width > 0 && rect.height > 0 && style.display !== 'none' && style.visibility !== 'hidden';
+	}
+
 	// Dumps every element whose id/class looks player-, menu-, or copilot-related, so we can see
 	// what actually rendered when the expected selector doesn't show up.
 	function dumpWalkmeDiagnostics() {
@@ -372,8 +392,8 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 		window.WalkMePlayerAPI.toggleMenu();
 		try {
 			await waitFor(
-				() => isVisible('#walkme-menu') || window.WalkMePlayerAPI.isMenuOpen(),
-				'menu open (toggleMenu call)',
+				() => (isVisible('#walkme-menu') || window.WalkMePlayerAPI.isMenuOpen()) && isMenuIframeRendered(),
+				'menu open and iframe rendered (toggleMenu call)',
 				timeoutMs
 			);
 		} catch (e) {
@@ -381,6 +401,13 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 			dumpWalkmeDiagnostics();
 			throw e;
 		}
+
+		// The checks above only prove the same-origin wrapper iframe is laid out on screen, not that
+		// the cross-origin app inside it has painted — no signal for that exists on the host page
+		// (confirmed via source: no postMessage/load handshake for workstation-web). This fixed grace
+		// period is a heuristic stand-in, matching the fixed-timer approach the player's own SDK
+		// loader uses internally for the same underlying problem.
+		await sleep(MENU_RENDER_GRACE_MS);
 	}
 
 	// Closing is a plain toggleMenu() call too — safe here because the open has already fully
