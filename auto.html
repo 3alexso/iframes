@@ -9,6 +9,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anaheim:wght@400..800&display=swap" rel="stylesheet">
+	<script src="walkme-manual-tests.js"></script>
+	<script>
+		document.getElementById('startTest').addEventListener('click', async function () {
+			var button = this;
+			button.classList.add('is-disabled');
+			try {
+				await window.runWalkmeSwtTest();
+			} finally {
+				button.classList.remove('is-disabled');
+			}
+		});
+	</script>
 <script>
     function openPopup() {
                     window.open("http://3alexso.github.io/iframes/popup.html", "_blank", 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=600');
@@ -27,6 +39,31 @@
 }
     </script>
 <style>
+	#startTest.button-container {
+			position: fixed;
+			bottom: 24px;
+			right: 24px;
+			z-index: 2147483647;
+			background: #00b894;
+			color: #fff;
+			font-family: sans-serif;
+			font-size: 14px;
+			font-weight: bold;
+			padding: 12px 20px;
+			border-radius: 6px;
+			cursor: pointer;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+			user-select: none;
+			display: inline-block;
+		}
+		#startTest.button-container:hover {
+			background: #00997a;
+		}
+		#startTest.button-container.is-disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+	
 	.modal {
   display: none; 
   position: fixed; 
@@ -450,7 +487,7 @@ cursor: pointer;
 <div class="long">
 
 <div id="startTest" class="button-container">Start test</div>
-  <div class="button-container"><span id="timer">0</span> </div>
+	<div class="button-container"><span id="timer">0</span> </div>
 <div class="button-container">Element in horizontal scroll</div>
 <div class="button-container" id="openModalBtn">Open Modal</div>
 <div class="button-container" id="popup1" onclick="openPopup()">Click to open popup</div>
