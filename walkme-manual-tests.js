@@ -12,40 +12,73 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 	const CONFIG_BY_ENV = {
 		US: {
 			aiActionBar: {
-				snippetUrl: 'https://cdn.walkme.com/users/9a345b0fa50e4f5396ede47f241d05df/test/walkme_9a345b0fa50e4f5396ede47f241d05df_https.js'
+				snippetUrl: 'https://cdn.walkme.com/users/9a345b0fa50e4f5396ede47f241d05df/test/walkme_9a345b0fa50e4f5396ede47f241d05df_https.js',
+				impersonationSystem: 'alex.solovkin_unknown_7396@walkme.com'
 			},
 			noAiActionBar: {
 				snippetUrl: 'https://cdn.walkme.com/users/8b982176173a47f7a79459d1a6c3a0e0/test/walkme_8b982176173a47f7a79459d1a6c3a0e0_https.js',
-				launcherId: '1020643'
+				launcherId: '1020643',
+				impersonationSystem: 'alex.solovkin_unknown_6ab7@walkme.com'
 			}
 		},
 		EU: {
-			aiActionBar: { snippetUrl: 'https://eu-cdn.walkme.com/users/1e7db03a0db44069a8973a35d623694b/test/walkme_1e7db03a0db44069a8973a35d623694b_https.js' },
-			noAiActionBar: { snippetUrl: 'https://eu-cdn.walkme.com/users/72bf67c6a9ed4d8fa83a6d71d55eb42f/test/walkme_72bf67c6a9ed4d8fa83a6d71d55eb42f_https.js', launcherId: '1000113013' }
+			aiActionBar: {
+				snippetUrl: 'https://eu-cdn.walkme.com/users/1e7db03a0db44069a8973a35d623694b/test/walkme_1e7db03a0db44069a8973a35d623694b_https.js',
+				impersonationSystem: 'alex.solovkin_default_heqj@walkme.com'
+			},
+			noAiActionBar: {
+				snippetUrl: 'https://eu-cdn.walkme.com/users/72bf67c6a9ed4d8fa83a6d71d55eb42f/test/walkme_72bf67c6a9ed4d8fa83a6d71d55eb42f_https.js',
+				launcherId: '1000113013',
+				impersonationSystem: 'alex.solovkin_unknown_452f@walkme.com'
+			}
 		},
 		'Canada (prod2)': {
-			aiActionBar: { snippetUrl: 'REPLACE_WITH_CANADA_AI_SNIPPET_URL' },
-			noAiActionBar: { snippetUrl: 'https://cdn-ca1.walkmedap.com/users/3d2e6a01a59e4624a1a916ad475b59b2/test/walkme_3d2e6a01a59e4624a1a916ad475b59b2_https.js', launcherId: '196354' }
+			aiActionBar: { snippetUrl: 'REPLACE_WITH_CANADA_AI_SNIPPET_URL', impersonationSystem: 'REPLACE_WITH_CANADA_AI_IMPERSONATION_SYSTEM' },
+			noAiActionBar: {
+				snippetUrl: 'https://cdn-ca1.walkmedap.com/users/3d2e6a01a59e4624a1a916ad475b59b2/test/walkme_3d2e6a01a59e4624a1a916ad475b59b2_https.js',
+				launcherId: '196354',
+				impersonationSystem: 'alex.solovkin_jira_8fb6@walkme.com'
+			}
 		},
 		'Fedramp (prod1)': {
-			aiActionBar: { snippetUrl: 'REPLACE_WITH_FEDRAMP_AI_SNIPPET_URL' },
-			noAiActionBar: { snippetUrl: 'https://cdn.walkmegov.com/users/430d9ab7a46d425492af84f6de798f13/test/walkme_430d9ab7a46d425492af84f6de798f13_https.js', launcherId: '198072' }
+			aiActionBar: { snippetUrl: 'REPLACE_WITH_FEDRAMP_AI_SNIPPET_URL', impersonationSystem: 'REPLACE_WITH_FEDRAMP_AI_IMPERSONATION_SYSTEM' },
+			noAiActionBar: {
+				snippetUrl: 'https://cdn.walkmegov.com/users/430d9ab7a46d425492af84f6de798f13/test/walkme_430d9ab7a46d425492af84f6de798f13_https.js',
+				launcherId: '198072',
+				impersonationSystem: 'REPLACE_WITH_FEDRAMP_NON_AI_IMPERSONATION_SYSTEM'
+			}
 		},
 		'SAP US (us01)': {
-			aiActionBar: { snippetUrl: 'REPLACE_WITH_SAP_US_AI_SNIPPET_URL' },
-			noAiActionBar: { snippetUrl: 'REPLACE_WITH_SAP_US_NON_AI_SNIPPET_URL', launcherId: 'REPLACE_WITH_SAP_US_NON_AI_LAUNCHER_ID' }
+			aiActionBar: { snippetUrl: 'https://cdn-us01.walkme.cloud.sap/users/3812f50546ad4b969566e3210f9dbbf8/test/walkme_3812f50546ad4b969566e3210f9dbbf8_https.js', impersonationSystem: 'alexsolovkin_unknown_19ae@walkme.com' },
+			noAiActionBar: {
+				snippetUrl: 'https://cdn-us01.walkme.cloud.sap/users/430e12e90fcc4c1f9d5f2960cfd2eee5/test/walkme_430e12e90fcc4c1f9d5f2960cfd2eee5_https.js',
+				launcherId: '214118',
+				impersonationSystem: 'alexsolovkin_unknown_0bb7@walkme.com'
+			}
 		},
 		'SAP EU (eu01)': {
-			aiActionBar: { snippetUrl: 'REPLACE_WITH_SAP_EU_AI_SNIPPET_URL' },
-			noAiActionBar: { snippetUrl: 'REPLACE_WITH_SAP_EU_NON_AI_SNIPPET_URL', launcherId: 'REPLACE_WITH_SAP_EU_NON_AI_LAUNCHER_ID' }
+			aiActionBar: { snippetUrl: 'https://cdn-eu01.walkme.cloud.sap/users/7f21338b3cd0423493d2308d5dab67e0/test/walkme_7f21338b3cd0423493d2308d5dab67e0_https.js', impersonationSystem: 'alexsolovkin_unknown_31c5@walkme.com' },
+			noAiActionBar: {
+				snippetUrl: 'https://cdn-eu01.walkme.cloud.sap/users/5e1b62114dbe4fcb93bebcd02d71cb19/test/walkme_5e1b62114dbe4fcb93bebcd02d71cb19_https.js',
+				launcherId: '210742',
+				impersonationSystem: 'alexsolovkin_unknown_4278@walkme.com'
+			}
 		},
 		'GSA1 (t01)': {
-			aiActionBar: { snippetUrl: 'REPLACE_WITH_GSA1_AI_SNIPPET_URL' },
-			noAiActionBar: { snippetUrl: 'https://cdn.t01.walkmegov.com/users/e1ef054f22c944ebb24ac97a092d32d2/test/walkme_e1ef054f22c944ebb24ac97a092d32d2_https.js', launcherId: '535' }
+			aiActionBar: { snippetUrl: 'REPLACE_WITH_GSA1_AI_SNIPPET_URL', impersonationSystem: 'REPLACE_WITH_GSA1_AI_IMPERSONATION_SYSTEM' },
+			noAiActionBar: {
+				snippetUrl: 'https://cdn.t01.walkmegov.com/users/e1ef054f22c944ebb24ac97a092d32d2/test/walkme_e1ef054f22c944ebb24ac97a092d32d2_https.js',
+				launcherId: '535',
+				impersonationSystem: 'REPLACE_WITH_GSA1_NON_AI_IMPERSONATION_SYSTEM'
+			}
 		},
 		'GSA2 (t02)': {
-			aiActionBar: { snippetUrl: 'REPLACE_WITH_GSA2_AI_SNIPPET_URL' },
-			noAiActionBar: { snippetUrl: 'REPLACE_WITH_GSA2_NON_AI_SNIPPET_URL', launcherId: 'REPLACE_WITH_GSA2_NON_AI_LAUNCHER_ID' }
+			aiActionBar: { snippetUrl: 'REPLACE_WITH_GSA2_AI_SNIPPET_URL', impersonationSystem: 'REPLACE_WITH_GSA2_AI_IMPERSONATION_SYSTEM' },
+			noAiActionBar: {
+				snippetUrl: 'REPLACE_WITH_GSA2_NON_AI_SNIPPET_URL',
+				launcherId: 'REPLACE_WITH_GSA2_NON_AI_LAUNCHER_ID',
+				impersonationSystem: 'REPLACE_WITH_GSA2_NON_AI_IMPERSONATION_SYSTEM'
+			}
 		}
 	};
 
@@ -217,26 +250,28 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 			guidSection.style.marginBottom = '16px';
 
 			const guidHeading = document.createElement('div');
-			guidHeading.textContent = 'System Guid';
+			guidHeading.textContent = 'System data';
 			guidHeading.style.fontWeight = 'bold';
 			guidHeading.style.marginBottom = '8px';
 			guidSection.appendChild(guidHeading);
 
 			const guidValue = document.createElement('div');
 			const envValue = document.createElement('div');
-			guidSection.append(guidValue, envValue);
+			const impersonationSystemValue = document.createElement('div');
+			guidSection.append(guidValue, envValue, impersonationSystemValue);
 
-			// Read-only info for the currently selected env/mode — pulled from the snippet url
-			// itself rather than typed separately, so it can't drift out of sync with CONFIG_BY_ENV.
+			// Guid/Env are read-only, pulled from the snippet url itself so they can't drift out of
+			// sync with CONFIG_BY_ENV. impersonationSystem is separate editable data per snippet
+			// (like launcherId) since it isn't recoverable from the url — fill it in above.
 			function refreshGuidInfo() {
 				const selectedEnv = envGroup.querySelector('input[name="wm-test-env"]:checked')?.value;
 				const selectedMode = modeGroup.querySelector('input[name="wm-test-mode"]:checked')?.value;
-				const { guid, urlEnv } =
-					selectedEnv && selectedMode
-						? parseSnippetUrl(configByEnv[selectedEnv][getModeConfigKey(selectedMode)].snippetUrl)
-						: {};
+				const modeConfig = selectedEnv && selectedMode ? configByEnv[selectedEnv][getModeConfigKey(selectedMode)] : undefined;
+				const { guid, urlEnv } = modeConfig ? parseSnippetUrl(modeConfig.snippetUrl) : {};
+				const impersonationSystem = modeConfig && !isPlaceholder(modeConfig.impersonationSystem) ? modeConfig.impersonationSystem : undefined;
 				guidValue.textContent = `Guid: ${guid || '—'}`;
 				envValue.textContent = `Env: ${urlEnv || '—'}`;
+				impersonationSystemValue.textContent = `System: ${impersonationSystem || '—'}`;
 			}
 
 			refreshModeDisabling();
