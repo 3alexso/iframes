@@ -401,9 +401,196 @@ title="iframe example"
 	<li class="list-item" id="item15">Item Number 15</li>
 </ul>
 </div>
+	<div class="scrollable-container">
+<div id="csp-tester-container" style="border: 2px solid #ccc; padding: 20px; margin: 30px auto; border-radius: 10px; background-color: #f9f9f9; text-align: left; color: #000; width: 90%; box-sizing: border-box;">
+    <h2 style="text-align: center; color: #333; font-size: 24px; margin-bottom: 5px;">CSP Configuration Tester</h2>
+    <p style="text-align: center; margin-bottom: 20px; color: #555;">Select directives or add custom ones below. Custom text area rules override checkboxes if they share the same directive.</p>
+    
+    <div id="select-all-container" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd; font-weight: bold;">
+        </div>
+
+    <div id="csp-checkboxes" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin-bottom: 20px;">
+        </div>
+
+    <div style="margin-bottom: 20px; border-top: 1px solid #ddd; padding-top: 15px;">
+        <label for="manualCspTextArea" style="display: block; font-weight: bold; margin-bottom: 10px;">Manual CSP Input (Overrides checkboxes on conflict):</label>
+        <textarea id="manualCspTextArea" rows="4" style="width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: monospace;" placeholder="e.g., script-src 'self' https://trusted.cdn.com; img-src *"></textarea>
+    </div>
+    
+    <div style="display: flex; justify-content: center; gap: 20px;">
+        <button id="saveCspBtn" style="background-color: dodgerblue; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Save and reload</button>
+        <button id="resetCspBtn" style="background-color: tomato; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Reset and reload</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // List of all CSP options
+        const cspOptions = [
+          "default-src 'none'", "script-src 'none'", "style-src 'none'",
+            "img-src 'none'", "connect-src 'none'", "font-src 'none'",
+            "object-src 'none'", "frame-ancestors 'none'", "upgrade-insecure-requests",
+            "frame-src 'none'", "base-uri 'none'", "form-action 'none'",
+            "media-src 'none'", "child-src 'none'", "worker-src 'none'",
+            "manifest-src 'none'", "block-all-mixed-content", "sandbox",
+            "prefetch-src 'none'", "plugin-types 'none'", "script-src-elem 'none'",
+            "script-src-attr 'none'", "style-src-elem 'none'", "style-src-attr 'none'"
+        ];
+
+        function addMetaTagCspString(cspString) {
+            const meta = document.createElement('meta');
+            meta.httpEquiv = 'Content-Security-Policy';
+            meta.content = cspString;
+            document.getElementsByTagName('head')[0].appendChild(meta);
+            console.log("Applied CSP:", cspString); // Useful for debugging in console
+        }
+
+        function combineCspRules(checkboxesArr, textareaStr) {
+            const cspMap = new Map();
+
+            // 1. Process Checkboxes
+            checkboxesArr.forEach(rule => {
+                const parts = rule.trim().split(/\s+/);
+                const directiveName = parts[0];
+                cspMap.set(directiveName, rule.trim());
+            });
+
+            // 2. Process Textarea (This overwrites existing keys in the Map)
+            if (textareaStr) {
+                const textRules = textareaStr.split(';');
+                textRules.forEach(rule => {
+                    const trimmed = rule.trim();
+                    if (trimmed) {
+                        const parts = trimmed.split(/\s+/);
+                        const directiveName = parts[0];
+                        cspMap.set(directiveName, trimmed.replace(/\n/g, ' '));
+                    }
+                });
+            }
+
+            // 3. Join the final mapped rules into a single CSP string
+            return Array.from(cspMap.values()).join('; ');
+        }
+
+        function initCspTester() {
+            const container = document.getElementById('csp-checkboxes');
+            const selectAllContainer = document.getElementById('select-all-container');
+            const manualCspTextArea = document.getElementById('manualCspTextArea');
+            
+            // Fetch saved config (Using a new JSON key to handle both UI states cleanly)
+            let savedConfig = { checkboxes: [], textarea: "" };
+            try {
+                const savedData = localStorage.getItem('cspTesterConfig');
+                if (savedData) savedConfig = JSON.parse(savedData);
+            } catch (e) {
+                console.error("Failed to parse CSP config from LocalStorage", e);
+            }
+
+            // 1. Combine and apply the CSP immediately if rules exist
+            const finalCspString = combineCspRules(savedConfig.checkboxes, savedConfig.textarea);
+            if (finalCspString) {
+                addMetaTagCspString(finalCspString);
+            }
+
+            // 2. Restore Textarea state
+            manualCspTextArea.value = savedConfig.textarea;
+
+            // 3. Create the "Select / Clear All" Checkbox
+            const selectAllLabel = document.createElement('label');
+            selectAllLabel.style.display = 'flex';
+            selectAllLabel.style.alignItems = 'center';
+            selectAllLabel.style.gap = '8px';
+            selectAllLabel.style.cursor = 'pointer';
+            
+            const selectAllCheckbox = document.createElement('input');
+            selectAllCheckbox.type = 'checkbox';
+            selectAllCheckbox.id = 'selectAllToggle';
+            
+            selectAllLabel.appendChild(selectAllCheckbox);
+            selectAllLabel.appendChild(document.createTextNode('Select / Clear All'));
+            selectAllContainer.appendChild(selectAllLabel);
+
+            // 4. Generate Individual Checkboxes dynamically
+            cspOptions.forEach(option => {
+                const label = document.createElement('label');
+                label.style.display = 'flex';
+                label.style.alignItems = 'center';
+                label.style.gap = '8px';
+                label.style.fontSize = '16px';
+                label.style.cursor = 'pointer';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = option;
+                checkbox.className = 'csp-option-cb';
+                
+                // Check the box if it was previously saved
+                if (savedConfig.checkboxes.includes(option)) {
+                    checkbox.checked = true;
+                }
+
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(option));
+                container.appendChild(label);
+            });
+
+            // 5. Handle Checkbox Sync Logic
+            const allOptionCheckboxes = container.querySelectorAll('.csp-option-cb');
+            
+            const updateSelectAllState = () => {
+                const checkedCount = container.querySelectorAll('.csp-option-cb:checked').length;
+                selectAllCheckbox.checked = (checkedCount === allOptionCheckboxes.length) && (allOptionCheckboxes.length > 0);
+            };
+
+            updateSelectAllState();
+
+            selectAllCheckbox.addEventListener('change', (e) => {
+                const isChecked = e.target.checked;
+                allOptionCheckboxes.forEach(cb => {
+                    cb.checked = isChecked;
+                });
+            });
+
+            allOptionCheckboxes.forEach(cb => {
+                cb.addEventListener('change', updateSelectAllState);
+            });
+
+            // 6. Save Button Logic
+            document.getElementById('saveCspBtn').addEventListener('click', () => {
+                const checkedBoxes = Array.from(container.querySelectorAll('.csp-option-cb:checked')).map(cb => cb.value);
+                const textareaContent = manualCspTextArea.value.trim();
+                
+                const newConfig = {
+                    checkboxes: checkedBoxes,
+                    textarea: textareaContent
+                };
+
+                if (checkedBoxes.length > 0 || textareaContent !== "") {
+                    localStorage.setItem('cspTesterConfig', JSON.stringify(newConfig));
+                } else {
+                    localStorage.removeItem('cspTesterConfig');
+                }
+                
+                window.location.reload();
+            });
+
+            // 7. Reset Button Logic
+            document.getElementById('resetCspBtn').addEventListener('click', () => {
+                localStorage.removeItem('cspTesterConfig');
+                // Optional cleanup of older key if it existed
+                localStorage.removeItem('cspString'); 
+                window.location.reload();
+            });
+        }
+
+        // Run the initialization
+        initCspTester();
+    })();
+</script>
+</div>
 <div id="outside">
     <form id="survey-form" action="/my-handling-form-page" method="post">
-      <p id="description"><b>Note:</b> Form is to be completed at least 21 days prior to date</p>
+      <p id="description"><b>Note:</b> Form is to be completed at least  days prior to date</p>
       
       <!-- ------------------Personal Details---------------------------- -->
       <fieldset>
