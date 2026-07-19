@@ -17,7 +17,6 @@
             );
             opacity: 0.75;
         }
-
         /* Basic styles for the page */
         body {
             font-family: Arial, sans-serif;
@@ -25,7 +24,6 @@
             background-color: #f0f0f0;
             margin: 0;
         }
-
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -35,17 +33,14 @@
             color: white;
             border-radius: 4px;
         }
-
         button:focus {
             outline: none;
             box-shadow: 0 0 3px 2px rgba(98, 0, 234, 0.5);
         }
-
         p {
             font-size: 18px;
             margin: 10px 0;
         }
-
         dialog {
             border: solid 2px #6200ea;
             border-radius: 8px;
@@ -58,23 +53,19 @@
             margin: 0;
             padding: 0;
         }
-
         nav {
             background-color: #333;
             padding: 10px 20px;
         }
-
         nav ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
             display: flex;
         }
-
         nav ul li {
             margin-right: 20px;
         }
-
         nav ul li a {
             color: white;
             text-decoration: none;
@@ -83,36 +74,59 @@
             display: block;
             transition: background-color 0.3s;
         }
-
         nav ul li a:hover {
             background-color: #575757;
             border-radius: 4px;
         }
-
         /* Styling for the sections */
         section {
             padding: 50px;
             height: 8vh;
         }
-
         #home {
             background-color: lightblue;
         }
-
         #about {
             background-color: lightgreen;
         }
-
         #services {
             background-color: lightcoral;
         }
-
         #contact {
             background-color: lightyellow;
+        }
+
+        /* Mock MUI drawer/top button styles */
+        .MuiDrawer-paperAnchorDockedLeft {
+            display: flex;
+            align-items: center;
+            padding: 8px 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+        }
+        .MuiTypography-root.MuiTypography-body1.MuiTypography-noWrap {
+            margin: 0;
+        }
+        #top-selector-button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
+
+    <!-- Top button matching the requested selector -->
+    <div class="MuiDrawer-paperAnchorDockedLeft">
+        <button id="top-selector-button" class="MuiTypography-root MuiTypography-body1 MuiTypography-noWrap">
+            Top Button
+        </button>
+    </div>
+
      <nav>
         <ul>
             <li><a href="#home">Home</a></li>
@@ -121,28 +135,23 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
-
     <!-- Sections with corresponding IDs -->
     <section id="home">
         <h1>Home</h1>
         <p>Welcome to the Home section!</p>
     </section>
-
     <section id="about">
         <h1>About</h1>
         <p>This is the About section. Here you can learn more about us.</p>
     </section>
-
     <section id="services">
         <h1>Services</h1>
         <p>Discover the services we offer in the Services section.</p>
     </section>
-
     <section id="contact">
         <h1>Stay in touch</h1>
         <p>Get in touch with us .</p>
     </section>
-
     <dialog id="dialog_id">
   <button id="butt" autofocus="">Close</button>
   <p>This modal dialog has a groovy backdrop!</p>
@@ -153,22 +162,23 @@
         </div>
 </dialog>
 <button>Show the dialog</button>
-
     <script>const dialog = document.querySelector("dialog");
 const showButton = document.querySelector("dialog + button");
 const closeButton = document.querySelector("dialog button");
-
 // "Show the dialog" button opens the dialog modally
 showButton.addEventListener("click", () => {
   dialog.showModal();
 });
-
 // "Close" button closes the dialog
 closeButton.addEventListener("click", () => {
   dialog.close();
 });
+
+// Optional: wire up the top button
+document.getElementById("top-selector-button").addEventListener("click", () => {
+  alert("Top button clicked!");
+});
 </script>
   
-
 </body>
 </html>
