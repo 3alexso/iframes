@@ -75,8 +75,8 @@ window.runWalkmeSwtTest = async function walkmeSwtTest() {
 		'GSA2 (t02)': {
 			aiActionBar: { snippetUrl: 'REPLACE_WITH_GSA2_AI_SNIPPET_URL', impersonationSystem: 'REPLACE_WITH_GSA2_AI_IMPERSONATION_SYSTEM' },
 			noAiActionBar: {
-				snippetUrl: 'REPLACE_WITH_GSA2_NON_AI_SNIPPET_URL',
-				launcherId: 'REPLACE_WITH_GSA2_NON_AI_LAUNCHER_ID',
+				snippetUrl: 'https://cdn.t02.walkmegov.com/users/eccddb2bd86247c1837b5bf08398af7c/test/walkme_eccddb2bd86247c1837b5bf08398af7c_https.js',
+				launcherId: '175',
 				impersonationSystem: 'REPLACE_WITH_GSA2_NON_AI_IMPERSONATION_SYSTEM'
 			}
 		}
