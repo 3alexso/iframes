@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Northwind Cloud — Live Recovery QA Test Site</title>
+<style>
+	:root {
+		--brand: #2563eb;
+		--brand-dark: #1e3a8a;
+		--brand-light: #eff6ff;
+		--text: #111827;
+		--muted: #6b7280;
+		--border: #e5e7eb;
+		--bg: #ffffff;
+		--bg-alt: #f9fafb;
+		--ok: #16a34a;
+		--warn: #d97706;
+		--bad: #dc2626;
+	}
+	* { box-sizing: border-box; }
+	html, body { margin: 0; padding: 0; }
+	body {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+		color: var(--text);
+		background: var(--bg);
+		line-height: 1.5;
+	}
+	a { color: var(--brand); text-decoration: none; }
+	button, input, select { font: inherit; }
+	.btn {
+		display: inline-flex; align-items: center; gap: 6px;
+		padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border);
+		background: #fff; color: var(--text); cursor: pointer;
+	}
+	.btn:hover { background: var(--bg-alt); }
+	.btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+	.btn.primary:hover { background: var(--brand-dark); }
+	.btn.round { border-radius: 999px; }
+	.btn.ghost { border-color: transparent; }
+	.btn:disabled { opacity: .5; cursor: not-allowed; }
+	/* "-v2" twins keep the look identical after breakSelector() renames classes */
+	.btn-v2 { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: #fff; color: var(--text); cursor: pointer; }
+	.btn-v2.primary-v2 { background: var(--brand); border-color: var(--brand); color: #fff; }
+	.btn-v2.round-v2 { border-radius: 999px; }
+	.btn-v2.ghost-v2 { border-color: transparent; }
+	.btn-v2:disabled { opacity: .5; cursor: not-allowed; }
+	.input-v2 { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; min-width: 220px; }
+	.input {
+		padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; min-width: 220px;
+	}
+	.card {
+		border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: #fff;
+	}
+	.row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+	.muted { color: var(--muted); }
+	.tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--bg-alt); border: 1px solid var(--border); color: var(--muted); }
+	.hidden { display: none !important; }
+
+	/* ---------- Header / nav ---------- */
+	header.site-header {
+		display: flex; align-items: center; justify-content: space-between;
+		padding: 14px 32px; border-bottom: 1px solid var(--border); background: #fff;
+		position: sticky; top: 0; z-index: 50;
+	}
+	.logo { font-weight: 700; font-size: 18px; color: var(--brand-dark); display: flex; align-items: center; gap: 8px; }
+	.logo .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--brand); }
+	nav.site-nav a { margin: 0 10px; color: var(--text); font-weight: 500; }
+	nav.site-nav a.active { color: var(--brand); }
+
+	main { max-width: 1100px; margin: 0 auto; padding: 24px 32px 120px; }
+	.page { display: none; }
+	.page.active { display: block; }
+
+	/* ---------- Scenario sections ---------- */
+	.category { margin: 40px 0 12px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+	section.scenario {
+		border: 1px solid var(--border); border-radius: 12px; margin: 16px 0; background: #fff; overflow: hidden;
+	}
+	section.scenario.variation-on { border-color: var(--warn); box-shadow: 0 0 0 2px #fde68a inset; }
+	.scenario-head {
+		display: flex; justify-content: space-between; align-items: center; gap: 12px;
+		padding: 10px 16px; background: var(--bg-alt); border-bottom: 1px solid var(--border);
+	}
+	.scenario-head .sid { font-family: ui-monospace, Menlo, monospace; font-weight: 700; color: var(--brand-dark); }
+	.scenario-head .stitle { font-weight: 600; }
+	.scenario-head .sexp { font-size: 12px; color: var(--muted); }
+	.scenario-head label.var-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); white-space: nowrap; cursor: pointer; }
+	.scenario-body { padding: 20px 16px; position: relative; min-height: 70px; }
+	.scenario-foot { padding: 8px 16px; border-top: 1px dashed var(--border); font-size: 12px; color: var(--muted); }
+	.scenario-foot code { background: var(--bg-alt); padding: 1px 5px; border-radius: 4px; }
+	.state-badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+	.state-badge.ok { background: #dcfce7; color: #166534; border-color: #86efac; }
+
+	/* ---------- Scenario-specific ---------- */
+	.search-group { display: inline-flex; align-items: center; gap: 6px; }
+	.panel { border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 10px; background: var(--bg-alt); }
+	.switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+	.dropdown { position: relative; display: inline-block; }
+	.dropdown-menu { position: absolute; top: 110%; left: 0; background: #fff; border: 1px solid var(--border); border-radius: 8px; min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,.08); padding: 6px; z-index: 5; }
+	.dropdown-menu a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--text); }
+	.dropdown-menu a:hover { background: var(--bg-alt); }
+	.accordion-head { display: flex; justify-content: space-between; width: 100%; text-align: left; }
+	.topnav { display: flex; gap: 18px; align-items: center; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; }
+	.topnav a { color: var(--text); }
+	.hamburger { display: none; }
+	.topnav.collapsed .nav-items { display: none; }
+	.topnav.collapsed .hamburger { display: inline-flex; }
+	@media (max-width: 700px) { .topnav .nav-items { display: none; } .topnav .hamburger { display: inline-flex; } }
+	.layout-wide { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+	.layout-narrow { display: grid; grid-template-columns: 1fr; gap: 12px; }
+	.layout-sidebar { display: grid; grid-template-columns: 180px 1fr; gap: 12px; }
+	.sidebar { border-right: 1px solid var(--border); padding-right: 12px; }
+	.dark { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 16px; }
+	.dark .btn { background: #1e293b; color: #e2e8f0; border-color: #334155; }
+	table.data { border-collapse: collapse; width: 100%; }
+	table.data th, table.data td { border-bottom: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+	table.data th { cursor: pointer; background: var(--bg-alt); }
+	.truncate-box { width: 90px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: inline-block; vertical-align: bottom; }
+	.toast { position: absolute; top: 12px; right: 16px; background: #111827; color: #fff; padding: 10px 14px; border-radius: 8px; font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+	.hover-menu { position: relative; display: inline-block; }
+	.hover-menu .submenu { display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 6px; min-width: 160px; z-index: 5; }
+	.hover-menu:hover .submenu, .hover-menu.open .submenu { display: block; }
+	.hover-menu .submenu a { display: block; padding: 6px 10px; color: var(--text); }
+	.spacer-fold { height: 2200px; background: repeating-linear-gradient(180deg, transparent 0 60px, var(--bg-alt) 60px 61px); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+
+	/* ---------- Modals ---------- */
+	.modal-backdrop {
+		position: fixed; inset: 0; background: rgba(17,24,39,.55); z-index: 1000;
+		display: flex; align-items: center; justify-content: center;
+	}
+	.modal { background: #fff; border-radius: 14px; padding: 24px 28px; width: min(520px, 90vw); position: relative; box-shadow: 0 30px 60px rgba(0,0,0,.3); }
+	.modal.full { width: 100vw; height: 100vh; border-radius: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+	.modal h3 { margin: 0 0 8px; }
+	.modal .x { position: absolute; top: 12px; right: 14px; border: 0; background: transparent; font-size: 22px; cursor: pointer; line-height: 1; }
+	.side-modal { position: fixed; bottom: 24px; left: 24px; z-index: 1000; width: 280px; }
+	.cookie-banner { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000; background: #111827; color: #fff; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+	.cookie-banner .btn { background: #fff; }
+
+	/* ---------- Demo control panel (NOT part of the app under test; ids prefixed dc-) ---------- */
+	#dc-fab {
+		position: fixed; right: 20px; bottom: 20px; z-index: 2000; border: 0; border-radius: 999px;
+		background: #111827; color: #fff; padding: 12px 18px; cursor: pointer; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,.3);
+	}
+	#dc-fab .badge { background: var(--warn); border-radius: 999px; padding: 0 7px; margin-left: 6px; font-size: 12px; }
+	#dc-panel {
+		position: fixed; right: 20px; bottom: 70px; z-index: 2000; width: 380px; max-height: 75vh; overflow: auto;
+		background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,.25); padding: 14px; font-size: 13px;
+	}
+	#dc-panel h4 { margin: 0 0 8px; }
+	#dc-panel .dc-cat { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 12px 0 4px; }
+	#dc-panel .dc-row { display: flex; align-items: center; gap: 6px; border-radius: 6px; }
+	#dc-panel .dc-row:hover { background: var(--bg-alt); }
+	#dc-panel label { display: flex; gap: 8px; align-items: flex-start; padding: 4px 2px; cursor: pointer; border-radius: 6px; flex: 1; }
+	#dc-panel .dc-goto { flex: none; border: 1px solid var(--border); background: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; cursor: pointer; color: var(--brand); white-space: nowrap; }
+	#dc-panel .dc-goto:hover { background: var(--brand-light); border-color: var(--brand); }
+	section.scenario { scroll-margin-top: 80px; }
+	section.scenario.flash { box-shadow: 0 0 0 3px var(--brand) inset; transition: box-shadow .3s; }
+	#dc-panel label .sid { font-family: ui-monospace, Menlo, monospace; font-weight: 700; min-width: 54px; color: var(--brand-dark); }
+	#dc-panel .dc-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+	#dc-panel .dc-actions .btn { padding: 5px 10px; font-size: 12px; }
+	#dc-url { width: 100%; font-size: 11px; font-family: ui-monospace, Menlo, monospace; padding: 6px; border: 1px solid var(--border); border-radius: 6px; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+	<div class="logo"><span class="dot"></span> Northwind Cloud</div>
+	<nav class="site-nav">
+		<a href="#/home" data-route="home" class="active">Home</a>
+		<a href="#/reports" data-route="reports">Reports</a>
+		<a href="#/orders" data-route="orders">Orders</a>
+		<a href="#/settings" data-route="settings">Settings</a>
+	</nav>
+	<div class="row">
+		<button class="btn primary" id="header-get-started">Get started</button>
+	</div>
+</header>
+
+<main>
+	<!-- ===================== HOME: all scenarios ===================== -->
+	<div class="page active" id="page-home" data-page="home">
+		<h1 style="margin:0 0 4px">Live Recovery QA scenarios</h1>
+		<p class="muted" style="margin-top:0">
+			Each section is one row of the <em>Live_Recovery_QA_Scenarios</em> sheet. Build the Smart Walk-Thru on the elements while the
+			<strong>runtime variation is OFF</strong>, then switch it <strong>ON</strong> (section toggle, the control panel bottom-right, or
+			<code>?on=LR-001,LR-035</code> in the URL) and play the flow. Element ids are stable and prefixed with the scenario id.
+		</p>
+		<div id="scenarios"></div>
+	</div>
+
+	<!-- ===================== REPORTS page (LR-013) ===================== -->
+	<div class="page" id="page-reports" data-page="reports">
+		<h1 id="reports-page-title">Reports</h1>
+		<p class="muted">Second page used by LR-013 (step 2 lives here).</p>
+		<div class="card row">
+			<button class="btn primary" id="reports-export-btn">Export report</button>
+			<button class="btn" id="reports-schedule-btn">Schedule</button>
+		</div>
+		<p><a href="#/home">← Back to home</a></p>
+	</div>
+
+	<!-- ===================== ORDERS page (LR-049) ===================== -->
+	<div class="page" id="page-orders" data-page="orders">
+		<h1 id="orders-page-title">Orders</h1>
+		<p class="muted">Second page used by LR-049 (step after the auto-click lives here).</p>
+		<div class="card row">
+			<button class="btn primary" id="orders-new-btn">New order</button>
+			<input class="input" id="orders-search" placeholder="Search orders" />
+		</div>
+		<p><a href="#/home">← Back to home</a></p>
+	</div>
+
+	<!-- ===================== SETTINGS page (generic) ===================== -->
+	<div class="page" id="page-settings" data-page="settings">
+		<h1 id="settings-page-title">Settings</h1>
+		<div class="card row">
+			<label class="switch"><input type="checkbox" id="settings-notifications" /> Email notifications</label>
+			<button class="btn primary" id="settings-save">Save</button>
+		</div>
+		<p><a href="#/home">← Back to home</a></p>
+	</div>
+</main>
+
+<!-- modal / overlay host -->
+<div id="overlay-host"></div>
+
+<!-- ===================== Demo controls (ids prefixed dc-, not part of the app) ===================== -->
+<button id="dc-fab">⚙ Scenarios <span class="badge" id="dc-badge">0</span></button>
+<div id="dc-panel" class="hidden">
+	<h4>Runtime variations</h4>
+	<div class="dc-actions">
+		<button class="btn" id="dc-reset">Reset all</button>
+		<button class="btn" id="dc-copy">Copy URL</button>
+		<button class="btn" id="dc-close">Close</button>
+	</div>
+	<div class="muted">Checked = scenario page differs from how the flow was built. State is kept in the URL (<code>?on=</code>) and localStorage so it survives reloads.</div>
+	<input id="dc-url" readonly />
+	<div id="dc-list"></div>
+</div>
+
+<script>
+(function () {
+	'use strict';
+
+	/* ------------------------------------------------------------------ */
+	/* Scenario definitions                                               */
+	/* build(): static HTML with the elements to capture (variation OFF)  */
+	/* apply(root): mutate the section to the runtime variation (ON)      */
+	/* ------------------------------------------------------------------ */
+	var h = function (s) { return s.replace(/\s+\n\s+/g, '\n'); };
+
+	// Breaks the WalkMe selector of an element: new id (<id>--alt), new classes, extra wrapper.
+	function breakSelector(root, id) {
+		var el = root.querySelector('#' + id);
+		if (!el) return null;
+		el.id = id + '--alt';
+		el.className = el.className.split(' ').map(function (c) { return c ? c + '-v2' : c; }).join(' ') + ' alt-' + Math.random().toString(36).slice(2, 7);
+		el.setAttribute('data-alt', 'true');
+		var wrap = document.createElement('span');
+		wrap.className = 'alt-wrap';
+		el.parentNode.insertBefore(wrap, el);
+		wrap.appendChild(el);
+		return el;
+	}
+	function hide(root, ids) {
+		ids.forEach(function (id) { var el = root.querySelector('#' + id); if (el) el.remove(); });
+	}
+	function badge(text, ok) { return '<span class="state-badge' + (ok ? ' ok' : '') + '">' + text + '</span>'; }
+
+	var SCENARIOS = [
+		/* ===================== Skip – independent steps ===================== */
+		{ id: 'LR-001', cat: 'Skip – independent steps', title: 'Skip missing info balloon', expected: 'Skip B1, show B2 → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-001-signin">Sign in</button><button class="btn" id="lr-001-products">Products</button><button class="btn" id="lr-001-pricing">Pricing</button></div>'),
+			steps: 'B1 "Sign in here" on <code>#lr-001-signin</code> → B2 "Our products" on <code>#lr-001-products</code>',
+			variation: 'Sign in button removed',
+			apply: function (r) { hide(r, ['lr-001-signin']); } },
+
+		{ id: 'LR-002', cat: 'Skip – independent steps', title: 'Search icon hidden, bar pre-expanded', expected: 'Skip B1, show B2 → fixed',
+			build: h('<div class="search-group"><button class="btn round" id="lr-002-search-icon" title="Search">🔍</button><input class="input hidden" id="lr-002-search-bar" placeholder="Search products…" /></div>'),
+			steps: 'B1 on <code>#lr-002-search-icon</code> → B2 on <code>#lr-002-search-bar</code> (bar appears after clicking the icon)',
+			variation: 'Search bar already expanded, icon hidden',
+			init: function (r) { r.querySelector('#lr-002-search-icon').addEventListener('click', function () { r.querySelector('#lr-002-search-bar').classList.remove('hidden'); }); },
+			apply: function (r) { hide(r, ['lr-002-search-icon']); r.querySelector('#lr-002-search-bar').classList.remove('hidden'); } },
+
+		{ id: 'LR-003', cat: 'Skip – independent steps', title: 'Panel already open – skip click step', expected: 'Skip S1, show S2 → fixed',
+			build: h('<button class="btn" id="lr-003-filters-btn">Filters ▾</button><div class="panel hidden" id="lr-003-panel"><label class="switch"><input type="checkbox" id="lr-003-filter-active" /> Active only</label> &nbsp; <label class="switch"><input type="checkbox" id="lr-003-filter-paid" /> Paid</label> &nbsp; <button class="btn primary" id="lr-003-apply">Apply filters</button></div>'),
+			steps: 'S1 click <code>#lr-003-filters-btn</code> → S2 balloon on <code>#lr-003-apply</code> (inside panel)',
+			variation: 'Filters panel open by default (button removed)',
+			init: function (r) { r.querySelector('#lr-003-filters-btn').addEventListener('click', function () { r.querySelector('#lr-003-panel').classList.toggle('hidden'); }); },
+			apply: function (r) { hide(r, ['lr-003-filters-btn']); r.querySelector('#lr-003-panel').classList.remove('hidden'); } },
+
+		{ id: 'LR-004', cat: 'Skip – independent steps', title: 'Toggle already in target state', expected: 'Skip S1, show S2 → fixed',
+			build: h('<div class="row"><label class="switch" id="lr-004-toggle-label"><input type="checkbox" id="lr-004-toggle" /> Enable alerts</label><button class="btn primary" id="lr-004-save">Save</button></div>'),
+			steps: 'S1 click <code>#lr-004-toggle</code> ("Enable alerts") → S2 on <code>#lr-004-save</code>',
+			variation: 'Toggle already ON and hidden',
+			apply: function (r) { r.querySelector('#lr-004-toggle').checked = true; hide(r, ['lr-004-toggle-label']); r.querySelector('.row').insertAdjacentHTML('afterbegin', badge('Alerts enabled', true)); } },
+
+		{ id: 'LR-005', cat: 'Skip – independent steps', title: 'Skip 2 consecutive steps', expected: 'Skip B1+B2, show B3 → fixed',
+			build: h('<div class="row"><button class="btn" id="lr-005-el1">Element 1</button><button class="btn" id="lr-005-el2">Element 2</button><button class="btn primary" id="lr-005-el3">Element 3</button></div>'),
+			steps: 'B1 <code>#lr-005-el1</code> → B2 <code>#lr-005-el2</code> → B3 <code>#lr-005-el3</code> (all info balloons)',
+			variation: 'Elements 1 and 2 missing',
+			apply: function (r) { hide(r, ['lr-005-el1', 'lr-005-el2']); } },
+
+		{ id: 'LR-006', cat: 'Skip – independent steps', title: '3+ non-essential steps missing', expected: 'Skip all, show B4 → fixed',
+			build: h('<div class="row"><button class="btn" id="lr-006-el1">Tips</button><button class="btn" id="lr-006-el2">Shortcuts</button><button class="btn" id="lr-006-el3">What\'s new</button><button class="btn primary" id="lr-006-el4">Dashboard</button></div>'),
+			steps: 'B1 <code>#lr-006-el1</code> → B2 <code>#lr-006-el2</code> → B3 <code>#lr-006-el3</code> → B4 <code>#lr-006-el4</code> (all info)',
+			variation: 'Elements 1–3 missing',
+			apply: function (r) { hide(r, ['lr-006-el1', 'lr-006-el2', 'lr-006-el3']); } },
+
+		{ id: 'LR-007', cat: 'Skip – independent steps', title: '3 missing, one is essential', expected: 'Stop at essential step → not_fixed',
+			build: h('<div class="row"><span id="lr-007-state" class="state-badge">Signed out</span><button class="btn" id="lr-007-info1">Welcome tour</button><button class="btn primary" id="lr-007-signin">Sign in</button><button class="btn" id="lr-007-info3">Tips</button><button class="btn" id="lr-007-el4">My account</button></div>'),
+			steps: 'B1 info <code>#lr-007-info1</code> → B2 <code>#lr-007-signin</code> (essential) → B3 info <code>#lr-007-info3</code> → B4 <code>#lr-007-el4</code>',
+			variation: 'B1–B3 elements missing; user still signed out',
+			apply: function (r) { hide(r, ['lr-007-info1', 'lr-007-signin', 'lr-007-info3']); } },
+
+		{ id: 'LR-008', cat: 'Skip – independent steps', title: 'Last step missing', expected: 'Found → show; not found → fail like any step → fixed / not_fixed',
+			build: h('<div class="row"><button class="btn" id="lr-008-el1">Step one</button><button class="btn" id="lr-008-el2">Step two</button><button class="btn primary" id="lr-008-el3">Finish</button></div>'),
+			steps: 'B1 <code>#lr-008-el1</code> → B2 <code>#lr-008-el2</code> → B3 <code>#lr-008-el3</code> (last)',
+			variation: 'Last element (Finish) missing',
+			apply: function (r) { hide(r, ['lr-008-el3']); } },
+
+		{ id: 'LR-009', cat: 'Skip – independent steps', title: 'Role-based hidden element', expected: 'Skip B1, show B2 → fixed',
+			build: h('<div class="row"><span class="state-badge ok" id="lr-009-role">Role: Admin</span><button class="btn" id="lr-009-admin-settings">Admin settings</button><button class="btn" id="lr-009-help">Help</button></div>'),
+			steps: 'B1 <code>#lr-009-admin-settings</code> → B2 <code>#lr-009-help</code>',
+			variation: 'Role = Viewer: Admin settings not rendered',
+			apply: function (r) { hide(r, ['lr-009-admin-settings']); var b = r.querySelector('#lr-009-role'); b.textContent = 'Role: Viewer'; b.classList.remove('ok'); } },
+
+		/* ===================== No skip – dependent steps ===================== */
+		{ id: 'LR-010', cat: 'No skip – dependent steps', title: 'Sign-in dependency, user not signed in', expected: "Don't skip, don't click; stop → not_fixed",
+			build: h('<div class="row"><span class="state-badge" id="lr-010-state">Signed out</span><button class="btn primary" id="lr-010-signin">Sign in</button><div class="panel hidden" id="lr-010-signed-in-banner">You\'re signed in — go to your <a href="#/settings" id="lr-010-settings-link">settings</a>.</div></div>'),
+			steps: 'B1 on <code>#lr-010-signin</code> → B2 "You\'re signed in, go to…" on <code>#lr-010-signed-in-banner</code> (appears after sign-in click)',
+			variation: 'Sign in button missing, user NOT signed in (banner never appears)',
+			init: function (r) { r.querySelector('#lr-010-signin').addEventListener('click', function () { r.querySelector('#lr-010-signed-in-banner').classList.remove('hidden'); r.querySelector('#lr-010-state').textContent = 'Signed in'; r.querySelector('#lr-010-state').classList.add('ok'); }); },
+			apply: function (r) { hide(r, ['lr-010-signin']); } },
+
+		{ id: 'LR-011', cat: 'No skip – dependent steps', title: 'Sign-in dependency, user already signed in', expected: 'Skip B1, show B2 → fixed',
+			build: h('<div class="row"><span class="state-badge" id="lr-011-state">Signed out</span><button class="btn primary" id="lr-011-signin">Sign in</button><div class="dropdown hidden" id="lr-011-profile-menu"><button class="btn" id="lr-011-profile-btn">👤 Dana Levi ▾</button></div></div>'),
+			steps: 'B1 on <code>#lr-011-signin</code> → B2 on <code>#lr-011-profile-menu</code> (profile menu appears after sign-in)',
+			variation: 'User already signed in: Sign in missing, profile menu present',
+			init: function (r) { r.querySelector('#lr-011-signin').addEventListener('click', function () { r.querySelector('#lr-011-profile-menu').classList.remove('hidden'); r.querySelector('#lr-011-state').textContent = 'Signed in'; r.querySelector('#lr-011-state').classList.add('ok'); }); },
+			apply: function (r) { hide(r, ['lr-011-signin']); r.querySelector('#lr-011-profile-menu').classList.remove('hidden'); var s = r.querySelector('#lr-011-state'); s.textContent = 'Signed in'; s.classList.add('ok'); } },
+
+		{ id: 'LR-012', cat: 'No skip – dependent steps', title: 'Next element only after click (dropdown)', expected: "Don't open menu; stop → not_fixed",
+			build: h('<div class="row"><div class="dropdown" id="lr-012-dropdown"><button class="btn" id="lr-012-account-menu">Account ▾</button><div class="dropdown-menu hidden" id="lr-012-menu"><a href="#" id="lr-012-menu-profile">Profile</a><a href="#" id="lr-012-menu-billing">Billing</a><a href="#" id="lr-012-menu-signout">Sign out</a></div></div><span class="muted" id="lr-012-slot"></span></div>'),
+			steps: 'S1 click <code>#lr-012-account-menu</code> → S2 on menu item <code>#lr-012-menu-billing</code>',
+			variation: '"Account" renamed to "Workspace", moved right, selector changed; menu closed',
+			init: function (r) { r.querySelector('#lr-012-account-menu').addEventListener('click', function () { r.querySelector('#lr-012-menu').classList.toggle('hidden'); }); },
+			apply: function (r) { var b = breakSelector(r, 'lr-012-account-menu'); b.textContent = 'Workspace ▾'; var dd = r.querySelector('#lr-012-dropdown'); r.querySelector('#lr-012-slot').after(dd); } },
+
+		{ id: 'LR-013', cat: 'No skip – dependent steps', title: 'Next step on another page', expected: 'No navigation; stop → not_fixed',
+			build: h('<div class="row"><a class="btn" href="#/reports" id="lr-013-reports-link">Reports →</a><span class="muted">Step 2 is on the Reports page (<code>#reports-export-btn</code>).</span></div>'),
+			steps: 'S1 click <code>#lr-013-reports-link</code> → S2 balloon on <code>#reports-export-btn</code> (Reports page)',
+			variation: 'Reports link missing',
+			apply: function (r) { hide(r, ['lr-013-reports-link']); } },
+
+		{ id: 'LR-014', cat: 'No skip – dependent steps', title: 'Element in collapsed accordion', expected: "Don't expand; stop → not_fixed",
+			build: h('<div class="card" style="padding:0"><button class="btn ghost accordion-head" id="lr-014-advanced-toggle"><span>Advanced options</span><span>▸</span></button><div class="panel hidden" id="lr-014-advanced-body" style="margin:0;border:0;border-top:1px solid var(--border);border-radius:0"><label>API timeout (ms) <input class="input" id="lr-014-advanced-field" value="3000" /></label></div></div>'),
+			steps: 'S1 click <code>#lr-014-advanced-toggle</code> ("Advanced") → S2 on <code>#lr-014-advanced-field</code> inside',
+			variation: 'Accordion header missing, section stays collapsed',
+			init: function (r) { r.querySelector('#lr-014-advanced-toggle').addEventListener('click', function () { r.querySelector('#lr-014-advanced-body').classList.toggle('hidden'); }); },
+			apply: function (r) { hide(r, ['lr-014-advanced-toggle']); } },
+
+		{ id: 'LR-015', cat: 'No skip – dependent steps', title: 'Input needed before next step', expected: "Don't skip to Submit; stop → not_fixed",
+			build: h('<form class="row" onsubmit="return false"><input class="input" id="lr-015-email" type="email" placeholder="Work email" /><button class="btn primary" id="lr-015-submit">Submit</button></form>'),
+			steps: 'S1 type email in <code>#lr-015-email</code> → S2 click <code>#lr-015-submit</code>',
+			variation: 'Email field missing',
+			apply: function (r) { hide(r, ['lr-015-email']); } },
+
+		{ id: 'LR-016', cat: 'No skip – dependent steps', title: 'Hamburger menu at small width', expected: "Don't open hamburger; stop → not_fixed",
+			build: h('<nav class="topnav" id="lr-016-nav"><span class="nav-items" id="lr-016-nav-items"><a href="#" id="lr-016-nav-home">Home</a> <a href="#" id="lr-016-nav-pricing">Pricing</a> <a href="#" id="lr-016-nav-docs">Docs</a> <a href="#" id="lr-016-nav-contact">Contact</a></span><button class="btn hamburger" id="lr-016-hamburger">☰ Menu</button><span class="muted" style="margin-left:auto">also collapses below 700px</span></nav>'),
+			steps: 'S1 on top-nav item <code>#lr-016-nav-pricing</code> → S2 on <code>#lr-016-nav-docs</code>',
+			variation: 'Nav collapsed into hamburger (<code>#lr-016-hamburger</code>); items not rendered until opened',
+			init: function (r) { r.querySelector('#lr-016-hamburger').addEventListener('click', function () { r.querySelector('#lr-016-nav').classList.toggle('collapsed'); }); },
+			apply: function (r) { r.querySelector('#lr-016-nav').classList.add('collapsed'); } },
+
+		/* ===================== Heal – element changed, no click ===================== */
+		{ id: 'LR-017', cat: 'Heal – element changed, no click', title: 'Language change', expected: 'Heal, show B1 on new element → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-017-signin">Sign in</button><button class="btn" id="lr-017-register">Create account</button></div>'),
+			steps: 'B1 on <code>#lr-017-signin</code> ("Sign in", EN)',
+			variation: 'UI in Hebrew ("התחבר"), selector broken',
+			apply: function (r) { r.querySelector('.row').setAttribute('dir', 'rtl'); r.querySelector('.row').setAttribute('lang', 'he'); breakSelector(r, 'lr-017-signin').textContent = 'התחבר'; r.querySelector('#lr-017-register').textContent = 'צור חשבון'; } },
+
+		{ id: 'LR-018', cat: 'Heal – element changed, no click', title: 'RTL layout', expected: 'Heal → fixed',
+			build: h('<div class="layout-wide" id="lr-018-bar"><span>Invoices</span><button class="btn primary" id="lr-018-btn">New invoice</button></div>'),
+			steps: 'B1 on <code>#lr-018-btn</code> (top-right, LTR)',
+			variation: 'RTL layout — button mirrored to the left; selector broken',
+			apply: function (r) { r.querySelector('#lr-018-bar').setAttribute('dir', 'rtl'); breakSelector(r, 'lr-018-btn'); } },
+
+		{ id: 'LR-019', cat: 'Heal – element changed, no click', title: 'Screen size – element moved', expected: 'Heal → fixed',
+			build: h('<div class="layout-wide" id="lr-019-layout"><div><strong>Team workspace</strong><div class="muted">12 members · 3 projects</div></div><button class="btn primary" id="lr-019-btn">Invite member</button></div>'),
+			steps: 'B1 on <code>#lr-019-btn</code> captured at 1920px',
+			variation: 'Narrow layout (1366/1024px): button wraps under the title; selector broken. Also try a real window resize.',
+			apply: function (r) { var l = r.querySelector('#lr-019-layout'); l.className = 'layout-narrow'; breakSelector(r, 'lr-019-btn'); } },
+
+		{ id: 'LR-020', cat: 'Heal – element changed, no click', title: 'Browser zoom', expected: 'Heal → fixed',
+			build: h('<div class="row" id="lr-020-row"><button class="btn primary" id="lr-020-btn">Download CSV</button><span class="muted">Captured at 100%. For a real test use browser zoom (Ctrl/Cmd +/-).</span></div>'),
+			steps: 'B1 on <code>#lr-020-btn</code> at 100% zoom',
+			variation: 'Section zoomed to 150% (CSS) and selector broken — or set browser zoom to 67% / 150%',
+			apply: function (r) { r.querySelector('#lr-020-row').style.zoom = '1.5'; breakSelector(r, 'lr-020-btn'); } },
+
+		{ id: 'LR-021', cat: 'Heal – element changed, no click', title: 'Element below fold', expected: 'Scroll to element, show step → fixed',
+			build: h('<div id="lr-021-spacer"></div><div class="row"><button class="btn primary" id="lr-021-btn">Archive project</button></div>'),
+			steps: 'B1 on <code>#lr-021-btn</code> captured in view',
+			variation: 'A 2200px spacer pushes the button far below the fold; selector broken',
+			apply: function (r) { var s = r.querySelector('#lr-021-spacer'); s.className = 'spacer-fold'; s.textContent = '… long page content … (target is below)'; breakSelector(r, 'lr-021-btn'); } },
+
+		{ id: 'LR-022', cat: 'Heal – element changed, no click', title: 'Label text changed', expected: 'Heal → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-022-signin">Sign in</button><button class="btn" id="lr-022-help">Help</button></div>'),
+			steps: 'B1 on <code>#lr-022-signin</code> ("Sign in")',
+			variation: 'Label now "Log in"; selector broken',
+			apply: function (r) { breakSelector(r, 'lr-022-signin').textContent = 'Log in'; } },
+
+		{ id: 'LR-023', cat: 'Heal – element changed, no click', title: 'Element moved on same page', expected: 'Heal → fixed',
+			build: h('<div class="layout-wide" id="lr-023-layout"><div><strong>Projects</strong><div class="muted">4 active</div></div><button class="btn primary" id="lr-023-btn">+ New project</button></div>'),
+			steps: 'B1 on <code>#lr-023-btn</code> (top-right)',
+			variation: 'Button moved into a left sidebar; selector broken',
+			apply: function (r) { var l = r.querySelector('#lr-023-layout'); var btn = r.querySelector('#lr-023-btn'); l.className = 'layout-sidebar'; var sb = document.createElement('aside'); sb.className = 'sidebar'; sb.id = 'lr-023-sidebar'; sb.innerHTML = '<div class="muted" style="margin-bottom:8px">Actions</div>'; sb.appendChild(btn); l.insertBefore(sb, l.firstChild); breakSelector(r, 'lr-023-btn'); } },
+
+		{ id: 'LR-024', cat: 'Heal – element changed, no click', title: 'Style / icon changed', expected: 'Heal → fixed',
+			build: h('<div class="row"><button class="btn primary round" id="lr-024-btn">＋ Add widget</button></div>'),
+			steps: 'B1 on <code>#lr-024-btn</code> (blue round button)',
+			variation: 'Button restyled (grey square, new icon); selector broken',
+			apply: function (r) { var b = breakSelector(r, 'lr-024-btn'); b.className = 'btn'; b.style.borderRadius = '2px'; b.style.background = '#374151'; b.style.color = '#fff'; b.textContent = '⊞ Add widget'; } },
+
+		{ id: 'LR-025', cat: 'Heal – element changed, no click', title: 'Dark mode / theme', expected: 'Heal → fixed',
+			build: h('<div id="lr-025-theme"><div class="row"><button class="btn primary" id="lr-025-btn">Create report</button><span class="muted">light theme</span></div></div>'),
+			steps: 'B1 on <code>#lr-025-btn</code> (light theme)',
+			variation: 'Dark theme; selector broken',
+			apply: function (r) { r.querySelector('#lr-025-theme').classList.add('dark'); breakSelector(r, 'lr-025-btn'); } },
+
+		{ id: 'LR-026', cat: 'Heal – element changed, no click', title: 'Selector / DOM change only', expected: 'Heal → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-026-btn">Publish</button><button class="btn" id="lr-026-preview">Preview</button></div>'),
+			steps: 'B1 on <code>#lr-026-btn</code> (id/class based)',
+			variation: 'ids/classes regenerated on every load, same look (<code>#lr-026-btn</code> → random id)',
+			apply: function (r) { [r.querySelector('#lr-026-btn'), r.querySelector('#lr-026-preview')].forEach(function (b) { var cs = getComputedStyle(b); ['display','alignItems','gap','padding','borderRadius','border','background','color','cursor'].forEach(function (p) { b.style[p] = cs[p]; }); b.id = 'btn-' + Math.random().toString(36).slice(2, 8); b.className = 'css-' + Math.random().toString(36).slice(2, 8) + ' x' + Math.random().toString(36).slice(2, 6); }); } },
+
+		{ id: 'LR-027', cat: 'Heal – element changed, no click', title: 'Duplicate similar elements', expected: "Heal to correct 'Save' → fixed",
+			build: h('<div class="row" style="align-items:stretch"><form class="card" id="lr-027-form-a" onsubmit="return false"><strong>Form A – Profile</strong><br/><input class="input" id="lr-027-a-name" placeholder="Display name" /><br/><br/><button class="btn primary" id="lr-027-form-a-save">Save</button></form><form class="card hidden" id="lr-027-form-b" onsubmit="return false"><strong>Form B – Billing</strong><br/><input class="input" id="lr-027-b-card" placeholder="Card holder" /><br/><br/><button class="btn primary" id="lr-027-form-b-save">Save</button></form></div>'),
+			steps: 'B1 on <code>#lr-027-form-a-save</code> ("Save" in form A)',
+			variation: 'Form B (second "Save") rendered; form A Save selector broken',
+			apply: function (r) { r.querySelector('#lr-027-form-b').classList.remove('hidden'); breakSelector(r, 'lr-027-form-a-save'); } },
+
+		{ id: 'LR-028', cat: 'Heal – element changed, no click', title: 'Only a wrong look-alike exists', expected: "Don't attach to wrong element → not_fixed",
+			build: h('<div class="row"><button class="btn primary" id="lr-028-signin">Sign in</button><button class="btn" id="lr-028-help">Help</button></div>'),
+			steps: 'B1 on <code>#lr-028-signin</code> ("Sign in")',
+			variation: 'Only "Sign out" (<code>#lr-028-signout</code>) present',
+			apply: function (r) { var b = r.querySelector('#lr-028-signin'); b.id = 'lr-028-signout'; b.className = 'btn'; b.textContent = 'Sign out'; } },
+
+		{ id: 'LR-029', cat: 'Heal – element changed, no click', title: 'Table row reordered', expected: 'Heal to same row by content → fixed',
+			build: h('<table class="data" id="lr-029-table"><thead><tr><th id="lr-029-th-invoice">Invoice</th><th id="lr-029-th-customer">Customer</th><th id="lr-029-th-amount">Amount</th><th></th></tr></thead><tbody id="lr-029-tbody">' +
+				'<tr id="lr-029-row-121"><td>Invoice #121</td><td>Acme Ltd</td><td>$1,200</td><td><button class="btn" id="lr-029-row-121-view">View</button></td></tr>' +
+				'<tr id="lr-029-row-122"><td>Invoice #122</td><td>Globex</td><td>$640</td><td><button class="btn" id="lr-029-row-122-view">View</button></td></tr>' +
+				'<tr id="lr-029-row-123"><td>Invoice #123</td><td>Initech</td><td>$3,050</td><td><button class="btn" id="lr-029-row-123-view">View</button></td></tr>' +
+				'<tr id="lr-029-row-124"><td>Invoice #124</td><td>Umbrella</td><td>$95</td><td><button class="btn" id="lr-029-row-124-view">View</button></td></tr></tbody></table>'),
+			steps: 'B1 on row <code>#lr-029-row-123</code> ("Invoice #123") or its <code>#lr-029-row-123-view</code> button',
+			variation: 'Rows sorted by amount desc, row ids regenerated',
+			apply: function (r) { var tb = r.querySelector('#lr-029-tbody'); var rows = Array.prototype.slice.call(tb.children); rows.sort(function (a, b) { return parseFloat(b.children[2].textContent.replace(/[$,]/g, '')) - parseFloat(a.children[2].textContent.replace(/[$,]/g, '')); }); rows.forEach(function (tr, i) { tr.id = 'row-' + (i + 1) + '-' + Math.random().toString(36).slice(2, 6); tr.querySelector('button').id = tr.id + '-view'; tb.appendChild(tr); }); } },
+
+		{ id: 'LR-030', cat: 'Heal – element changed, no click', title: 'Truncated text', expected: 'Heal → fixed',
+			build: h('<div class="row"><button class="btn" id="lr-030-customer-settings"><span class="label">Customer settings</span></button><button class="btn" id="lr-030-billing">Billing</button></div>'),
+			steps: 'B1 on <code>#lr-030-customer-settings</code> ("Customer settings")',
+			variation: 'Text truncated to "Custom…" at small width; selector broken',
+			apply: function (r) { var b = breakSelector(r, 'lr-030-customer-settings'); b.querySelector('.label').className = 'label truncate-box'; } },
+
+		{ id: 'LR-031', cat: 'Heal – element changed, no click', title: 'Element inside iframe', expected: 'Heal → fixed',
+			build: h('<iframe id="lr-031-iframe" title="Embedded payment widget" style="width:100%;height:120px;border:1px solid var(--border);border-radius:8px"></iframe>'),
+			steps: 'B1 on <code>#lr-031-iframe-btn</code> ("Pay now") inside <code>#lr-031-iframe</code>',
+			variation: 'Button id/classes inside the iframe regenerated (<code>#lr-031-iframe-btn--alt</code>)',
+			init: function (r) { r.__writeFrame = function (alt) { var f = r.querySelector('#lr-031-iframe'); var id = alt ? 'lr-031-iframe-btn--alt' : 'lr-031-iframe-btn'; var cls = alt ? 'pay-' + Math.random().toString(36).slice(2, 7) : 'pay-btn'; f.srcdoc = '<!doctype html><html><body style="font-family:sans-serif;margin:16px"><p style="margin:0 0 10px;color:#6b7280">Payment widget (iframe)</p>' + (alt ? '<span>' : '') + '<button id="' + id + '" class="' + cls + '" style="padding:8px 16px;border-radius:8px;border:1px solid #2563eb;background:#2563eb;color:#fff">Pay now</button>' + (alt ? '</span>' : '') + ' <button id="lr-031-iframe-cancel" style="padding:8px 16px;border-radius:8px;border:1px solid #e5e7eb;background:#fff">Cancel</button></body></html>'; }; r.__writeFrame(false); },
+			apply: function (r) { r.__writeFrame(true); } },
+
+		{ id: 'LR-032', cat: 'Heal – element changed, no click', title: 'Element inside shadow DOM', expected: 'Heal → fixed',
+			build: h('<div id="lr-032-host-wrap"></div>'),
+			steps: 'B1 on <code>#lr-032-shadow-btn</code> ("Subscribe") inside the <code>&lt;lr-032-widget&gt;</code> shadow root',
+			variation: 'Shadow button id/classes regenerated (<code>#lr-032-shadow-btn--alt</code>)',
+			init: function (r) { r.__mountShadow = function (alt) { var host = document.createElement('lr-032-widget'); host.id = 'lr-032-widget'; var sr = host.attachShadow({ mode: 'open' }); var id = alt ? 'lr-032-shadow-btn--alt' : 'lr-032-shadow-btn'; var cls = alt ? 'sub-' + Math.random().toString(36).slice(2, 7) : 'sub-btn'; sr.innerHTML = '<style>button{padding:8px 16px;border-radius:8px;border:1px solid #2563eb;background:#2563eb;color:#fff;font:inherit} .m{color:#6b7280;margin-bottom:8px;font-size:13px}</style><div class="m">Newsletter widget (shadow DOM)</div>' + (alt ? '<div>' : '') + '<button id="' + id + '" class="' + cls + '">Subscribe</button>' + (alt ? '</div>' : ''); var w = r.querySelector('#lr-032-host-wrap'); w.innerHTML = ''; w.appendChild(host); }; r.__mountShadow(false); },
+			apply: function (r) { r.__mountShadow(true); } },
+
+		{ id: 'LR-033', cat: 'Heal – element changed, no click', title: 'Disabled but visible element', expected: 'Heal, show balloon → fixed',
+			build: h('<form class="row" onsubmit="return false"><input class="input" id="lr-033-name" placeholder="Project name" /><button class="btn primary" id="lr-033-submit">Submit</button></form>'),
+			steps: 'B1 on <code>#lr-033-submit</code>',
+			variation: 'Submit disabled + selector broken',
+			apply: function (r) { breakSelector(r, 'lr-033-submit').disabled = true; } },
+
+		{ id: 'LR-034', cat: 'Heal – element changed, no click', title: 'Element covered by non-blocking overlay', expected: 'Heal, no click on toast → fixed',
+			build: h('<div class="row" style="justify-content:flex-end"><button class="btn primary" id="lr-034-btn">Share</button></div>'),
+			steps: 'B1 on <code>#lr-034-btn</code>',
+			variation: 'A toast (<code>#lr-034-toast</code>) appears next to the button; selector broken',
+			apply: function (r) { breakSelector(r, 'lr-034-btn'); r.querySelector('.scenario-body').insertAdjacentHTML('beforeend', '<div class="toast" id="lr-034-toast">✅ Link copied to clipboard <button id="lr-034-toast-close" style="margin-left:8px;background:none;border:0;color:#fff;cursor:pointer">✕</button></div>'); r.querySelector('#lr-034-toast-close').addEventListener('click', function () { r.querySelector('#lr-034-toast').remove(); }); } },
+
+		/* ===================== Modal / mandatory click ===================== */
+		{ id: 'LR-035', cat: 'Modal / mandatory click', title: 'Full-screen modal takes over', expected: 'Close modal (X), then continue → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-035-btn">Open dashboard</button></div>'),
+			steps: 'B1 on <code>#lr-035-btn</code>',
+			variation: '"What\'s new" full-screen modal (<code>#lr-035-modal</code>, close with <code>#lr-035-modal-close</code>) covers the page; selector broken',
+			apply: function (r) { breakSelector(r, 'lr-035-btn'); showModal('<div class="modal-backdrop" id="lr-035-modal"><div class="modal full"><button class="x" id="lr-035-modal-close" aria-label="Close">✕</button><h3>What\'s new in Northwind Cloud</h3><p class="muted">Faster reports, a redesigned Orders page and new keyboard shortcuts.</p><img alt="" width="320" height="140" style="background:linear-gradient(135deg,#dbeafe,#c7d2fe);border-radius:12px"/></div></div>', ['lr-035-modal-close']); } },
+
+		{ id: 'LR-036', cat: 'Modal / mandatory click', title: "Modal w/o X – only 'Got it'", expected: "Click 'Got it', continue → fixed",
+			build: h('<div class="row"><button class="btn primary" id="lr-036-btn">View analytics</button></div>'),
+			steps: 'B1 on <code>#lr-036-btn</code>',
+			variation: 'Blocking modal (<code>#lr-036-modal</code>) with a single "Got it" (<code>#lr-036-modal-gotit</code>); selector broken',
+			apply: function (r) { breakSelector(r, 'lr-036-btn'); showModal('<div class="modal-backdrop" id="lr-036-modal"><div class="modal"><h3>We\'ve updated our terms</h3><p class="muted">Please review the updated terms of service. Nothing changes for your account.</p><button class="btn primary" id="lr-036-modal-gotit">Got it</button></div></div>', ['lr-036-modal-gotit']); } },
+
+		{ id: 'LR-037', cat: 'Modal / mandatory click', title: 'Cookie banner covering element', expected: 'Dismiss with any button → fixed',
+			build: h('<div class="row"><a class="btn" href="#" id="lr-037-footer-link">Privacy policy</a><span class="muted">(footer link)</span></div>'),
+			steps: 'B1 on <code>#lr-037-footer-link</code>',
+			variation: 'Cookie banner (<code>#lr-037-cookie-banner</code>: Accept <code>#lr-037-cookie-accept</code> / Reject <code>#lr-037-cookie-reject</code>) covers the bottom of the page; selector broken. Scroll so the link sits at the bottom.',
+			apply: function (r) { breakSelector(r, 'lr-037-footer-link'); showModal('<div class="cookie-banner" id="lr-037-cookie-banner"><span>We use cookies to improve your experience.</span><span class="row"><button class="btn" id="lr-037-cookie-reject">Reject all</button><button class="btn" id="lr-037-cookie-accept">Accept all</button></span></div>', ['lr-037-cookie-accept', 'lr-037-cookie-reject']); } },
+
+		{ id: 'LR-038', cat: 'Modal / mandatory click', title: 'Decision modal', expected: "Don't choose; stop → stopped",
+			build: h('<div class="row"><button class="btn primary" id="lr-038-btn">Save draft</button></div>'),
+			steps: 'B1 on <code>#lr-038-btn</code>',
+			variation: '"Discard changes? Yes/No" modal (<code>#lr-038-modal</code>, <code>#lr-038-modal-yes</code> / <code>#lr-038-modal-no</code>); selector broken',
+			apply: function (r) { breakSelector(r, 'lr-038-btn'); showModal('<div class="modal-backdrop" id="lr-038-modal"><div class="modal"><h3>Discard changes?</h3><p class="muted">You have unsaved changes. Discarding cannot be undone.</p><div class="row"><button class="btn" id="lr-038-modal-no">No, keep editing</button><button class="btn primary" id="lr-038-modal-yes" style="background:var(--bad);border-color:var(--bad)">Yes, discard</button></div></div></div>', ['lr-038-modal-yes', 'lr-038-modal-no']); } },
+
+		{ id: 'LR-039', cat: 'Modal / mandatory click', title: 'Session timeout / login modal', expected: "Don't act; stop → not_fixed",
+			build: h('<div class="row"><button class="btn primary" id="lr-039-btn">Refresh data</button></div>'),
+			steps: 'B1 on <code>#lr-039-btn</code>',
+			variation: 'Re-login modal (<code>#lr-039-login-modal</code>) with username/password; selector broken',
+			apply: function (r) { breakSelector(r, 'lr-039-btn'); showModal('<div class="modal-backdrop" id="lr-039-login-modal"><div class="modal"><h3>Your session expired</h3><p class="muted">Please sign in again to continue.</p><form onsubmit="return false"><input class="input" id="lr-039-login-user" placeholder="Username" style="width:100%;margin-bottom:8px"/><input class="input" id="lr-039-login-pass" type="password" placeholder="Password" style="width:100%;margin-bottom:12px"/><button class="btn primary" id="lr-039-login-submit">Sign in</button></form></div></div>', ['lr-039-login-submit']); } },
+
+		{ id: 'LR-040', cat: 'Modal / mandatory click', title: 'Native browser dialog', expected: 'No action → not_fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-040-btn">Delete workspace</button><button class="btn" id="lr-040-fire">Fire confirm() now</button></div>'),
+			steps: 'B1 on <code>#lr-040-btn</code>',
+			variation: 'Selector broken and a native <code>confirm()</code> opens 2s after load (blocks page JS). Use "Fire confirm() now" to open it manually.',
+			init: function (r) { r.querySelector('#lr-040-fire').addEventListener('click', function () { window.confirm('Delete workspace "Northwind"? This cannot be undone.'); }); },
+			apply: function (r) { breakSelector(r, 'lr-040-btn'); setTimeout(function () { window.confirm('Delete workspace "Northwind"? This cannot be undone.'); }, 2000); } },
+
+		{ id: 'LR-041', cat: 'Modal / mandatory click', title: 'Modal not blocking target', expected: "Don't close modal; heal → fixed",
+			build: h('<div class="row" style="justify-content:flex-end"><button class="btn primary" id="lr-041-btn">Export</button></div>'),
+			steps: 'B1 on <code>#lr-041-btn</code>',
+			variation: 'Small non-blocking side modal (<code>#lr-041-side-modal</code>) bottom-left, away from the target; selector broken',
+			apply: function (r) { breakSelector(r, 'lr-041-btn'); showModal('<div class="modal side-modal" id="lr-041-side-modal"><button class="x" id="lr-041-side-modal-close">✕</button><h3 style="font-size:15px">Need help?</h3><p class="muted" style="margin:0 0 8px">Chat with our team.</p><button class="btn" id="lr-041-side-modal-chat">Start chat</button></div>', ['lr-041-side-modal-close']); } },
+
+		/* ===================== Step types ===================== */
+		{ id: 'LR-042', cat: 'Step types', title: 'Balloon w/ Next – healed', expected: 'Show B1 on healed element; Next → B2 → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-042-btn">Connect account</button><button class="btn" id="lr-042-next-target">Sync now</button></div>'),
+			steps: 'B1 (Next button) on <code>#lr-042-btn</code> → B2 on <code>#lr-042-next-target</code>',
+			variation: 'B1 selector broken',
+			apply: function (r) { breakSelector(r, 'lr-042-btn'); } },
+
+		{ id: 'LR-043', cat: 'Step types', title: 'Click-triggered step – healed', expected: 'Heal; user click advances → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-043-click-btn">Generate key</button><code class="hidden" id="lr-043-after-click">sk-live-4f9a…c21e</code></div>'),
+			steps: 'S1 click <code>#lr-043-click-btn</code> → S2 on <code>#lr-043-after-click</code> (appears after click)',
+			variation: 'S1 selector broken',
+			init: function (r) { r.querySelector('#lr-043-click-btn').addEventListener('click', function () { r.querySelector('#lr-043-after-click').classList.remove('hidden'); }); },
+			apply: function (r) { breakSelector(r, 'lr-043-click-btn'); } },
+
+		{ id: 'LR-044', cat: 'Step types', title: 'Type-triggered step – healed', expected: 'Heal; user typing advances → fixed',
+			build: h('<div class="row"><input class="input" id="lr-044-input" placeholder="Workspace name" /><button class="btn primary hidden" id="lr-044-after-type">Continue</button></div>'),
+			steps: 'S1 type in <code>#lr-044-input</code> → S2 on <code>#lr-044-after-type</code> (appears once text is entered)',
+			variation: 'Field selector broken',
+			init: function (r) { r.querySelector('#lr-044-input').addEventListener('input', function (e) { r.querySelector('#lr-044-after-type').classList.toggle('hidden', !e.target.value); }); },
+			apply: function (r) { breakSelector(r, 'lr-044-input'); } },
+
+		{ id: 'LR-045', cat: 'Step types', title: 'Hover-triggered step – healed', expected: 'Heal; user hover advances → fixed',
+			build: h('<div class="hover-menu" id="lr-045-menu"><button class="btn" id="lr-045-hover-item">Integrations ▾</button><div class="submenu" id="lr-045-submenu"><a href="#" id="lr-045-sub-slack">Slack</a><a href="#" id="lr-045-sub-jira">Jira</a></div></div>'),
+			steps: 'S1 hover <code>#lr-045-hover-item</code> → S2 on <code>#lr-045-sub-jira</code> (submenu on hover)',
+			variation: 'Hover item selector broken',
+			apply: function (r) { breakSelector(r, 'lr-045-hover-item'); } },
+
+		{ id: 'LR-046', cat: 'Step types', title: 'Select/dropdown step – healed', expected: 'Heal; user selection advances → fixed',
+			build: h('<div class="row"><select class="input" id="lr-046-select"><option value="">Choose a plan…</option><option value="starter">Starter</option><option value="pro">Pro</option><option value="enterprise">Enterprise</option></select><button class="btn primary hidden" id="lr-046-after-select">Checkout</button></div>'),
+			steps: 'S1 select value in <code>#lr-046-select</code> → S2 on <code>#lr-046-after-select</code>',
+			variation: 'Select selector broken',
+			init: function (r) { r.querySelector('#lr-046-select').addEventListener('change', function (e) { r.querySelector('#lr-046-after-select').classList.toggle('hidden', !e.target.value); }); },
+			apply: function (r) { breakSelector(r, 'lr-046-select'); } },
+
+		{ id: 'LR-047', cat: 'Step types', title: 'Auto step – healed', expected: 'Connect to step, then run its auto action → fixed',
+			build: h('<form class="row" onsubmit="return false"><input class="input" id="lr-047-auto-field" placeholder="Coupon code" /><button class="btn primary" id="lr-047-auto-btn">Apply coupon</button><span class="state-badge hidden" id="lr-047-after">Coupon applied</span></form>'),
+			steps: 'Auto-fill <code>#lr-047-auto-field</code> and/or auto-click <code>#lr-047-auto-btn</code> → next step on <code>#lr-047-after</code>',
+			variation: 'Auto-step element selectors broken',
+			init: function (r) { r.querySelector('#lr-047-auto-btn').addEventListener('click', function () { r.querySelector('#lr-047-after').classList.remove('hidden'); }); },
+			apply: function (r) { breakSelector(r, 'lr-047-auto-field'); breakSelector(r, 'lr-047-auto-btn'); } },
+
+		{ id: 'LR-048', cat: 'Step types', title: 'Auto step – already done', expected: 'Skip auto step → fixed',
+			build: h('<form class="row" onsubmit="return false"><input class="input" id="lr-048-field" placeholder="Company name" /><button class="btn primary" id="lr-048-next">Continue</button></form>'),
+			steps: 'Auto-fill <code>#lr-048-field</code> → next step on <code>#lr-048-next</code>',
+			variation: 'Field already filled and hidden',
+			apply: function (r) { var f = r.querySelector('#lr-048-field'); f.value = 'Northwind Traders'; f.classList.add('hidden'); r.querySelector('form').insertAdjacentHTML('afterbegin', badge('Company: Northwind Traders', true)); } },
+
+		{ id: 'LR-049', cat: 'Step types', title: 'Auto step causing navigation', expected: 'No navigation; stop → not_fixed',
+			build: h('<div class="row"><a class="btn" href="#/orders" id="lr-049-link">Go to Orders →</a><span class="muted">Next step on the Orders page (<code>#orders-new-btn</code>).</span></div>'),
+			steps: 'Auto-click <code>#lr-049-link</code> → step on <code>#orders-new-btn</code> (Orders page)',
+			variation: 'Link missing',
+			apply: function (r) { hide(r, ['lr-049-link']); } },
+
+		{ id: 'LR-050', cat: 'Step types', title: 'Non-visual step fails (split / wait-for)', expected: 'No remediation; legacy behavior → N/A',
+			build: h('<div class="row"><button class="btn" id="lr-050-trigger">Run job</button><span class="state-badge ok hidden" id="lr-050-el">Job completed</span><button class="btn primary" id="lr-050-after">Download results</button></div>'),
+			steps: 'Wait-for <code>#lr-050-el</code> (or split on it) → step on <code>#lr-050-after</code>. "Run job" shows the element after 1s.',
+			variation: 'Element never appears (condition never met)',
+			init: function (r) { r.querySelector('#lr-050-trigger').addEventListener('click', function () { if (r.__blocked) return; setTimeout(function () { r.querySelector('#lr-050-el').classList.remove('hidden'); }, 1000); }); },
+			apply: function (r) { r.__blocked = true; } },
+
+		/* ===================== Triggers & settings ===================== */
+		{ id: 'LR-051', cat: 'Triggers & settings', title: 'Remediation off (global)', expected: 'No agent; legacy behavior → N/A',
+			build: h('<div class="row"><button class="btn primary" id="lr-051-btn">Start trial</button></div>'), steps: 'Any step on <code>#lr-051-btn</code>', variation: 'Element missing', apply: function (r) { hide(r, ['lr-051-btn']); } },
+		{ id: 'LR-052', cat: 'Triggers & settings', title: 'Global on, SWT override off', expected: 'No agent → N/A',
+			build: h('<div class="row"><button class="btn primary" id="lr-052-btn">Upgrade</button></div>'), steps: 'Any step on <code>#lr-052-btn</code>', variation: 'Element missing', apply: function (r) { hide(r, ['lr-052-btn']); } },
+		{ id: 'LR-053', cat: 'Triggers & settings', title: 'Global off, SWT override on', expected: 'Agent runs → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-053-btn">Contact sales</button></div>'), steps: 'Any step on <code>#lr-053-btn</code>', variation: 'Element missing', apply: function (r) { hide(r, ['lr-053-btn']); } },
+		{ id: 'LR-054', cat: 'Triggers & settings', title: 'Default timeout', expected: 'Agent starts after ~5s, not before → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-054-btn">Book a demo</button><span class="muted" id="lr-054-clock"></span></div>'), steps: 'Any step on <code>#lr-054-btn</code>', variation: 'Element missing (a stopwatch starts so you can time the agent)',
+			apply: function (r) { hide(r, ['lr-054-btn']); startClock(r.querySelector('#lr-054-clock')); } },
+		{ id: 'LR-055', cat: 'Triggers & settings', title: 'Custom timeout', expected: 'Agent starts at configured timeout → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-055-btn">Request quote</button><span class="muted" id="lr-055-clock"></span></div>'), steps: 'Any step on <code>#lr-055-btn</code>', variation: 'Element missing (stopwatch starts)',
+			apply: function (r) { hide(r, ['lr-055-btn']); startClock(r.querySelector('#lr-055-clock')); } },
+		{ id: 'LR-056', cat: 'Triggers & settings', title: 'Element appears before timeout', expected: 'Normal play; no agent / event → N/A',
+			build: h('<div class="row"><button class="btn primary" id="lr-056-delayed-btn">Load recommendations</button><span class="muted" id="lr-056-clock"></span></div>'), steps: 'Any step on <code>#lr-056-delayed-btn</code>', variation: 'Element lazy-loads 3s after the variation is applied / page load',
+			apply: function (r) { delayedAppear(r, 'lr-056-delayed-btn', 3000, r.querySelector('#lr-056-clock')); } },
+		{ id: 'LR-057', cat: 'Triggers & settings', title: 'Element appears during remediation', expected: 'Continue on original element; no duplicate balloon → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-057-delayed-btn">Load insights</button><span class="muted" id="lr-057-clock"></span></div>'), steps: 'Any step on <code>#lr-057-delayed-btn</code>', variation: 'Element lazy-loads 7s after the variation is applied / page load (agent already running)',
+			apply: function (r) { delayedAppear(r, 'lr-057-delayed-btn', 7000, r.querySelector('#lr-057-clock')); } },
+		{ id: 'LR-058', cat: 'Triggers & settings', title: 'First visual step, autoplay', expected: 'No agent → First_step',
+			build: h('<div class="row"><button class="btn primary" id="lr-058-btn">Welcome – take the tour</button></div>'), steps: 'Autoplay SWT; step 1 on <code>#lr-058-btn</code>', variation: 'Step 1 element missing', apply: function (r) { hide(r, ['lr-058-btn']); } },
+		{ id: 'LR-059', cat: 'Triggers & settings', title: 'First visual step after non-visual step', expected: 'No agent → First_step',
+			build: h('<div class="row"><button class="btn primary" id="lr-059-btn">Set up profile</button></div>'), steps: 'Autoplay SWT; S1 non-visual (e.g. wait-for <code>body</code> / split) → S2 on <code>#lr-059-btn</code>', variation: 'S2 element missing', apply: function (r) { hide(r, ['lr-059-btn']); } },
+		{ id: 'LR-060', cat: 'Triggers & settings', title: 'First step – launched from menu', expected: 'Agent runs → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-060-btn">Create first project</button></div>'), steps: 'Step 1 on <code>#lr-060-btn</code>; play from the WalkMe Menu', variation: 'Step 1 element missing', apply: function (r) { hide(r, ['lr-060-btn']); } },
+		{ id: 'LR-061', cat: 'Triggers & settings', title: 'First step – launched from launcher', expected: 'Agent runs → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-061-btn">Import data</button><span class="muted">Attach a Launcher to <code>#lr-061-launcher-anchor</code>.</span><span id="lr-061-launcher-anchor" style="display:inline-block;width:40px;height:40px;border:1px dashed var(--border);border-radius:8px"></span></div>'), steps: 'Step 1 on <code>#lr-061-btn</code>; play from a Launcher placed on <code>#lr-061-launcher-anchor</code>', variation: 'Step 1 element missing', apply: function (r) { hide(r, ['lr-061-btn']); } },
+
+		{ id: 'LR-062', cat: 'Triggers & settings', title: 'First step – launched from another SWT', expected: 'Agent runs → per case',
+			build: h('<div class="row"><button class="btn" id="lr-062-start-btn">Open onboarding (SWT A)</button><span class="muted">→</span><button class="btn primary" id="lr-062-btn">Connect calendar (SWT B step 1)</button></div>'),
+			steps: 'SWT A: step on <code>#lr-062-start-btn</code> → action "Play SWT B". SWT B: step 1 on <code>#lr-062-btn</code>',
+			variation: 'SWT B step 1 element missing', apply: function (r) { hide(r, ['lr-062-btn']); } },
+		{ id: 'LR-063', cat: 'Triggers & settings', title: 'Autoplay, later step missing', expected: 'Agent runs → per case',
+			build: h('<div class="row"><button class="btn" id="lr-063-s1">Step 1</button><button class="btn" id="lr-063-s2">Step 2</button><button class="btn primary" id="lr-063-s3">Step 3</button></div>'),
+			steps: 'Autoplay SWT: S1 <code>#lr-063-s1</code> → S2 <code>#lr-063-s2</code> → S3 <code>#lr-063-s3</code>',
+			variation: 'Step 3 element missing (steps 1–2 play normally first)', apply: function (r) { hide(r, ['lr-063-s3']); } },
+		{ id: 'LR-064', cat: 'Triggers & settings', title: 'Multiple breaks in one play', expected: '2 separate remediations → fixed x2',
+			build: h('<div class="row"><button class="btn" id="lr-064-s1">Step 1</button><button class="btn" id="lr-064-s2">Step 2</button><button class="btn" id="lr-064-s3">Step 3</button><button class="btn" id="lr-064-s4">Step 4</button><button class="btn primary" id="lr-064-s5">Step 5</button></div>'),
+			steps: 'S1..S5 on <code>#lr-064-s1</code> … <code>#lr-064-s5</code> (info balloons with Next)',
+			variation: 'Steps 2 and 5 missing', apply: function (r) { hide(r, ['lr-064-s2', 'lr-064-s5']); } },
+		{ id: 'LR-065', cat: 'Triggers & settings', title: 'Replay same SWT', expected: 'Remediation runs on each play → per case',
+			build: h('<div class="row"><button class="btn" id="lr-065-s1">Step 1</button><button class="btn" id="lr-065-s2">Step 2</button><button class="btn primary" id="lr-065-s3">Step 3</button></div>'),
+			steps: 'S1 <code>#lr-065-s1</code> → S2 <code>#lr-065-s2</code> → S3 <code>#lr-065-s3</code>; play the SWT twice in a row',
+			variation: 'Step 2 missing', apply: function (r) { hide(r, ['lr-065-s2']); } },
+
+		/* ===================== Remediation UI & user interaction ===================== */
+		{ id: 'LR-066', cat: 'Remediation UI & user interaction', title: 'Takeover UI visible', expected: 'UI per Figma while running → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-066-btn">Generate invoice</button></div>'), steps: 'Any balloon on <code>#lr-066-btn</code>', variation: 'Element missing', apply: function (r) { hide(r, ['lr-066-btn']); } },
+		{ id: 'LR-067', cat: 'Remediation UI & user interaction', title: 'No clicks by agent (global check)', expected: 'No click / nav / submit events by agent (except mandatory modal)',
+			build: h('<div class="row"><button class="btn primary" id="lr-067-btn">Run audit</button><button class="btn" id="lr-067-clear">Clear log</button><span class="muted">Every click / submit / input / change / hashchange on the page is logged below (also in the console as <code>[LR-LOG]</code>).</span></div><pre id="lr-067-log" style="margin:12px 0 0;max-height:180px;overflow:auto;background:var(--bg-alt);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:12px"></pre>'),
+			steps: 'Any balloon on <code>#lr-067-btn</code>; the event log <code>#lr-067-log</code> is always on, so you can run any scenario and check it afterwards',
+			variation: 'Element missing', init: function (r) { r.querySelector('#lr-067-clear').addEventListener('click', function () { r.querySelector('#lr-067-log').textContent = ''; }); }, apply: function (r) { hide(r, ['lr-067-btn']); } },
+		{ id: 'LR-068', cat: 'Remediation UI & user interaction', title: 'No data changes', expected: 'No field value changed by agent',
+			build: h('<form class="row" onsubmit="return false"><input class="input" id="lr-068-name" value="Dana Levi" /><input class="input" id="lr-068-email" value="dana@northwind.example" /><label class="switch"><input type="checkbox" id="lr-068-newsletter" checked /> Newsletter</label><button class="btn primary" id="lr-068-submit">Update profile</button></form><div class="muted" id="lr-068-status" style="margin-top:8px"></div>'),
+			steps: 'Form SWT: balloon on <code>#lr-068-submit</code> (fields pre-filled)',
+			variation: 'Submit missing; the status line turns red if any field value changes', init: function (r) { var init = ['lr-068-name', 'lr-068-email'].map(function (id) { return r.querySelector('#' + id).value; }); var chk = r.querySelector('#lr-068-newsletter').checked; setInterval(function () { var now = ['lr-068-name', 'lr-068-email'].map(function (id) { return r.querySelector('#' + id).value; }); var changed = now.join('|') !== init.join('|') || r.querySelector('#lr-068-newsletter').checked !== chk; var s = r.querySelector('#lr-068-status'); s.textContent = changed ? '✖ field values CHANGED' : '✔ field values unchanged'; s.style.color = changed ? 'var(--bad)' : 'var(--ok)'; }, 500); }, apply: function (r) { hide(r, ['lr-068-submit']); } },
+		{ id: 'LR-069', cat: 'Remediation UI & user interaction', title: 'User clicks page during remediation', expected: 'Click blocked; only Stop active',
+			build: h('<div class="row"><button class="btn primary" id="lr-069-btn">Send reminder</button><button class="btn" id="lr-069-decoy">Decoy – click me during remediation</button><span class="muted" id="lr-069-count">decoy clicks: 0</span></div>'),
+			steps: 'Any balloon on <code>#lr-069-btn</code>; while the overlay is up, try clicking <code>#lr-069-decoy</code>',
+			variation: 'Element missing; the decoy counts clicks that got through', init: function (r) { var n = 0; r.querySelector('#lr-069-decoy').addEventListener('click', function () { n++; r.querySelector('#lr-069-count').textContent = 'decoy clicks: ' + n; }); }, apply: function (r) { hide(r, ['lr-069-btn']); } },
+		{ id: 'LR-070', cat: 'Remediation UI & user interaction', title: 'User clicks Stop', expected: 'Remediation pauses; Resume / End options',
+			build: h('<div class="row"><button class="btn primary" id="lr-070-btn">Archive</button></div>'), steps: 'Any balloon on <code>#lr-070-btn</code>; click Stop on the overlay', variation: 'Element missing', apply: function (r) { hide(r, ['lr-070-btn']); } },
+		{ id: 'LR-071', cat: 'Remediation UI & user interaction', title: 'Stop → Resume', expected: 'Remediation continues → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-071-btn">Restore</button></div>'), steps: 'Any balloon on <code>#lr-071-btn</code>; Stop, then Resume', variation: 'Element missing', apply: function (r) { hide(r, ['lr-071-btn']); } },
+		{ id: 'LR-072', cat: 'Remediation UI & user interaction', title: "Stop → don't resume", expected: 'Remediation ends; SWT stops → stopped',
+			build: h('<div class="row"><button class="btn primary" id="lr-072-btn">Duplicate</button></div>'), steps: 'Any balloon on <code>#lr-072-btn</code>; Stop, then End', variation: 'Element missing', apply: function (r) { hide(r, ['lr-072-btn']); } },
+		{ id: 'LR-073', cat: 'Remediation UI & user interaction', title: 'User closes SWT during remediation', expected: 'Agent stops; UI removed → stopped',
+			build: h('<div class="row"><button class="btn primary" id="lr-073-btn">Export PDF</button></div>'), steps: 'Any balloon on <code>#lr-073-btn</code>; close the SWT (Menu / X) while the overlay is up', variation: 'Element missing', apply: function (r) { hide(r, ['lr-073-btn']); } },
+		{ id: 'LR-074', cat: 'Remediation UI & user interaction', title: 'User navigates away during remediation', expected: 'Agent stops → stopped',
+			build: h('<div class="row"><button class="btn primary" id="lr-074-btn">Assign owner</button><a class="btn" href="#/reports" id="lr-074-nav-link">Navigate to Reports →</a></div>'), steps: 'Any balloon on <code>#lr-074-btn</code>; while the overlay is up, click <code>#lr-074-nav-link</code> (or the header nav)', variation: 'Element missing', apply: function (r) { hide(r, ['lr-074-btn']); } },
+		{ id: 'LR-075', cat: 'Remediation UI & user interaction', title: 'Remediation fails – UX', expected: 'Clear message, SWT ends; no stuck UI → not_fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-075-btn">Approve timesheet</button></div>'), steps: 'Any balloon on <code>#lr-075-btn</code>', variation: 'Element missing with nothing similar on the page (agent cannot heal)', apply: function (r) { hide(r, ['lr-075-btn']); } },
+		{ id: 'LR-076', cat: 'Remediation UI & user interaction', title: "UI doesn't hide healed element", expected: 'Balloon visible, not covered by remediation UI → fixed',
+			build: h('<div class="row" style="justify-content:flex-end"><button class="btn primary" id="lr-076-btn">Bottom-right action</button></div>'), steps: 'B1 on <code>#lr-076-btn</code> (sits bottom-right, where the overlay panel lives)', variation: 'Selector broken (heal case)', apply: function (r) { breakSelector(r, 'lr-076-btn'); } },
+		{ id: 'LR-077', cat: 'Remediation UI & user interaction', title: 'Remediation duration', expected: 'Ends within 30 s → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-077-btn">Reconcile</button><span class="muted" id="lr-077-clock"></span></div>'), steps: 'Any balloon on <code>#lr-077-btn</code>', variation: 'Element missing; stopwatch starts', apply: function (r) { hide(r, ['lr-077-btn']); startClock(r.querySelector('#lr-077-clock')); } },
+		{ id: 'LR-078', cat: 'Remediation UI & user interaction', title: 'Remediation hits 30 s limit', expected: 'Stop; SWT ends gracefully → not_fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-078-btn">Finalize</button><span class="muted" id="lr-078-clock"></span></div><div id="lr-078-heavy"></div>'), steps: 'Any balloon on <code>#lr-078-btn</code>',
+			variation: 'Element missing and 4,000 look-alike controls are injected below to slow the agent down; stopwatch starts', apply: function (r) { hide(r, ['lr-078-btn']); startClock(r.querySelector('#lr-078-clock')); var html = ''; for (var i = 0; i < 4000; i++) { html += '<button class="btn" style="margin:2px;font-size:11px;padding:2px 6px">Finalize ' + i + '</button>'; } r.querySelector('#lr-078-heavy').innerHTML = '<div class="muted" style="margin:10px 0 6px">Heavy DOM (4,000 similar buttons)</div>' + html; } },
+		{ id: 'LR-079', cat: 'Remediation UI & user interaction', title: 'LLM / service slow or down', expected: 'Times out; SWT ends gracefully → not_fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-079-btn">Sync CRM</button><span class="muted">Throttle / block the agent service in DevTools → Network.</span></div>'), steps: 'Any balloon on <code>#lr-079-btn</code>', variation: 'Element missing', apply: function (r) { hide(r, ['lr-079-btn']); } },
+
+		/* ===================== Data / environment ===================== */
+		{ id: 'LR-080', cat: 'Data / environment', title: 'Extension (UI native agent) not installed', expected: 'No remediation; legacy behavior → N/A',
+			build: h('<div class="row"><button class="btn primary" id="lr-080-btn">Enable SSO</button><span class="muted" id="lr-080-api"></span></div>'), steps: 'Any balloon on <code>#lr-080-btn</code>; run in a profile without the extension',
+			variation: 'Element missing; the badge shows whether <code>window.deepagentEngineApi</code> is present', init: function (r) { var s = r.querySelector('#lr-080-api'); setInterval(function () { var ok = !!(window.deepagentEngineApi && typeof window.deepagentEngineApi.remediateSwt === 'function'); s.textContent = ok ? '✔ deepagentEngineApi present' : '✖ deepagentEngineApi missing'; s.style.color = ok ? 'var(--ok)' : 'var(--bad)'; }, 1000); }, apply: function (r) { hide(r, ['lr-080-btn']); } },
+		{ id: 'LR-081', cat: 'Data / environment', title: 'Step intent missing', expected: 'No remediation → N/A',
+			build: h('<div class="row"><button class="btn primary" id="lr-081-btn">Add teammate</button></div>'), steps: 'Any balloon on <code>#lr-081-btn</code> in an SWT with no published intents file', variation: 'Element missing', apply: function (r) { hide(r, ['lr-081-btn']); } },
+		{ id: 'LR-082', cat: 'Data / environment', title: 'Descriptions from deep UI (no screenshots)', expected: 'Heal works → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-082-btn">Request access</button></div>'), steps: 'B1 on <code>#lr-082-btn</code> in an SWT built without screenshots', variation: 'Selector broken (heal case)', apply: function (r) { breakSelector(r, 'lr-082-btn'); } },
+		{ id: 'LR-083', cat: 'Data / environment', title: 'SPA route change', expected: 'Detect + heal as usual → fixed',
+			build: h('<div class="row"><a class="btn" href="#/orders" id="lr-083-link">Go to Orders (SPA route, no reload) →</a><span class="muted">Step 2 is on the Orders page: <code>#orders-new-btn</code>.</span></div>'), steps: 'S1 click <code>#lr-083-link</code> → S2 on <code>#orders-new-btn</code> (reached by hash route, no reload)',
+			variation: 'Selector of <code>#orders-new-btn</code> on the Orders page broken', apply: function () { breakSelector(document, 'orders-new-btn'); } },
+		{ id: 'LR-084', cat: 'Data / environment', title: 'Browsers', expected: 'Same behavior in Chrome / Edge / Firefox → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-084-btn">Open settings</button><span class="muted" id="lr-084-ua"></span></div>'), steps: 'Any balloon on <code>#lr-084-btn</code>; repeat in each browser', variation: 'Element missing', init: function (r) { r.querySelector('#lr-084-ua').textContent = navigator.userAgent; }, apply: function (r) { hide(r, ['lr-084-btn']); } },
+
+		/* ===================== Analytics ===================== */
+		{ id: 'LR-085', cat: 'Analytics', title: 'Start event', expected: 'Event with time, system, env, SWT ID, play ID, step ID',
+			build: h('<div class="row"><button class="btn primary" id="lr-085-btn">Create ticket</button></div>'), steps: 'Any balloon on <code>#lr-085-btn</code>', variation: 'Element missing', apply: function (r) { hide(r, ['lr-085-btn']); } },
+		{ id: 'LR-086', cat: 'Analytics', title: 'End event – fixed', expected: 'End event, status fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-086-btn">Mark as paid</button></div>'), steps: 'B1 on <code>#lr-086-btn</code>', variation: 'Selector broken (heal case)', apply: function (r) { breakSelector(r, 'lr-086-btn'); } },
+		{ id: 'LR-087', cat: 'Analytics', title: 'End event – not_fixed', expected: 'End event, status not_fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-087-btn">Escalate</button></div>'), steps: 'Any balloon on <code>#lr-087-btn</code>', variation: 'Element missing, nothing similar to heal to', apply: function (r) { hide(r, ['lr-087-btn']); } },
+		{ id: 'LR-088', cat: 'Analytics', title: 'End event – stopped', expected: 'End event, status stopped',
+			build: h('<div class="row"><button class="btn primary" id="lr-088-btn">Merge accounts</button></div>'), steps: 'Any balloon on <code>#lr-088-btn</code>; click Stop on the overlay', variation: 'Element missing', apply: function (r) { hide(r, ['lr-088-btn']); } },
+		{ id: 'LR-089', cat: 'Analytics', title: 'End event – First_step', expected: 'Event sent with First_step',
+			build: h('<div class="row"><button class="btn primary" id="lr-089-btn">Welcome banner CTA</button></div>'), steps: 'Autoplay SWT; step 1 on <code>#lr-089-btn</code>', variation: 'Step 1 element missing', apply: function (r) { hide(r, ['lr-089-btn']); } },
+		{ id: 'LR-090', cat: 'Analytics', title: 'New element path field', expected: 'Path description populated (if built) → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-090-btn">Download statement</button></div>'), steps: 'B1 on <code>#lr-090-btn</code>', variation: 'Selector broken (heal case)', apply: function (r) { breakSelector(r, 'lr-090-btn'); } },
+		{ id: 'LR-091', cat: 'Analytics', title: 'Start / End pairing', expected: 'IDs match; 1 start + 1 end per run',
+			build: h('<div class="row"><button class="btn" id="lr-091-s1">Step 1</button><button class="btn" id="lr-091-s2">Step 2</button><button class="btn" id="lr-091-s3">Step 3</button><button class="btn primary" id="lr-091-s4">Step 4</button></div>'), steps: 'S1..S4 on <code>#lr-091-s1</code> … <code>#lr-091-s4</code>', variation: 'Steps 1 and 3 missing (2 breaks in one play)', apply: function (r) { hide(r, ['lr-091-s1', 'lr-091-s3']); } },
+		{ id: 'LR-092', cat: 'Analytics', title: 'No event without remediation', expected: 'No remediation events → N/A',
+			build: h('<div class="row"><button class="btn" id="lr-092-s1">Step 1</button><button class="btn primary" id="lr-092-s2">Step 2</button></div>'), steps: 'S1 <code>#lr-092-s1</code> → S2 <code>#lr-092-s2</code>; play with the variation OFF', variation: '(none needed – this toggle only highlights the section)', apply: function () {} },
+
+		/* ===================== Flow Tracker / Preview ===================== */
+		{ id: 'LR-093', cat: 'Flow Tracker / Preview', title: 'Flow Tracker – in process', expected: "'Remediation in process' instead of 'looking for element'",
+			build: h('<div class="row"><button class="btn primary" id="lr-093-btn">Submit expense</button></div>'), steps: 'Any balloon on <code>#lr-093-btn</code>; keep the Flow Tracker open', variation: 'Element missing', apply: function (r) { hide(r, ['lr-093-btn']); } },
+		{ id: 'LR-094', cat: 'Flow Tracker / Preview', title: 'Flow Tracker – success', expected: 'Success indication → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-094-btn">Approve expense</button></div>'), steps: 'B1 on <code>#lr-094-btn</code>; Flow Tracker open', variation: 'Selector broken (heal case)', apply: function (r) { breakSelector(r, 'lr-094-btn'); } },
+		{ id: 'LR-095', cat: 'Flow Tracker / Preview', title: 'Flow Tracker – failed', expected: 'Failed indication → not_fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-095-btn">Reject expense</button></div>'), steps: 'Any balloon on <code>#lr-095-btn</code>; Flow Tracker open', variation: 'Element missing, nothing similar to heal to', apply: function (r) { hide(r, ['lr-095-btn']); } },
+		{ id: 'LR-096', cat: 'Flow Tracker / Preview', title: 'Preview mode', expected: 'Remediation runs + Flow Tracker indication → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-096-btn">Preview target</button></div>'), steps: 'B1 on <code>#lr-096-btn</code>; play from the Editor in Preview', variation: 'Selector broken (heal case)', apply: function (r) { breakSelector(r, 'lr-096-btn'); } },
+		{ id: 'LR-097', cat: 'Flow Tracker / Preview', title: 'Preview – analytics', expected: 'Start / End events sent → per case',
+			build: h('<div class="row"><button class="btn primary" id="lr-097-btn">Preview analytics target</button></div>'), steps: 'Any balloon on <code>#lr-097-btn</code>; play in Preview', variation: 'Element missing', apply: function (r) { hide(r, ['lr-097-btn']); } }
+	];
+
+	/* Global user-interaction logger (LR-067): records every click / submit / input / change / hashchange. */
+	(function installEventLogger() {
+		function describe(t) { if (!t || !t.tagName) return String(t); return t.tagName.toLowerCase() + (t.id ? '#' + t.id : '') + (t.className && typeof t.className === 'string' ? '.' + t.className.trim().split(/\s+/).slice(0, 2).join('.') : '') + (t.textContent ? ' "' + t.textContent.trim().slice(0, 30) + '"' : ''); }
+		function log(type, e) {
+			var line = new Date().toISOString().slice(11, 23) + ' ' + type + (e && 'isTrusted' in e ? (e.isTrusted ? ' [trusted]' : ' [synthetic]') : '') + ' ' + (e && e.target ? describe(e.target) : location.hash);
+			var pre = document.getElementById('lr-067-log');
+			if (pre) { pre.textContent += line + '\n'; pre.scrollTop = pre.scrollHeight; }
+			console.log('[LR-LOG]', line);
+		}
+		['click', 'submit', 'input', 'change'].forEach(function (type) { document.addEventListener(type, function (e) { if (e.target && e.target.closest && e.target.closest('#dc-panel, #dc-fab, .var-toggle, #lr-067-clear')) return; log(type, e); }, true); });
+		window.addEventListener('hashchange', function () { log('hashchange'); });
+	})();
+
+	/* ------------------------------------------------------------------ */
+	/* Helpers for modals, timers                                          */
+	/* ------------------------------------------------------------------ */
+	function showModal(html, closeIds) {
+		var host = document.getElementById('overlay-host');
+		host.insertAdjacentHTML('beforeend', html);
+		var el = host.lastElementChild;
+		(closeIds || []).forEach(function (id) { var b = el.querySelector('#' + id); if (b) b.addEventListener('click', function () { el.remove(); }); });
+	}
+	function startClock(span) {
+		if (!span) return;
+		var t0 = Date.now();
+		span.textContent = '⏱ 0.0s since element went missing';
+		setInterval(function () { span.textContent = '⏱ ' + ((Date.now() - t0) / 1000).toFixed(1) + 's since element went missing'; }, 100);
+	}
+	function delayedAppear(r, id, ms, clock) {
+		var el = r.querySelector('#' + id);
+		var ph = document.createElement('span');
+		ph.className = 'muted';
+		ph.id = id + '-placeholder';
+		ph.textContent = 'Loading…';
+		el.parentNode.insertBefore(ph, el);
+		el.remove();
+		var t0 = Date.now();
+		var iv = setInterval(function () { if (clock) clock.textContent = '⏱ element appears in ' + Math.max(0, (ms - (Date.now() - t0)) / 1000).toFixed(1) + 's'; }, 100);
+		setTimeout(function () { clearInterval(iv); ph.replaceWith(el); if (clock) clock.textContent = '✅ element appeared after ' + (ms / 1000) + 's'; }, ms);
+	}
+
+	/* ------------------------------------------------------------------ */
+	/* Variation state: URL ?on=LR-001,LR-035  +  localStorage            */
+	/* ------------------------------------------------------------------ */
+	var LS_KEY = 'lr-variations';
+	function readState() {
+		var params = new URLSearchParams(location.search);
+		var on = {};
+		if (params.has('on')) {
+			params.get('on').split(',').map(function (s) { return s.trim().toUpperCase(); }).filter(Boolean).forEach(function (id) { on[id] = true; });
+			try { localStorage.setItem(LS_KEY, JSON.stringify(Object.keys(on))); } catch (e) {}
+			return on;
+		}
+		try { (JSON.parse(localStorage.getItem(LS_KEY) || '[]')).forEach(function (id) { on[id] = true; }); } catch (e) {}
+		return on;
+	}
+	function writeState(on) {
+		var ids = Object.keys(on).filter(function (k) { return on[k]; }).sort();
+		try { localStorage.setItem(LS_KEY, JSON.stringify(ids)); } catch (e) {}
+		var url = new URL(location.href);
+		if (ids.length) url.searchParams.set('on', ids.join(',')); else url.searchParams.delete('on');
+		history.replaceState(null, '', url.toString());
+		document.getElementById('dc-url').value = url.toString();
+		document.getElementById('dc-badge').textContent = ids.length;
+	}
+	var state = readState();
+
+	/* ------------------------------------------------------------------ */
+	/* Render                                                              */
+	/* ------------------------------------------------------------------ */
+	var host = document.getElementById('scenarios');
+	var dcList = document.getElementById('dc-list');
+	var lastCat = null;
+	SCENARIOS.forEach(function (sc) {
+		if (sc.cat !== lastCat) {
+			host.insertAdjacentHTML('beforeend', '<div class="category">' + sc.cat + '</div>');
+			dcList.insertAdjacentHTML('beforeend', '<div class="dc-cat">' + sc.cat + '</div>');
+			lastCat = sc.cat;
+		}
+		var on = !!state[sc.id];
+		var sec = document.createElement('section');
+		sec.className = 'scenario' + (on ? ' variation-on' : '');
+		sec.id = 'scenario-' + sc.id;
+		sec.setAttribute('data-scenario', sc.id);
+		sec.innerHTML =
+			'<div class="scenario-head"><div><span class="sid">' + sc.id + '</span> &nbsp; <span class="stitle">' + sc.title + '</span><div class="sexp">Expected: ' + sc.expected + '</div></div>' +
+			'<label class="var-toggle"><input type="checkbox" class="dc-var" data-id="' + sc.id + '"' + (on ? ' checked' : '') + ' /> runtime variation</label></div>' +
+			'<div class="scenario-body">' + sc.build + '</div>' +
+			'<div class="scenario-foot"><div><strong>Build:</strong> ' + sc.steps + '</div><div><strong>Variation:</strong> ' + sc.variation + '</div></div>';
+		host.appendChild(sec);
+		if (sc.init) sc.init(sec);
+		if (on && sc.apply) sc.apply(sec);
+
+		dcList.insertAdjacentHTML('beforeend', '<div class="dc-row"><label><input type="checkbox" class="dc-var" data-id="' + sc.id + '"' + (on ? ' checked' : '') + ' /><span class="sid">' + sc.id + '</span><span>' + sc.title + '</span></label><button class="dc-goto" data-id="' + sc.id + '" title="Scroll to ' + sc.id + '">Go ↓</button></div>');
+	});
+
+	// "Go" buttons in the panel: switch to the home page if needed, scroll the section into view and flash it.
+	dcList.addEventListener('click', function (e) {
+		var btn = e.target.closest('.dc-goto');
+		if (!btn) return;
+		var id = btn.getAttribute('data-id');
+		var onHome = (location.hash.replace('#/', '') || 'home').split('&')[0] === 'home';
+		if (!onHome) { location.hash = '#/home'; route(); }
+		var sec = document.getElementById('scenario-' + id);
+		if (!sec) return;
+		sec.scrollIntoView({ behavior: onHome ? 'smooth' : 'auto', block: 'start' });
+		sec.classList.add('flash');
+		setTimeout(function () { sec.classList.remove('flash'); }, 1600);
+	});
+	writeState(state);
+
+	// Toggling re-renders the page so the DOM is deterministic (same as a fresh load).
+	document.addEventListener('change', function (e) {
+		if (!e.target.classList.contains('dc-var')) return;
+		var id = e.target.getAttribute('data-id');
+		state[id] = e.target.checked;
+		writeState(state);
+		location.reload();
+	});
+	document.getElementById('dc-reset').addEventListener('click', function () { state = {}; writeState(state); location.reload(); });
+	document.getElementById('dc-copy').addEventListener('click', function () { var i = document.getElementById('dc-url'); i.select(); try { navigator.clipboard.writeText(i.value); } catch (e) { document.execCommand('copy'); } });
+	document.getElementById('dc-fab').addEventListener('click', function () { document.getElementById('dc-panel').classList.toggle('hidden'); });
+	document.getElementById('dc-close').addEventListener('click', function () { document.getElementById('dc-panel').classList.add('hidden'); });
+
+	/* ------------------------------------------------------------------ */
+	/* Hash routing: #/home #/reports #/orders #/settings                 */
+	/* ------------------------------------------------------------------ */
+	function route() {
+		var name = (location.hash.replace('#/', '') || 'home').split('?')[0];
+		var found = false;
+		document.querySelectorAll('.page').forEach(function (p) { var active = p.getAttribute('data-page') === name; p.classList.toggle('active', active); if (active) found = true; });
+		if (!found) document.getElementById('page-home').classList.add('active');
+		document.querySelectorAll('nav.site-nav a').forEach(function (a) { a.classList.toggle('active', a.getAttribute('data-route') === name); });
+		if (name !== 'home') window.scrollTo(0, 0);
+	}
+	window.addEventListener('hashchange', route);
+	route();
+
+	// Deep link to a section: #/home&s=LR-021 scrolls to it
+	var m = location.hash.match(/s=(LR-\d{3})/i);
+	if (m) { var s = document.getElementById('scenario-' + m[1].toUpperCase()); if (s) s.scrollIntoView(); }
+})();
+</script>
+</body>
+</html>
