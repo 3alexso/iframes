@@ -232,9 +232,10 @@
 	<div class="dc-actions">
 		<button class="btn" id="dc-reset">Reset all</button>
 		<button class="btn" id="dc-copy">Copy URL</button>
+		<button class="btn" id="dc-reload" title="Fresh load with the current variations – do this before playing a flow">Reload page</button>
 		<button class="btn" id="dc-close">Close</button>
 	</div>
-	<div class="muted">Checked = scenario page differs from how the flow was built. State is kept in the URL (<code>?on=</code>) and localStorage so it survives reloads.</div>
+	<div class="muted">Checked = scenario page differs from how the flow was built. Toggling rebuilds just that section (no reload). State is kept in the URL (<code>?on=</code>) and localStorage; use <b>Reload page</b> for a clean DOM before playing a flow.</div>
 	<input id="dc-url" readonly />
 	<div id="dc-list"></div>
 </div>
@@ -820,12 +821,10 @@
 	var host = document.getElementById('scenarios');
 	var dcList = document.getElementById('dc-list');
 	var lastCat = null;
-	SCENARIOS.forEach(function (sc) {
-		if (sc.cat !== lastCat) {
-			host.insertAdjacentHTML('beforeend', '<div class="category">' + sc.cat + '</div>');
-			dcList.insertAdjacentHTML('beforeend', '<div class="dc-cat">' + sc.cat + '</div>');
-			lastCat = sc.cat;
-		}
+	var ordersBtnHtml = document.getElementById('orders-new-btn').outerHTML; // LR-083 mutates the Orders page; keep the original to restore it
+
+	// Builds (or rebuilds) one scenario section. Called at load and again whenever its toggle changes.
+	function renderSection(sc, existing) {
 		var on = !!state[sc.id];
 		var sec = document.createElement('section');
 		sec.className = 'scenario' + (on ? ' variation-on' : '');
@@ -836,11 +835,30 @@
 			'<label class="var-toggle"><input type="checkbox" class="dc-var" data-id="' + sc.id + '"' + (on ? ' checked' : '') + ' /> runtime variation</label></div>' +
 			'<div class="scenario-body">' + sc.build + '</div>' +
 			'<div class="scenario-foot"><div><strong>Build:</strong> ' + sc.steps + '</div><div><strong>Variation:</strong> ' + sc.variation + '</div></div>';
-		host.appendChild(sec);
+		if (existing) { existing.replaceWith(sec); } else { host.appendChild(sec); }
 		if (sc.init) sc.init(sec);
 		if (on && sc.apply) sc.apply(sec);
+		return sec;
+	}
 
-		dcList.insertAdjacentHTML('beforeend', '<div class="dc-row"><label><input type="checkbox" class="dc-var" data-id="' + sc.id + '"' + (on ? ' checked' : '') + ' /><span class="sid">' + sc.id + '</span><span>' + sc.title + '</span></label><button class="dc-goto" data-id="' + sc.id + '" title="Scroll to ' + sc.id + '">Go ↓</button></div>');
+	// Undo everything a scenario may have left outside its own section (modals, cookie banner, Orders-page mutation).
+	function cleanupOutside(sc) {
+		var prefix = sc.id.toLowerCase() + '-';
+		Array.prototype.slice.call(document.getElementById('overlay-host').children).forEach(function (el) { if (el.id && el.id.indexOf(prefix) === 0) el.remove(); });
+		if (sc.id === 'LR-083') {
+			var cur = document.getElementById('orders-new-btn--alt');
+			if (cur) { var wrap = cur.closest('.alt-wrap'); (wrap || cur).outerHTML = ordersBtnHtml; }
+		}
+	}
+
+	SCENARIOS.forEach(function (sc) {
+		if (sc.cat !== lastCat) {
+			host.insertAdjacentHTML('beforeend', '<div class="category">' + sc.cat + '</div>');
+			dcList.insertAdjacentHTML('beforeend', '<div class="dc-cat">' + sc.cat + '</div>');
+			lastCat = sc.cat;
+		}
+		renderSection(sc, null);
+		dcList.insertAdjacentHTML('beforeend', '<div class="dc-row"><label><input type="checkbox" class="dc-var" data-id="' + sc.id + '"' + (!!state[sc.id] ? ' checked' : '') + ' /><span class="sid">' + sc.id + '</span><span>' + sc.title + '</span></label><button class="dc-goto" data-id="' + sc.id + '" title="Scroll to ' + sc.id + '">Go ↓</button></div>');
 	});
 
 	// "Go" buttons in the panel: switch to the home page if needed, scroll the section into view and flash it.
@@ -858,15 +876,25 @@
 	});
 	writeState(state);
 
-	// Toggling re-renders the page so the DOM is deterministic (same as a fresh load).
+	// Toggling rebuilds only that scenario's section in place (no page reload). Both checkboxes (panel + section) stay in sync.
 	document.addEventListener('change', function (e) {
 		if (!e.target.classList.contains('dc-var')) return;
 		var id = e.target.getAttribute('data-id');
+		var sc = SCENARIOS.filter(function (x) { return x.id === id; })[0];
+		if (!sc) return;
 		state[id] = e.target.checked;
 		writeState(state);
-		location.reload();
+		document.querySelectorAll('.dc-var[data-id="' + id + '"]').forEach(function (cb) { cb.checked = !!state[id]; });
+		cleanupOutside(sc);
+		renderSection(sc, document.getElementById('scenario-' + id));
 	});
-	document.getElementById('dc-reset').addEventListener('click', function () { state = {}; writeState(state); location.reload(); });
+	document.getElementById('dc-reset').addEventListener('click', function () {
+		state = {};
+		writeState(state);
+		document.querySelectorAll('.dc-var').forEach(function (cb) { cb.checked = false; });
+		SCENARIOS.forEach(function (sc) { cleanupOutside(sc); renderSection(sc, document.getElementById('scenario-' + sc.id)); });
+	});
+	document.getElementById('dc-reload').addEventListener('click', function () { location.reload(); });
 	document.getElementById('dc-copy').addEventListener('click', function () { var i = document.getElementById('dc-url'); i.select(); try { navigator.clipboard.writeText(i.value); } catch (e) { document.execCommand('copy'); } });
 	document.getElementById('dc-fab').addEventListener('click', function () { document.getElementById('dc-panel').classList.toggle('hidden'); });
 	document.getElementById('dc-close').addEventListener('click', function () { document.getElementById('dc-panel').classList.add('hidden'); });
