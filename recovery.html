@@ -396,8 +396,8 @@
 		{ id: 'LR-020', cat: 'Heal – element changed, no click', title: 'Browser zoom', expected: 'Heal → fixed',
 			build: h('<div class="row" id="lr-020-row"><button class="btn primary" id="lr-020-btn">Download CSV</button><span class="muted">Captured at 100%. For a real test use browser zoom (Ctrl/Cmd +/-).</span></div>'),
 			steps: 'B1 on <code>#lr-020-btn</code> at 100% zoom',
-			variation: 'Section zoomed to 150% (CSS) and selector broken — or set browser zoom to 67% / 150%',
-			apply: function (r) { r.querySelector('#lr-020-row').style.zoom = '1.5'; breakSelector(r, 'lr-020-btn'); } },
+			variation: 'Section zoomed to 200% (CSS) and selector broken — or set browser zoom to 67% / 150% / 200% (the Ford case)',
+			apply: function (r) { r.querySelector('#lr-020-row').style.zoom = '2'; breakSelector(r, 'lr-020-btn'); } },
 
 		{ id: 'LR-021', cat: 'Heal – element changed, no click', title: 'Element below fold', expected: 'Scroll to element, show step → fixed',
 			build: h('<div id="lr-021-spacer"></div><div class="row"><button class="btn primary" id="lr-021-btn">Archive project</button></div>'),
@@ -717,7 +717,34 @@
 		{ id: 'LR-096', cat: 'Flow Tracker / Preview', title: 'Preview mode', expected: 'Remediation runs + Flow Tracker indication → per case',
 			build: h('<div class="row"><button class="btn primary" id="lr-096-btn">Preview target</button></div>'), steps: 'B1 on <code>#lr-096-btn</code>; play from the Editor in Preview', variation: 'Selector broken (heal case)', apply: function (r) { breakSelector(r, 'lr-096-btn'); } },
 		{ id: 'LR-097', cat: 'Flow Tracker / Preview', title: 'Preview – analytics', expected: 'Start / End events sent → per case',
-			build: h('<div class="row"><button class="btn primary" id="lr-097-btn">Preview analytics target</button></div>'), steps: 'Any balloon on <code>#lr-097-btn</code>; play in Preview', variation: 'Element missing', apply: function (r) { hide(r, ['lr-097-btn']); } }
+			build: h('<div class="row"><button class="btn primary" id="lr-097-btn">Preview analytics target</button></div>'), steps: 'Any balloon on <code>#lr-097-btn</code>; play in Preview', variation: 'Element missing', apply: function (r) { hide(r, ['lr-097-btn']); } },
+
+		/* ===================== Added 14 Oct 2026 ===================== */
+		{ id: 'LR-098', cat: 'Heal – element changed, no click (added 14 Oct)', title: 'Infinite scroll – element loads on scroll', expected: 'Agent scrolls, content loads, element found → fixed',
+			build: h('<div class="row"><button class="btn primary" id="lr-098-btn">Load older activity</button><span class="muted" id="lr-098-status"></span></div><div id="lr-098-feed"></div>'),
+			steps: 'B1 on <code>#lr-098-btn</code> (visible at the top of the section while building)',
+			variation: 'Button is NOT in the DOM. The section becomes an activity feed that loads more items each time the "Loading more…" sentinel scrolls into view; the button (same id) is appended only after the 3rd page loads – i.e. only after scrolling to the bottom twice.',
+			apply: function (r) {
+				var btn = r.querySelector('#lr-098-btn'); btn.remove();
+				var feed = r.querySelector('#lr-098-feed'); var status = r.querySelector('#lr-098-status'); var page = 0;
+				var sentinel = document.createElement('div'); sentinel.id = 'lr-098-sentinel'; sentinel.className = 'muted'; sentinel.style.cssText = 'padding:16px;text-align:center'; sentinel.textContent = 'Loading more…';
+				function addPage() {
+					page++; var html = '';
+					for (var i = 1; i <= 12; i++) { html += '<div class="card" style="margin:8px 0;padding:12px"><strong>Activity #' + ((page - 1) * 12 + i) + '</strong><div class="muted">Page ' + page + ' · item loaded on scroll</div></div>'; }
+					sentinel.insertAdjacentHTML('beforebegin', html);
+					status.textContent = 'pages loaded: ' + page + (page < 3 ? ' – scroll down to load more' : ' – target button is now in the DOM ✔');
+					if (page >= 3) { sentinel.replaceWith(btn); io.disconnect(); }
+				}
+				feed.appendChild(sentinel);
+				var io = new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) { setTimeout(addPage, 600); } }, { rootMargin: '0px' });
+				addPage();
+				io.observe(sentinel);
+			} },
+		{ id: 'LR-099', cat: 'Heal – element changed, no click (added 14 Oct)', title: 'Language change – same structure (Deep UI only)', expected: 'Deep UI finds the element itself; no remediation → N/A',
+			build: h('<div class="row" id="lr-099-row"><button class="btn primary" id="lr-099-signin">Sign in</button><button class="btn" id="lr-099-register">Create account</button></div>'),
+			steps: 'B1 on <code>#lr-099-signin</code> ("Sign in"). Pair with LR-017, where the structure changes too.',
+			variation: 'Only the text changes to Hebrew ("התחבר") and the row turns RTL; id, classes and DOM position stay identical',
+			apply: function (r) { var row = r.querySelector('#lr-099-row'); row.setAttribute('dir', 'rtl'); row.setAttribute('lang', 'he'); r.querySelector('#lr-099-signin').textContent = 'התחבר'; r.querySelector('#lr-099-register').textContent = 'צור חשבון'; } }
 	];
 
 	/* Global user-interaction logger (LR-067): records every click / submit / input / change / hashchange. */
