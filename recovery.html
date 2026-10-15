@@ -745,7 +745,19 @@
 			build: h('<div class="row" id="lr-099-row"><button class="btn primary" id="lr-099-signin">Sign in</button><button class="btn" id="lr-099-register">Create account</button></div>'),
 			steps: 'B1 on <code>#lr-099-signin</code> ("Sign in"). Pair with LR-017, where the structure changes too.',
 			variation: 'Only the text changes to Hebrew ("התחבר") and the row turns RTL; id, classes and DOM position stay identical',
-			apply: function (r) { var row = r.querySelector('#lr-099-row'); row.setAttribute('dir', 'rtl'); row.setAttribute('lang', 'he'); r.querySelector('#lr-099-signin').textContent = 'התחבר'; r.querySelector('#lr-099-register').textContent = 'צור חשבון'; } }
+			apply: function (r) { var row = r.querySelector('#lr-099-row'); row.setAttribute('dir', 'rtl'); row.setAttribute('lang', 'he'); r.querySelector('#lr-099-signin').textContent = 'התחבר'; r.querySelector('#lr-099-register').textContent = 'צור חשבון'; } },
+
+		/* ===================== Added 15 Oct 2026 ===================== */
+		{ id: 'LR-100', cat: 'Modal / mandatory click (added 15 Oct)', title: 'Blocking modal gates the content – element exists only after close', expected: 'Dismiss modal (mandatory click), element mounts, show step on it → fixed',
+			build: h('<div class="row"><span class="muted" id="lr-100-status"></span></div><div class="row" id="lr-100-content"><button class="btn primary" id="lr-100-btn">Start setup wizard</button><button class="btn" id="lr-100-skip">Skip for now</button></div>'),
+			steps: 'B1 on <code>#lr-100-btn</code> ("Start setup wizard"), visible normally while building',
+			variation: 'A blocking "Choose your region" modal (<code>#lr-100-modal</code>, close with X <code>#lr-100-modal-close</code> or "Continue" <code>#lr-100-modal-continue</code>) is shown and the section content is <b>not in the DOM</b> at all; <code>#lr-100-btn</code> (original selector) is mounted only when the modal is closed. Pair with LR-035 (element present but covered).',
+			apply: function (r) {
+				var content = r.querySelector('#lr-100-content'); var html = content.innerHTML; content.innerHTML = '';
+				var status = r.querySelector('#lr-100-status'); status.textContent = '⛔ content not mounted – blocked by region modal'; status.style.color = 'var(--bad)';
+				showModal('<div class="modal-backdrop" id="lr-100-modal"><div class="modal"><button class="x" id="lr-100-modal-close" aria-label="Close">✕</button><h3>Choose your region</h3><p class="muted">We use this to show the right pricing and data center.</p><select class="input" id="lr-100-modal-region" style="width:100%;margin-bottom:12px"><option>Europe (Frankfurt)</option><option>US East (Virginia)</option><option>Asia Pacific (Singapore)</option></select><button class="btn primary" id="lr-100-modal-continue">Continue</button></div></div>', ['lr-100-modal-close', 'lr-100-modal-continue']);
+				['lr-100-modal-close', 'lr-100-modal-continue'].forEach(function (id) { document.getElementById(id).addEventListener('click', function () { content.innerHTML = html; status.textContent = '✔ content mounted after modal closed'; status.style.color = 'var(--ok)'; }); });
+			} }
 	];
 
 	/* Global user-interaction logger (LR-067): records every click / submit / input / change / hashchange. */
