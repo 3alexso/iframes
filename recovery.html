@@ -742,7 +742,7 @@
 				addPage();
 				io.observe(sentinel);
 			} },
-		{ id: 'LR-099', cat: 'Heal – element changed, no click (added 14 Oct)', title: 'Language change – same structure (Deep UI only)', expected: 'Deep UI finds the element itself; no remediation → N/A',
+		{ id: 'LR-099', cat: 'Heal – element changed, no click (added 14 Oct)', title: 'Language change – same structure', expected: 'Deep UI finds the element itself; no remediation → N/A',
 			build: h('<div class="row" id="lr-099-row"><button class="btn primary" id="lr-099-signin">Sign in</button><button class="btn" id="lr-099-register">Create account</button></div>'),
 			steps: 'B1 on <code>#lr-099-signin</code> ("Sign in"). Pair with LR-017, where the structure changes too.',
 			variation: 'Only the text changes to Hebrew ("התחבר") and the row turns RTL; id, classes and DOM position stay identical',
