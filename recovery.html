@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Northwind Cloud — Live Recovery QA Test Site</title>
+<title>Northwind Cloud</title>
 <style>
 	:root {
 		--brand: #2563eb;
@@ -80,9 +80,9 @@
 	section.scenario.variation-on { border-color: var(--warn); box-shadow: 0 0 0 2px #fde68a inset; }
 	.scenario-head {
 		display: flex; justify-content: space-between; align-items: center; gap: 12px;
-		padding: 10px 16px; background: var(--bg-alt); border-bottom: 1px solid var(--border);
+		padding: 6px 16px; background: var(--bg-alt); border-bottom: 1px solid var(--border);
 	}
-	.scenario-head .sid { font-family: ui-monospace, Menlo, monospace; font-weight: 700; color: var(--brand-dark); }
+	.scenario-head .sid { font-family: ui-monospace, Menlo, monospace; font-weight: 700; color: var(--brand-dark); font-size: 12px; }
 	.scenario-head .stitle { font-weight: 600; }
 	.scenario-head .sexp { font-size: 12px; color: var(--muted); }
 	.scenario-head label.var-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); white-space: nowrap; cursor: pointer; }
@@ -161,7 +161,8 @@
 	#dc-panel .dc-actions .btn { padding: 5px 10px; font-size: 12px; }
 	#dc-url { width: 100%; font-size: 11px; font-family: ui-monospace, Menlo, monospace; padding: 6px; border: 1px solid var(--border); border-radius: 6px; margin-top: 6px; }
 </style>
-	<script type="text/javascript">(function() {var walkme = document.createElement('script'); walkme.type = 'text/javascript'; walkme.async = true; walkme.src = 'https://cdn.walkmeqa.com/users/523f7d6415344c4a98ba85558748927f/test/walkme_523f7d6415344c4a98ba85558748927f_https.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(walkme, s); window._walkmeConfig = {smartLoad:true}; })();</script>
+		<script type="text/javascript">(function() {var walkme = document.createElement('script'); walkme.type = 'text/javascript'; walkme.async = true; walkme.src = 'https://cdn.walkmeqa.com/users/523f7d6415344c4a98ba85558748927f/test/walkme_523f7d6415344c4a98ba85558748927f_https.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(walkme, s); window._walkmeConfig = {smartLoad:true}; })();</script>
+
 </head>
 <body>
 
@@ -181,19 +182,14 @@
 <main>
 	<!-- ===================== HOME: all scenarios ===================== -->
 	<div class="page active" id="page-home" data-page="home">
-		<h1 style="margin:0 0 4px">Live Recovery QA scenarios</h1>
-		<p class="muted" style="margin-top:0">
-			Each section is one row of the <em>Live_Recovery_QA_Scenarios</em> sheet. Build the Smart Walk-Thru on the elements while the
-			<strong>runtime variation is OFF</strong>, then switch it <strong>ON</strong> (section toggle, the control panel bottom-right, or
-			<code>?on=LR-001,LR-035</code> in the URL) and play the flow. Element ids are stable and prefixed with the scenario id.
-		</p>
+		<h1 style="margin:0 0 16px">Dashboard</h1>
 		<div id="scenarios"></div>
 	</div>
 
 	<!-- ===================== REPORTS page (LR-013) ===================== -->
 	<div class="page" id="page-reports" data-page="reports">
 		<h1 id="reports-page-title">Reports</h1>
-		<p class="muted">Second page used by LR-013 (step 2 lives here).</p>
+		
 		<div class="card row">
 			<button class="btn primary" id="reports-export-btn">Export report</button>
 			<button class="btn" id="reports-schedule-btn">Schedule</button>
@@ -204,7 +200,7 @@
 	<!-- ===================== ORDERS page (LR-049) ===================== -->
 	<div class="page" id="page-orders" data-page="orders">
 		<h1 id="orders-page-title">Orders</h1>
-		<p class="muted">Second page used by LR-049 (step after the auto-click lives here).</p>
+		
 		<div class="card row">
 			<button class="btn primary" id="orders-new-btn">New order</button>
 			<input class="input" id="orders-search" placeholder="Search orders" />
@@ -236,7 +232,7 @@
 		<button class="btn" id="dc-reload" title="Fresh load with the current variations – do this before playing a flow">Reload page</button>
 		<button class="btn" id="dc-close">Close</button>
 	</div>
-	<div class="muted">Checked = scenario page differs from how the flow was built. Toggling rebuilds just that section (no reload). State is kept in the URL (<code>?on=</code>) and localStorage; use <b>Reload page</b> for a clean DOM before playing a flow.</div>
+	<div class="muted">Checked = runtime variation on. State is kept in the URL (<code>?on=</code>) and localStorage; use <b>Reload page</b> for a clean DOM before playing a flow.</div>
 	<input id="dc-url" readonly />
 	<div id="dc-list"></div>
 </div>
@@ -351,7 +347,7 @@
 			apply: function (r) { var b = breakSelector(r, 'lr-012-account-menu'); b.textContent = 'Workspace ▾'; var dd = r.querySelector('#lr-012-dropdown'); r.querySelector('#lr-012-slot').after(dd); } },
 
 		{ id: 'LR-013', cat: 'No skip – dependent steps', title: 'Next step on another page', expected: 'No navigation; stop → not_fixed',
-			build: h('<div class="row"><a class="btn" href="#/reports" id="lr-013-reports-link">Reports →</a><span class="muted">Step 2 is on the Reports page (<code>#reports-export-btn</code>).</span></div>'),
+			build: h('<div class="row"><a class="btn" href="#/reports" id="lr-013-reports-link">Reports →</a></div>'),
 			steps: 'S1 click <code>#lr-013-reports-link</code> → S2 balloon on <code>#reports-export-btn</code> (Reports page)',
 			variation: 'Reports link missing',
 			apply: function (r) { hide(r, ['lr-013-reports-link']); } },
@@ -370,7 +366,7 @@
 			apply: function (r) { hide(r, ['lr-015-email']); } },
 
 		{ id: 'LR-016', cat: 'No skip – dependent steps', title: 'Hamburger menu at small width', expected: "Don't open hamburger; stop → not_fixed",
-			build: h('<nav class="topnav" id="lr-016-nav"><span class="nav-items" id="lr-016-nav-items"><a href="#" id="lr-016-nav-home">Home</a> <a href="#" id="lr-016-nav-pricing">Pricing</a> <a href="#" id="lr-016-nav-docs">Docs</a> <a href="#" id="lr-016-nav-contact">Contact</a></span><button class="btn hamburger" id="lr-016-hamburger">☰ Menu</button><span class="muted" style="margin-left:auto">also collapses below 700px</span></nav>'),
+			build: h('<nav class="topnav" id="lr-016-nav"><span class="nav-items" id="lr-016-nav-items"><a href="#" id="lr-016-nav-home">Home</a> <a href="#" id="lr-016-nav-pricing">Pricing</a> <a href="#" id="lr-016-nav-docs">Docs</a> <a href="#" id="lr-016-nav-contact">Contact</a></span><button class="btn hamburger" id="lr-016-hamburger">☰ Menu</button></nav>'),
 			steps: 'S1 on top-nav item <code>#lr-016-nav-pricing</code> → S2 on <code>#lr-016-nav-docs</code>',
 			variation: 'Nav collapsed into hamburger (<code>#lr-016-hamburger</code>); items not rendered until opened',
 			init: function (r) { r.querySelector('#lr-016-hamburger').addEventListener('click', function () { r.querySelector('#lr-016-nav').classList.toggle('collapsed'); }); },
@@ -396,7 +392,7 @@
 			apply: function (r) { var l = r.querySelector('#lr-019-layout'); l.className = 'layout-narrow'; breakSelector(r, 'lr-019-btn'); } },
 
 		{ id: 'LR-020', cat: 'Heal – element changed, no click', title: 'Browser zoom', expected: 'Heal → fixed',
-			build: h('<div class="row" id="lr-020-row"><button class="btn primary" id="lr-020-btn">Download CSV</button><span class="muted">Captured at 100%. For a real test use browser zoom (Ctrl/Cmd +/-).</span></div>'),
+			build: h('<div class="row" id="lr-020-row"><button class="btn primary" id="lr-020-btn">Download CSV</button></div>'),
 			steps: 'B1 on <code>#lr-020-btn</code> at 100% zoom',
 			variation: 'Section zoomed to 200% (CSS) and selector broken — or set browser zoom to 67% / 150% / 200% (the Ford case)',
 			apply: function (r) { r.querySelector('#lr-020-row').style.zoom = '2'; breakSelector(r, 'lr-020-btn'); } },
@@ -505,7 +501,7 @@
 			apply: function (r) { breakSelector(r, 'lr-036-btn'); showModal('<div class="modal-backdrop" id="lr-036-modal"><div class="modal"><h3>We\'ve updated our terms</h3><p class="muted">Please review the updated terms of service. Nothing changes for your account.</p><button class="btn primary" id="lr-036-modal-gotit">Got it</button></div></div>', ['lr-036-modal-gotit']); } },
 
 		{ id: 'LR-037', cat: 'Modal / mandatory click', title: 'Cookie banner covering element', expected: 'Dismiss with any button → fixed',
-			build: h('<div class="row"><a class="btn" href="#" id="lr-037-footer-link">Privacy policy</a><span class="muted">(footer link)</span></div>'),
+			build: h('<div class="row"><a class="btn" href="#" id="lr-037-footer-link">Privacy policy</a></div>'),
 			steps: 'B1 on <code>#lr-037-footer-link</code>',
 			variation: 'Cookie banner (<code>#lr-037-cookie-banner</code>: Accept <code>#lr-037-cookie-accept</code> / Reject <code>#lr-037-cookie-reject</code>) covers the bottom of the page; selector broken. Scroll so the link sits at the bottom.',
 			apply: function (r) { breakSelector(r, 'lr-037-footer-link'); showModal('<div class="cookie-banner" id="lr-037-cookie-banner"><span>We use cookies to improve your experience.</span><span class="row"><button class="btn" id="lr-037-cookie-reject">Reject all</button><button class="btn" id="lr-037-cookie-accept">Accept all</button></span></div>', ['lr-037-cookie-accept', 'lr-037-cookie-reject']); } },
@@ -523,9 +519,9 @@
 			apply: function (r) { breakSelector(r, 'lr-039-btn'); showModal('<div class="modal-backdrop" id="lr-039-login-modal"><div class="modal"><h3>Your session expired</h3><p class="muted">Please sign in again to continue.</p><form onsubmit="return false"><input class="input" id="lr-039-login-user" placeholder="Username" style="width:100%;margin-bottom:8px"/><input class="input" id="lr-039-login-pass" type="password" placeholder="Password" style="width:100%;margin-bottom:12px"/><button class="btn primary" id="lr-039-login-submit">Sign in</button></form></div></div>', ['lr-039-login-submit']); } },
 
 		{ id: 'LR-040', cat: 'Modal / mandatory click', title: 'Native browser dialog', expected: 'No action → not_fixed',
-			build: h('<div class="row"><button class="btn primary" id="lr-040-btn">Delete workspace</button><button class="btn" id="lr-040-fire">Fire confirm() now</button></div>'),
+			build: h('<div class="row"><button class="btn primary" id="lr-040-btn">Delete workspace</button><button class="btn" id="lr-040-fire">Confirm deletion</button></div>'),
 			steps: 'B1 on <code>#lr-040-btn</code>',
-			variation: 'Selector broken and a native <code>confirm()</code> opens 2s after load (blocks page JS). Use "Fire confirm() now" to open it manually.',
+			variation: 'Selector broken and a native <code>confirm()</code> opens 2s after load (blocks page JS). Use "Confirm deletion" to open it manually.',
 			init: function (r) { r.querySelector('#lr-040-fire').addEventListener('click', function () { window.confirm('Delete workspace "Northwind"? This cannot be undone.'); }); },
 			apply: function (r) { breakSelector(r, 'lr-040-btn'); setTimeout(function () { window.confirm('Delete workspace "Northwind"? This cannot be undone.'); }, 2000); } },
 
@@ -583,7 +579,7 @@
 			apply: function (r) { var f = r.querySelector('#lr-048-field'); f.value = 'Northwind Traders'; f.classList.add('hidden'); r.querySelector('form').insertAdjacentHTML('afterbegin', badge('Company: Northwind Traders', true)); } },
 
 		{ id: 'LR-049', cat: 'Step types', title: 'Auto step causing navigation', expected: 'No navigation; stop → not_fixed',
-			build: h('<div class="row"><a class="btn" href="#/orders" id="lr-049-link">Go to Orders →</a><span class="muted">Next step on the Orders page (<code>#orders-new-btn</code>).</span></div>'),
+			build: h('<div class="row"><a class="btn" href="#/orders" id="lr-049-link">Go to Orders →</a></div>'),
 			steps: 'Auto-click <code>#lr-049-link</code> → step on <code>#orders-new-btn</code> (Orders page)',
 			variation: 'Link missing',
 			apply: function (r) { hide(r, ['lr-049-link']); } },
@@ -621,7 +617,7 @@
 		{ id: 'LR-060', cat: 'Triggers & settings', title: 'First step – launched from menu', expected: 'Agent runs → per case',
 			build: h('<div class="row"><button class="btn primary" id="lr-060-btn">Create first project</button></div>'), steps: 'Step 1 on <code>#lr-060-btn</code>; play from the WalkMe Menu', variation: 'Step 1 element missing', apply: function (r) { hide(r, ['lr-060-btn']); } },
 		{ id: 'LR-061', cat: 'Triggers & settings', title: 'First step – launched from launcher', expected: 'Agent runs → per case',
-			build: h('<div class="row"><button class="btn primary" id="lr-061-btn">Import data</button><span class="muted">Attach a Launcher to <code>#lr-061-launcher-anchor</code>.</span><span id="lr-061-launcher-anchor" style="display:inline-block;width:40px;height:40px;border:1px dashed var(--border);border-radius:8px"></span></div>'), steps: 'Step 1 on <code>#lr-061-btn</code>; play from a Launcher placed on <code>#lr-061-launcher-anchor</code>', variation: 'Step 1 element missing', apply: function (r) { hide(r, ['lr-061-btn']); } },
+			build: h('<div class="row"><button class="btn primary" id="lr-061-btn">Import data</button><span id="lr-061-launcher-anchor" style="display:inline-block;width:40px;height:40px;border:1px dashed var(--border);border-radius:8px"></span></div>'), steps: 'Step 1 on <code>#lr-061-btn</code>; play from a Launcher placed on <code>#lr-061-launcher-anchor</code>', variation: 'Step 1 element missing', apply: function (r) { hide(r, ['lr-061-btn']); } },
 
 		{ id: 'LR-062', cat: 'Triggers & settings', title: 'First step – launched from another SWT', expected: 'Agent runs → per case',
 			build: h('<div class="row"><button class="btn" id="lr-062-start-btn">Open onboarding (SWT A)</button><span class="muted">→</span><button class="btn primary" id="lr-062-btn">Connect calendar (SWT B step 1)</button></div>'),
@@ -644,7 +640,7 @@
 		{ id: 'LR-066', cat: 'Remediation UI & user interaction', title: 'Takeover UI visible', expected: 'UI per Figma while running → per case',
 			build: h('<div class="row"><button class="btn primary" id="lr-066-btn">Generate invoice</button></div>'), steps: 'Any balloon on <code>#lr-066-btn</code>', variation: 'Element missing', apply: function (r) { hide(r, ['lr-066-btn']); } },
 		{ id: 'LR-067', cat: 'Remediation UI & user interaction', title: 'No clicks by agent (global check)', expected: 'No click / nav / submit events by agent (except mandatory modal)',
-			build: h('<div class="row"><button class="btn primary" id="lr-067-btn">Run audit</button><button class="btn" id="lr-067-clear">Clear log</button><span class="muted">Every click / submit / input / change / hashchange on the page is logged below (also in the console as <code>[LR-LOG]</code>).</span></div><pre id="lr-067-log" style="margin:12px 0 0;max-height:180px;overflow:auto;background:var(--bg-alt);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:12px"></pre>'),
+			build: h('<div class="row"><button class="btn primary" id="lr-067-btn">Run audit</button><button class="btn" id="lr-067-clear">Clear log</button></div><pre id="lr-067-log" style="margin:12px 0 0;max-height:180px;overflow:auto;background:var(--bg-alt);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:12px"></pre>'),
 			steps: 'Any balloon on <code>#lr-067-btn</code>; the event log <code>#lr-067-log</code> is always on, so you can run any scenario and check it afterwards',
 			variation: 'Element missing', init: function (r) { r.querySelector('#lr-067-clear').addEventListener('click', function () { r.querySelector('#lr-067-log').textContent = ''; }); }, apply: function (r) { hide(r, ['lr-067-btn']); } },
 		{ id: 'LR-068', cat: 'Remediation UI & user interaction', title: 'No data changes', expected: 'No field value changed by agent',
@@ -652,7 +648,7 @@
 			steps: 'Form SWT: balloon on <code>#lr-068-submit</code> (fields pre-filled)',
 			variation: 'Submit missing; the status line turns red if any field value changes', init: function (r) { var init = ['lr-068-name', 'lr-068-email'].map(function (id) { return r.querySelector('#' + id).value; }); var chk = r.querySelector('#lr-068-newsletter').checked; setInterval(function () { var now = ['lr-068-name', 'lr-068-email'].map(function (id) { return r.querySelector('#' + id).value; }); var changed = now.join('|') !== init.join('|') || r.querySelector('#lr-068-newsletter').checked !== chk; var s = r.querySelector('#lr-068-status'); s.textContent = changed ? '✖ field values CHANGED' : '✔ field values unchanged'; s.style.color = changed ? 'var(--bad)' : 'var(--ok)'; }, 500); }, apply: function (r) { hide(r, ['lr-068-submit']); } },
 		{ id: 'LR-069', cat: 'Remediation UI & user interaction', title: 'User clicks page during remediation', expected: 'Click blocked; only Stop active',
-			build: h('<div class="row"><button class="btn primary" id="lr-069-btn">Send reminder</button><button class="btn" id="lr-069-decoy">Decoy – click me during remediation</button><span class="muted" id="lr-069-count">decoy clicks: 0</span></div>'),
+			build: h('<div class="row"><button class="btn primary" id="lr-069-btn">Send reminder</button><button class="btn" id="lr-069-decoy">Dismiss</button><span class="muted" id="lr-069-count">decoy clicks: 0</span></div>'),
 			steps: 'Any balloon on <code>#lr-069-btn</code>; while the overlay is up, try clicking <code>#lr-069-decoy</code>',
 			variation: 'Element missing; the decoy counts clicks that got through', init: function (r) { var n = 0; r.querySelector('#lr-069-decoy').addEventListener('click', function () { n++; r.querySelector('#lr-069-count').textContent = 'decoy clicks: ' + n; }); }, apply: function (r) { hide(r, ['lr-069-btn']); } },
 		{ id: 'LR-070', cat: 'Remediation UI & user interaction', title: 'User clicks Stop', expected: 'Remediation pauses; Resume / End options',
@@ -673,9 +669,9 @@
 			build: h('<div class="row"><button class="btn primary" id="lr-077-btn">Reconcile</button><span class="muted" id="lr-077-clock"></span></div>'), steps: 'Any balloon on <code>#lr-077-btn</code>', variation: 'Element missing; stopwatch starts', apply: function (r) { hide(r, ['lr-077-btn']); startClock(r.querySelector('#lr-077-clock')); } },
 		{ id: 'LR-078', cat: 'Remediation UI & user interaction', title: 'Remediation hits 30 s limit', expected: 'Stop; SWT ends gracefully → not_fixed',
 			build: h('<div class="row"><button class="btn primary" id="lr-078-btn">Finalize</button><span class="muted" id="lr-078-clock"></span></div><div id="lr-078-heavy"></div>'), steps: 'Any balloon on <code>#lr-078-btn</code>',
-			variation: 'Element missing and 4,000 look-alike controls are injected below to slow the agent down; stopwatch starts', apply: function (r) { hide(r, ['lr-078-btn']); startClock(r.querySelector('#lr-078-clock')); var html = ''; for (var i = 0; i < 4000; i++) { html += '<button class="btn" style="margin:2px;font-size:11px;padding:2px 6px">Finalize ' + i + '</button>'; } r.querySelector('#lr-078-heavy').innerHTML = '<div class="muted" style="margin:10px 0 6px">Heavy DOM (4,000 similar buttons)</div>' + html; } },
+			variation: 'Element missing and 4,000 look-alike controls are injected below to slow the agent down; stopwatch starts', apply: function (r) { hide(r, ['lr-078-btn']); startClock(r.querySelector('#lr-078-clock')); var html = ''; for (var i = 0; i < 4000; i++) { html += '<button class="btn" style="margin:2px;font-size:11px;padding:2px 6px">Finalize ' + i + '</button>'; } r.querySelector('#lr-078-heavy').innerHTML = '' + html; } },
 		{ id: 'LR-079', cat: 'Remediation UI & user interaction', title: 'LLM / service slow or down', expected: 'Times out; SWT ends gracefully → not_fixed',
-			build: h('<div class="row"><button class="btn primary" id="lr-079-btn">Sync CRM</button><span class="muted">Throttle / block the agent service in DevTools → Network.</span></div>'), steps: 'Any balloon on <code>#lr-079-btn</code>', variation: 'Element missing', apply: function (r) { hide(r, ['lr-079-btn']); } },
+			build: h('<div class="row"><button class="btn primary" id="lr-079-btn">Sync CRM</button></div>'), steps: 'Any balloon on <code>#lr-079-btn</code>', variation: 'Element missing', apply: function (r) { hide(r, ['lr-079-btn']); } },
 
 		/* ===================== Data / environment ===================== */
 		{ id: 'LR-080', cat: 'Data / environment', title: 'Extension (UI native agent) not installed', expected: 'No remediation; legacy behavior → N/A',
@@ -686,7 +682,7 @@
 		{ id: 'LR-082', cat: 'Data / environment', title: 'Descriptions from deep UI (no screenshots)', expected: 'Heal works → fixed',
 			build: h('<div class="row"><button class="btn primary" id="lr-082-btn">Request access</button></div>'), steps: 'B1 on <code>#lr-082-btn</code> in an SWT built without screenshots', variation: 'Selector broken (heal case)', apply: function (r) { breakSelector(r, 'lr-082-btn'); } },
 		{ id: 'LR-083', cat: 'Data / environment', title: 'SPA route change', expected: 'Detect + heal as usual → fixed',
-			build: h('<div class="row"><a class="btn" href="#/orders" id="lr-083-link">Go to Orders (SPA route, no reload) →</a><span class="muted">Step 2 is on the Orders page: <code>#orders-new-btn</code>.</span></div>'), steps: 'S1 click <code>#lr-083-link</code> → S2 on <code>#orders-new-btn</code> (reached by hash route, no reload)',
+			build: h('<div class="row"><a class="btn" href="#/orders" id="lr-083-link">Go to Orders →</a></div>'), steps: 'S1 click <code>#lr-083-link</code> → S2 on <code>#orders-new-btn</code> (reached by hash route, no reload)',
 			variation: 'Selector of <code>#orders-new-btn</code> on the Orders page broken', apply: function () { breakSelector(document, 'orders-new-btn'); } },
 		{ id: 'LR-084', cat: 'Data / environment', title: 'Browsers', expected: 'Same behavior in Chrome / Edge / Firefox → per case',
 			build: h('<div class="row"><button class="btn primary" id="lr-084-btn">Open settings</button><span class="muted" id="lr-084-ua"></span></div>'), steps: 'Any balloon on <code>#lr-084-btn</code>; repeat in each browser', variation: 'Element missing', init: function (r) { r.querySelector('#lr-084-ua').textContent = navigator.userAgent; }, apply: function (r) { hide(r, ['lr-084-btn']); } },
@@ -742,7 +738,7 @@
 				addPage();
 				io.observe(sentinel);
 			} },
-		{ id: 'LR-099', cat: 'Heal – element changed, no click (added 14 Oct)', title: 'Language change – same structure', expected: 'Deep UI finds the element itself; no remediation → N/A',
+		{ id: 'LR-099', cat: 'Heal – element changed, no click (added 14 Oct)', title: 'Language change – same structure (Deep UI only)', expected: 'Deep UI finds the element itself; no remediation → N/A',
 			build: h('<div class="row" id="lr-099-row"><button class="btn primary" id="lr-099-signin">Sign in</button><button class="btn" id="lr-099-register">Create account</button></div>'),
 			steps: 'B1 on <code>#lr-099-signin</code> ("Sign in"). Pair with LR-017, where the structure changes too.',
 			variation: 'Only the text changes to Hebrew ("התחבר") and the row turns RTL; id, classes and DOM position stay identical',
@@ -750,7 +746,7 @@
 
 		/* ===================== Added 15 Oct 2026 ===================== */
 		{ id: 'LR-100', cat: 'Modal / mandatory click (added 15 Oct)', title: 'Blocking modal gates the content – element exists only after close', expected: 'Dismiss modal (mandatory click), element mounts, show step on it → fixed',
-			build: h('<div class="row"><span class="muted" id="lr-100-status"></span></div><div class="row" id="lr-100-content"><button class="btn primary" id="lr-100-btn">Start setup wizard</button><button class="btn" id="lr-100-skip">Skip for now</button></div>'),
+			build: h('<div class="row"><span id="lr-100-status" style="display:none"></span></div><div class="row" id="lr-100-content"><button class="btn primary" id="lr-100-btn">Start setup wizard</button><button class="btn" id="lr-100-skip">Skip for now</button></div>'),
 			steps: 'B1 on <code>#lr-100-btn</code> ("Start setup wizard"), visible normally while building',
 			variation: 'A blocking "Choose your region" modal (<code>#lr-100-modal</code>, close with X <code>#lr-100-modal-close</code> or "Continue" <code>#lr-100-modal-continue</code>) is shown and the section content is <b>not in the DOM</b> at all; <code>#lr-100-btn</code> (original selector) is mounted only when the modal is closed. Pair with LR-035 (element present but covered).',
 			apply: function (r) {
@@ -844,10 +840,9 @@
 		sec.id = 'scenario-' + sc.id;
 		sec.setAttribute('data-scenario', sc.id);
 		sec.innerHTML =
-			'<div class="scenario-head"><div><span class="sid">' + sc.id + '</span> &nbsp; <span class="stitle">' + sc.title + '</span><div class="sexp">Expected: ' + sc.expected + '</div></div>' +
+			'<div class="scenario-head"><span class="sid">' + sc.id + '</span>' +
 			'<label class="var-toggle"><input type="checkbox" class="dc-var" data-id="' + sc.id + '"' + (on ? ' checked' : '') + ' /> runtime variation</label></div>' +
-			'<div class="scenario-body">' + sc.build + '</div>' +
-			'<div class="scenario-foot"><div><strong>Build:</strong> ' + sc.steps + '</div><div><strong>Variation:</strong> ' + sc.variation + '</div></div>';
+			'<div class="scenario-body">' + sc.build + '</div>';
 		if (existing) { existing.replaceWith(sec); } else { host.appendChild(sec); }
 		if (sc.init) sc.init(sec);
 		if (on && sc.apply) sc.apply(sec);
@@ -866,7 +861,6 @@
 
 	SCENARIOS.forEach(function (sc) {
 		if (sc.cat !== lastCat) {
-			host.insertAdjacentHTML('beforeend', '<div class="category">' + sc.cat + '</div>');
 			dcList.insertAdjacentHTML('beforeend', '<div class="dc-cat">' + sc.cat + '</div>');
 			lastCat = sc.cat;
 		}
