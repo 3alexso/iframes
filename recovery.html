@@ -137,6 +137,10 @@
 	.cookie-banner { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000; background: #111827; color: #fff; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 	.cookie-banner .btn { background: #fff; }
 
+	.dc-info-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); cursor: pointer; margin-right: 8px; white-space: nowrap; }
+	.category { display: none; }
+	body.show-info .category { display: block; }
+
 	/* ---------- Demo control panel (NOT part of the app under test; ids prefixed dc-) ---------- */
 	#dc-fab {
 		position: fixed; right: 20px; bottom: 20px; z-index: 2000; border: 0; border-radius: 999px;
@@ -175,6 +179,7 @@
 		<a href="#/settings" data-route="settings">Settings</a>
 	</nav>
 	<div class="row">
+		<label class="dc-info-toggle" title="Show scenario title, expected result, build and variation notes"><input type="checkbox" id="dc-info" /> Show test info</label>
 		<button class="btn primary" id="header-get-started">Get started</button>
 	</div>
 </header>
@@ -823,6 +828,10 @@
 		document.getElementById('dc-badge').textContent = ids.length;
 	}
 	var state = readState();
+	var showInfo = false;
+	try { showInfo = localStorage.getItem('lr-show-info') === '1'; } catch (e) {}
+	document.body.classList.toggle('show-info', showInfo);
+	document.getElementById('dc-info').checked = showInfo;
 
 	/* ------------------------------------------------------------------ */
 	/* Render                                                              */
@@ -840,9 +849,11 @@
 		sec.id = 'scenario-' + sc.id;
 		sec.setAttribute('data-scenario', sc.id);
 		sec.innerHTML =
-			'<div class="scenario-head"><span class="sid">' + sc.id + '</span>' +
+			'<div class="scenario-head"><div><span class="sid">' + sc.id + '</span>' +
+			(showInfo ? ' &nbsp; <span class="stitle">' + sc.title + '</span><div class="sexp">Expected: ' + sc.expected + '</div>' : '') + '</div>' +
 			'<label class="var-toggle"><input type="checkbox" class="dc-var" data-id="' + sc.id + '"' + (on ? ' checked' : '') + ' /> runtime variation</label></div>' +
-			'<div class="scenario-body">' + sc.build + '</div>';
+			'<div class="scenario-body">' + sc.build + '</div>' +
+			(showInfo ? '<div class="scenario-foot"><div><strong>Build:</strong> ' + sc.steps + '</div><div><strong>Variation:</strong> ' + sc.variation + '</div></div>' : '');
 		if (existing) { existing.replaceWith(sec); } else { host.appendChild(sec); }
 		if (sc.init) sc.init(sec);
 		if (on && sc.apply) sc.apply(sec);
@@ -861,6 +872,7 @@
 
 	SCENARIOS.forEach(function (sc) {
 		if (sc.cat !== lastCat) {
+			host.insertAdjacentHTML('beforeend', '<div class="category">' + sc.cat + '</div>');
 			dcList.insertAdjacentHTML('beforeend', '<div class="dc-cat">' + sc.cat + '</div>');
 			lastCat = sc.cat;
 		}
@@ -902,6 +914,12 @@
 		SCENARIOS.forEach(function (sc) { cleanupOutside(sc); renderSection(sc, document.getElementById('scenario-' + sc.id)); });
 	});
 	document.getElementById('dc-reload').addEventListener('click', function () { location.reload(); });
+	document.getElementById('dc-info').addEventListener('change', function (e) {
+		showInfo = e.target.checked;
+		try { localStorage.setItem('lr-show-info', showInfo ? '1' : '0'); } catch (err) {}
+		document.body.classList.toggle('show-info', showInfo);
+		SCENARIOS.forEach(function (sc) { cleanupOutside(sc); renderSection(sc, document.getElementById('scenario-' + sc.id)); });
+	});
 	document.getElementById('dc-copy').addEventListener('click', function () { var i = document.getElementById('dc-url'); i.select(); try { navigator.clipboard.writeText(i.value); } catch (e) { document.execCommand('copy'); } });
 	document.getElementById('dc-fab').addEventListener('click', function () { document.getElementById('dc-panel').classList.toggle('hidden'); });
 	document.getElementById('dc-close').addEventListener('click', function () { document.getElementById('dc-panel').classList.add('hidden'); });
