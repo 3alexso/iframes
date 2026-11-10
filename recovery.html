@@ -774,11 +774,11 @@
 			apply: function (r) { breakSelector(r, 'lr-102-btn'); refreshKit(r, 'lr-102', [8, 10, 12, 15, 20], 10); } },
 
 		{ id: 'LR-103', cat: 'Scroll (added 10 Nov)', title: 'Endless scroll – target never loads', expected: 'Agent stops scrolling within the 30s limit, reports not found, SWT ends; page not left scrolled far away → not_fixed (sheet #24, pair with LR-098)',
-			build: h('<div class="row"><button class="btn primary" id="lr-103-btn">Load archived tickets</button><span class="muted" id="lr-103-status"></span></div><div id="lr-103-feed"></div>'),
-			steps: 'B1 on <code>#lr-103-btn</code> (visible at the top of the section while building)',
+			build: h('<div class="row"><button class="btn primary" id="lr-103-archived-tickets-btn">Load archived tickets</button><span class="muted" id="lr-103-status"></span></div><div id="lr-103-feed"></div>'),
+			steps: 'B1 on <code>#lr-103-archived-tickets-btn</code> (visible at the top of the section while building)',
 			variation: 'Button removed for good. The section becomes an endless feed: whenever the "Loading more…" sentinel (<code>#lr-103-sentinel</code>) scrolls into view, 5 more tickets load (one batch per scroll) – forever; the target never appears. A fixed chip bottom-left (<code>#lr-103-scroll-chip</code>) shows pages loaded and how far the page is scrolled past the section; "Back to section" resets.',
 			apply: function (r) {
-				hide(r, ['lr-103-btn']);
+				hide(r, ['lr-103-archived-tickets-btn']);
 				var feed = r.querySelector('#lr-103-feed'); var status = r.querySelector('#lr-103-status'); var page = 0; var loading = false;
 				var sentinel = document.createElement('div'); sentinel.id = 'lr-103-sentinel'; sentinel.className = 'muted'; sentinel.style.cssText = 'padding:16px;text-align:center'; sentinel.textContent = 'Loading more…';
 				feed.appendChild(sentinel);
@@ -796,7 +796,7 @@
 				}
 				function maybeLoad() {
 					if (loading || !document.body.contains(sentinel)) return;
-if (sentinel.getBoundingClientRect().top < window.innerHeight) { loading = true; setTimeout(function () { addPage(); loading = false; }, 600); }
+					if (sentinel.getBoundingClientRect().top < window.innerHeight) { loading = true; setTimeout(function () { addPage(); loading = false; }, 600); }
 				}
 				function onScroll() { if (!document.body.contains(feed)) { window.removeEventListener('scroll', onScroll); return; } paint(); maybeLoad(); }
 				window.addEventListener('scroll', onScroll, { passive: true });
