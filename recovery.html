@@ -759,7 +759,102 @@
 				var status = r.querySelector('#lr-100-status'); status.textContent = '⛔ content not mounted – blocked by region modal'; status.style.color = 'var(--bad)';
 				showModal('<div class="modal-backdrop" id="lr-100-modal"><div class="modal"><button class="x" id="lr-100-modal-close" aria-label="Close">✕</button><h3>Choose your region</h3><p class="muted">We use this to show the right pricing and data center.</p><select class="input" id="lr-100-modal-region" style="width:100%;margin-bottom:12px"><option>Europe (Frankfurt)</option><option>US East (Virginia)</option><option>Asia Pacific (Singapore)</option></select><button class="btn primary" id="lr-100-modal-continue">Continue</button></div></div>', ['lr-100-modal-close', 'lr-100-modal-continue']);
 				['lr-100-modal-close', 'lr-100-modal-continue'].forEach(function (id) { document.getElementById(id).addEventListener('click', function () { content.innerHTML = html; status.textContent = '✔ content mounted after modal closed'; status.style.color = 'var(--ok)'; }); });
-			} }
+			} },
+		/* ===================== Added 10 Nov 2026 – "Not tested" sheet #22–#26 ===================== */
+		{ id: 'LR-101', cat: 'Refresh during remediation (added 10 Nov)', title: 'Page refreshed before CUA starts', expected: 'After the reload the step is searched again, CUA starts and resolves → fixed (sheet #22)',
+			build: h('<div class="row"><button class="btn primary" id="lr-101-btn">Generate payout report</button><button class="btn" id="lr-101-help">Help</button></div>'),
+			steps: 'B1 on <code>#lr-101-btn</code> (play from the Menu so the agent is allowed on step 1, or put a normal step on <code>#lr-101-help</code> first)',
+			variation: 'Selector of <code>#lr-101-btn</code> broken and a refresh kit appears. Play the SWT and reload <b>before</b> the overlay shows (inside the ~5s default timeout): click "Refresh now", or pick 2–4s and "Arm timer" right before playing. After the reload, check that CUA starts and heals.',
+			apply: function (r) { breakSelector(r, 'lr-101-btn'); refreshKit(r, 'lr-101', [2, 3, 4], 3); } },
+
+		{ id: 'LR-102', cat: 'Refresh during remediation (added 10 Nov)', title: 'Refresh while CUA is running', expected: 'No stuck overlay / frozen SWT after reload; run resumes cleanly or ends; page usable at once (sheet #23 – retest: CUA not continuing, balloon gone after 3s)',
+			build: h('<div class="row"><button class="btn primary" id="lr-102-btn">Approve payout</button><button class="btn" id="lr-102-cancel">Cancel</button></div>'),
+			steps: 'B1 on <code>#lr-102-btn</code>',
+			variation: 'Selector of <code>#lr-102-btn</code> broken; refresh kit appears. Page clicks are blocked while CUA runs, so <b>arm the timer before playing</b> (default 10s ≈ timeout + a few seconds of agent work) or press F5 / Cmd+R while the overlay is up. After the reload click "Page usable?" (the counter must go up) and keep watching the balloon for 5s+.',
+			apply: function (r) { breakSelector(r, 'lr-102-btn'); refreshKit(r, 'lr-102', [8, 10, 12, 15, 20], 10); } },
+
+		{ id: 'LR-103', cat: 'Scroll (added 10 Nov)', title: 'Endless scroll – target never loads', expected: 'Agent stops scrolling within the 30s limit, reports not found, SWT ends; page not left scrolled far away → not_fixed (sheet #24, pair with LR-098)',
+			build: h('<div class="row"><button class="btn primary" id="lr-103-btn">Load archived tickets</button><span class="muted" id="lr-103-status"></span></div><div id="lr-103-feed"></div>'),
+			steps: 'B1 on <code>#lr-103-btn</code> (visible at the top of the section while building)',
+			variation: 'Button removed for good. The section becomes an endless feed: whenever the "Loading more…" sentinel (<code>#lr-103-sentinel</code>) nears the viewport, 12 more tickets load – forever; the target never appears. A fixed chip bottom-left (<code>#lr-103-scroll-chip</code>) shows pages loaded and how far the page is scrolled past the section; "Back to section" resets.',
+			apply: function (r) {
+				hide(r, ['lr-103-btn']);
+				var feed = r.querySelector('#lr-103-feed'); var status = r.querySelector('#lr-103-status'); var page = 0; var loading = false;
+				var sentinel = document.createElement('div'); sentinel.id = 'lr-103-sentinel'; sentinel.className = 'muted'; sentinel.style.cssText = 'padding:16px;text-align:center'; sentinel.textContent = 'Loading more…';
+				feed.appendChild(sentinel);
+				showModal('<div id="lr-103-scroll-chip" style="position:fixed;left:16px;bottom:16px;z-index:1500;background:#111827;color:#fff;border-radius:999px;padding:6px 8px 6px 14px;font-size:12px;display:flex;gap:8px;align-items:center"><span id="lr-103-chip-text"></span><button class="btn" id="lr-103-top" style="padding:2px 10px;font-size:12px">Back to section</button></div>', []);
+				var chipText = document.getElementById('lr-103-chip-text');
+				function paint() {
+					var secTop = Math.round(r.getBoundingClientRect().top + window.scrollY);
+					status.textContent = 'pages loaded: ' + page + ' – the target never loads';
+					if (chipText) chipText.textContent = 'LR-103 · pages: ' + page + ' · scrollY ' + Math.round(window.scrollY) + 'px · ' + Math.max(0, Math.round(window.scrollY - secTop)) + 'px past section top';
+				}
+				function addPage() {
+					page++; var html = '';
+					for (var i = 1; i <= 12; i++) { var n = (page - 1) * 12 + i; html += '<div class="card" style="margin:8px 0;padding:12px"><strong>Ticket #' + (10000 + n) + '</strong><div class="muted">Archived · page ' + page + '</div></div>'; }
+					sentinel.insertAdjacentHTML('beforebegin', html); paint();
+				}
+				function maybeLoad() {
+					if (loading || !document.body.contains(sentinel)) return;
+					if (sentinel.getBoundingClientRect().top < window.innerHeight + 100) { loading = true; setTimeout(function () { addPage(); loading = false; maybeLoad(); }, 600); }
+				}
+				function onScroll() { if (!document.body.contains(feed)) { window.removeEventListener('scroll', onScroll); return; } paint(); maybeLoad(); }
+				window.addEventListener('scroll', onScroll, { passive: true });
+				document.getElementById('lr-103-top').addEventListener('click', function () { r.scrollIntoView({ block: 'start' }); });
+				addPage();
+			} },
+
+		{ id: 'LR-104', cat: 'Step types (added 10 Nov)', title: 'Automation step – element text/position changed', expected: 'Reconnects to the right field/button; automation runs on them only, never on a decoy → fixed (sheet #25; also check the CUA balloon is not hidden behind the automation popup)',
+			build: h('<form class="row" onsubmit="return false" id="lr-104-form"><input class="input" id="lr-104-code" data-role="code" placeholder="Coupon code" /><button class="btn primary" id="lr-104-apply" data-role="apply">Apply coupon</button><button class="btn" id="lr-104-remove" data-role="remove">Remove coupon</button></form><div class="panel" id="lr-104-result"></div>'),
+			steps: 'Auto-fill <code>#lr-104-code</code> (e.g. "SAVE10") → auto-click <code>#lr-104-apply</code> → next step on <code>#lr-104-result</code>',
+			variation: 'Text and position changed, both selectors broken: field placeholder is now "Promo code" and it moved to 3rd place; the button is now "Redeem" and moved to the end of the row. Decoys sit in the original positions: a "Gift card number" field (<code>#lr-104-decoy-field</code>) and a primary "Clear cart" button (<code>#lr-104-decoy-btn</code>). The result panel turns red if a decoy is filled or clicked.',
+			init: function (r) {
+				var res = r.querySelector('#lr-104-result'); var applied = 0; var touched = {}; var last = '';
+				function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+				function paint() {
+					if (!document.body.contains(res)) { clearInterval(iv); return; }
+					var code = r.querySelector('[data-role="code"]'); var df = r.querySelector('[data-role="decoy-field"]');
+					if (df && df.value) touched['Gift card field filled'] = true;
+					var t = Object.keys(touched);
+					var html = 'Coupon field: <b>' + esc(code && code.value ? code.value : '(empty)') + '</b> · Apply/Redeem clicks: <b>' + applied + '</b>' + (applied ? ' <span class="state-badge ok">Coupon applied</span>' : '') + '<br/>' + (t.length ? '<span style="color:var(--bad)">✖ decoy touched: ' + t.join(', ') + '</span>' : '<span style="color:var(--ok)">✔ no decoy touched</span>');
+					if (html !== last) { res.innerHTML = html; last = html; }
+				}
+				r.addEventListener('click', function (e) {
+					var el = e.target.closest && e.target.closest('[data-role]'); if (!el) return;
+					var role = el.getAttribute('data-role');
+					if (role === 'apply') applied++;
+					if (role === 'remove') { applied = 0; var c = r.querySelector('[data-role="code"]'); if (c) c.value = ''; }
+					if (role === 'decoy-btn') touched['Clear cart clicked'] = true;
+					paint();
+				}, true);
+				r.addEventListener('input', paint, true);
+				var iv = setInterval(paint, 500); paint();
+			},
+			apply: function (r) {
+				var code = breakSelector(r, 'lr-104-code'); code.placeholder = 'Promo code';
+				var btn = breakSelector(r, 'lr-104-apply'); btn.textContent = 'Redeem';
+				var form = r.querySelector('#lr-104-form'); form.appendChild(btn.parentNode);
+				form.insertAdjacentHTML('afterbegin', '<input class="input" id="lr-104-decoy-field" data-role="decoy-field" placeholder="Gift card number" /><button class="btn primary" id="lr-104-decoy-btn" data-role="decoy-btn">Clear cart</button>');
+			} },
+
+		{ id: 'LR-105', cat: 'Multiple balloons / PEER (added 10 Nov)', title: 'Peer balloon target broken', expected: 'Agent reconnects the missing peer; main + other peer stay put; no duplicate / misplaced balloon → fixed (sheet #26)',
+			build: h(peerCard('lr-105')),
+			steps: 'One step: main balloon on <code>#lr-105-save</code> + peer balloons on <code>#lr-105-undo</code> and <code>#lr-105-help</code>',
+			variation: 'Peer target <code>#lr-105-undo</code> selector broken and moved to the start of the row; main and the other peer unchanged',
+			apply: function (r) { var u = breakSelector(r, 'lr-105-undo'); var a = r.querySelector('#lr-105-actions'); a.insertBefore(u.parentNode, a.firstChild); } },
+
+		{ id: 'LR-106', cat: 'Multiple balloons / PEER (added 10 Nov)', title: 'Main balloon target broken, peers intact', expected: 'Agent reconnects the main balloon; peers stay on their elements; no duplicates → fixed (sheet #26)',
+			build: h(peerCard('lr-106')),
+			steps: 'One step: main balloon on <code>#lr-106-save</code> + peer balloons on <code>#lr-106-undo</code> and <code>#lr-106-help</code>',
+			variation: 'Main target <code>#lr-106-save</code> selector broken, label now "Save", moved to the start of the row; peers unchanged',
+			apply: function (r) { var s = breakSelector(r, 'lr-106-save'); s.textContent = 'Save'; var a = r.querySelector('#lr-106-actions'); a.insertBefore(s.parentNode, a.firstChild); } },
+
+		{ id: 'LR-107', cat: 'Multiple balloons / PEER (added 10 Nov)', title: 'Main + one peer broken in the same step', expected: 'Both reconnected in one run; untouched peer stays put; no duplicates / wrong element → fixed (sheet #26)',
+			build: h(peerCard('lr-107')),
+			steps: 'One step: main balloon on <code>#lr-107-save</code> + peer balloons on <code>#lr-107-undo</code> and <code>#lr-107-help</code>',
+			variation: 'Main <code>#lr-107-save</code> broken (label "Save", moved first) and peer <code>#lr-107-help</code> broken (moved from the header into the actions row); peer <code>#lr-107-undo</code> unchanged',
+			apply: function (r) { var a = r.querySelector('#lr-107-actions'); var s = breakSelector(r, 'lr-107-save'); s.textContent = 'Save'; a.insertBefore(s.parentNode, a.firstChild); var hp = breakSelector(r, 'lr-107-help'); a.appendChild(hp.parentNode); } }
+
 	];
 
 	/* Global user-interaction logger (LR-067): records every click / submit / input / change / hashchange. */
@@ -806,6 +901,39 @@
 	/* ------------------------------------------------------------------ */
 	/* Variation state: URL ?on=LR-001,LR-035  +  localStorage            */
 	/* ------------------------------------------------------------------ */
+	/* LR-105..107: card with a main target (Save) and two peer targets (Undo, Help). */
+	function peerCard(p) {
+		return '<div class="card" id="' + p + '-card"><div class="row" style="justify-content:space-between"><strong>Billing profile</strong><button class="btn ghost" id="' + p + '-help">ⓘ Help</button></div>' +
+			'<div class="row" id="' + p + '-actions" style="margin-top:10px"><input class="input" id="' + p + '-vat" placeholder="VAT number" /><button class="btn" id="' + p + '-undo">Undo</button><button class="btn primary" id="' + p + '-save">Save changes</button></div></div>';
+	}
+
+	/* LR-101/102: refresh now / timed refresh, plus a "page usable" probe. The last reload is remembered in sessionStorage for 2 min. */
+	function refreshKit(r, p, delays, def) {
+		var key = 'lr-refresh-' + p;
+		var timers = window.__lrRefreshTimers = window.__lrRefreshTimers || {};
+		if (timers[p]) { clearTimeout(timers[p].t); clearInterval(timers[p].iv); delete timers[p]; }
+		var kit = document.createElement('div'); kit.className = 'panel'; kit.id = p + '-refresh-kit';
+		var opts = delays.map(function (d) { return '<option value="' + d + '"' + (d === def ? ' selected' : '') + '>' + d + 's</option>'; }).join('');
+		kit.innerHTML = '<div class="row"><button class="btn" id="' + p + '-refresh-now">↻ Refresh now</button><span class="muted">or in</span><select class="input" id="' + p + '-refresh-delay" style="min-width:80px">' + opts + '</select><button class="btn" id="' + p + '-refresh-arm">Arm timer</button><span class="muted" id="' + p + '-refresh-status"></span></div>' +
+			'<div class="row" style="margin-top:8px"><button class="btn" id="' + p + '-usable">Page usable? Click me</button><span class="muted" id="' + p + '-usable-count">clicks: 0</span><span class="muted" id="' + p + '-since-load"></span></div>';
+		r.querySelector('.scenario-body').appendChild(kit);
+		var q = function (s) { return kit.querySelector('#' + p + '-' + s); };
+		var status = q('refresh-status'), armBtn = q('refresh-arm'), since = q('since-load'), clicks = 0;
+		var prev = null; try { prev = JSON.parse(sessionStorage.getItem(key) || 'null'); } catch (e) {}
+		if (prev && Date.now() - prev.at < 120000) { status.textContent = '↻ last reload: ' + (prev.manual ? '"Refresh now"' : 'timer, ' + prev.delay + 's after arming') + ' at ' + new Date(prev.at).toLocaleTimeString(); status.style.color = 'var(--brand-dark)'; }
+		function go(info) { info.at = Date.now(); try { sessionStorage.setItem(key, JSON.stringify(info)); } catch (e) {} location.reload(); }
+		q('refresh-now').addEventListener('click', function () { go({ manual: true }); });
+		armBtn.addEventListener('click', function () {
+			if (timers[p]) { clearTimeout(timers[p].t); clearInterval(timers[p].iv); delete timers[p]; armBtn.textContent = 'Arm timer'; status.textContent = 'timer cancelled'; status.style.color = ''; return; }
+			var d = parseInt(q('refresh-delay').value, 10), t0 = Date.now();
+			var iv = setInterval(function () { status.textContent = '⏳ reloading in ' + Math.max(0, d - (Date.now() - t0) / 1000).toFixed(1) + 's – start the SWT now'; status.style.color = 'var(--warn)'; }, 100);
+			timers[p] = { t: setTimeout(function () { go({ delay: d }); }, d * 1000), iv: iv };
+			armBtn.textContent = 'Cancel timer';
+		});
+		q('usable').addEventListener('click', function () { clicks++; q('usable-count').textContent = 'clicks: ' + clicks; });
+		var siv = setInterval(function () { if (!document.body.contains(kit)) { clearInterval(siv); return; } since.textContent = '⏱ ' + (performance.now() / 1000).toFixed(1) + 's since page load'; }, 100);
+	}
+
 	var LS_KEY = 'lr-variations';
 	function readState() {
 		var params = new URLSearchParams(location.search);
