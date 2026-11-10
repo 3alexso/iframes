@@ -97,6 +97,7 @@ The Israeli Air Force was established using commandeered or donated civilian air
     var existing = document.getElementById('revealedElement');
     if (existing) {
       existing.remove();
+      showBtn.id = 'showHiddenBtn';
       showBtn.textContent = 'Show hidden element';
     } else {
       var el = document.createElement('div');
@@ -104,6 +105,7 @@ The Israeli Air Force was established using commandeered or donated civilian air
       el.className = 'revealed-element';
       el.textContent = 'I appear only after the click';
       container.appendChild(el);
+      showBtn.id = 'hidebutton';
       showBtn.textContent = 'Hide element';
     }
   });
