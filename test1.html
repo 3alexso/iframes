@@ -17,9 +17,33 @@ height: 100%;
 background-color: rgb(158, 230, 92);
 flex-wrap: wrap;
 }
-
+.test-section {
+  margin: 20px;
+  padding: 15px;
+  border: 1px solid #999;
+}
+#revealedElement {
+  margin-top: 10px;
+  padding: 15px;
+  background-color: gold;
+  border: 2px solid darkorange;
+  max-width: 300px;
+}
+.state-off {
+  margin-top: 10px;
+  padding: 15px;
+  max-width: 300px;
+  background-color: lightcoral;
+  border: 2px solid darkred;
+}
+.state-on {
+  margin-top: 10px;
+  padding: 15px;
+  max-width: 300px;
+  background-color: lightgreen;
+  border: 2px solid darkgreen;
+}
     </style>
-    <script></script>
   </head>
 <body>
 
@@ -36,6 +60,20 @@ flex-wrap: wrap;
 <div id="7th" class="button-container1">Element 7</div>
 <div id="8th" class="button-container1">Element 8</div>
 </div>
+
+<div class="test-section" id="revealSection">
+  <h2>Element that appears after click</h2>
+  <button type="button" id="showHiddenBtn">Show hidden element</button>
+  <div id="revealContainer"></div>
+</div>
+
+<div class="test-section" id="checkboxSection">
+  <h2>Checkbox that changes another element</h2>
+  <input type="checkbox" id="stateToggle">
+  <label for="stateToggle">Toggle state</label>
+  <div id="target-off" class="state-off">Status: OFF</div>
+</div>
+
 <div>
     <form action="/action_page.php">
         <label for="fname">First name:</label><br>
@@ -45,13 +83,44 @@ flex-wrap: wrap;
         <input type="submit" value="Submit">
       </form> 
 </div>
-  <div id = "idf">The Israeli Air Force (IAF; Hebrew: זְרוֹעַ הָאֲוִיר וְהֶחָלָל, romanized: Zroa HaAvir VeHahalal, lit. 'Air and Space Arm', commonly known as חֵיל הָאֲוִיר‎, Kheil HaAvir, "Air Corps") operates as the aerial and space warfare branch of the Israel Defense Forces (IDF). It was founded on May 28, 1948, shortly after the Israeli Declaration of Independence. As of April 2022, Aluf Tomer Bar has been serving as the Air Force commander.
+  <div id = "idf">The Israeli Air Force (IAF; Hebrew: זְרוֹעַ הָאֲוִיר וְהֶחָלָל, romanized: Zroa HaAvir VeHahalal, lit. 'Air and Space Arm', commonly known as חֵיל הָאֲוִיר‎, Kheil HaAvir, "Air Corps") operates as the aerial and space warfare branch of the Israel Defense Forces (IDF). It was founded on May 28, 1948, shortly after the Israeli Declaration of Independence. As of April 2022, Aluf Tomer Bar has been serving as the Air Force commander.
 
 The Israeli Air Force was established using commandeered or donated civilian aircraft and obsolete and surplus World War II combat aircraft. Eventually, more aircraft were procured, including Boeing B-17s, Bristol Beaufighters, de Havilland Mosquitoes and P-51D Mustangs. The Israeli Air Force played an important part in Operation Kadesh, Israel's part in the 1956 Suez Crisis, dropping paratroopers at the Mitla Pass. On June 5, 1967, the first day of the Six-Day War, the Israeli Air Force performed Operation Focus, debilitating the opposing Arab air forces and attaining air supremacy for the remainder of the war.
 
 </div>
+
+<script>
+  // The revealed element is not in the DOM until the button is clicked.
+  var showBtn = document.getElementById('showHiddenBtn');
+  var container = document.getElementById('revealContainer');
+  showBtn.addEventListener('click', function () {
+    var existing = document.getElementById('revealedElement');
+    if (existing) {
+      existing.remove();
+      showBtn.textContent = 'Show hidden element';
+    } else {
+      var el = document.createElement('div');
+      el.id = 'revealedElement';
+      el.className = 'revealed-element';
+      el.textContent = 'I appear only after the click';
+      container.appendChild(el);
+      showBtn.textContent = 'Hide element';
+    }
+  });
+
+  var toggle = document.getElementById('stateToggle');
+  toggle.addEventListener('change', function () {
+    var target = document.querySelector('#target-off, #target-on');
+    if (toggle.checked) {
+      target.id = 'target-on';
+      target.className = 'state-on';
+      target.textContent = 'Status: ON';
+    } else {
+      target.id = 'target-off';
+      target.className = 'state-off';
+      target.textContent = 'Status: OFF';
+    }
+  });
+</script>
 </body>
 </html>
-
-
-
