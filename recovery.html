@@ -726,7 +726,7 @@
 		{ id: 'LR-098', cat: 'Heal – element changed, no click (added 14 Oct)', title: 'Infinite scroll – element loads on scroll', expected: 'Agent scrolls, content loads, element found → fixed',
 			build: h('<div class="row"><button class="btn primary" id="lr-098-btn">Load older activity</button><span class="muted" id="lr-098-status"></span></div><div id="lr-098-feed"></div>'),
 			steps: 'B1 on <code>#lr-098-btn</code> (visible at the top of the section while building)',
-			variation: 'Button is NOT in the DOM. The section becomes an activity feed that loads more items each time the "Loading more…" sentinel scrolls into view; the button (same id) is appended only after the 3rd page loads – i.e. only after scrolling to the bottom twice.',
+			variation: 'Button is NOT in the DOM. The section becomes an activity feed that loads more items each time the "Loading more…" sentinel scrolls into view; the button (same id) is appended only after the 3rd page loads – i.e. only after scrolling to the bottom twice. The feed keeps loading below the button forever (infinite scroll).',
 			apply: function (r) {
 				var btn = r.querySelector('#lr-098-btn'); btn.remove();
 				var feed = r.querySelector('#lr-098-feed'); var status = r.querySelector('#lr-098-status'); var page = 0;
@@ -736,7 +736,7 @@
 					for (var i = 1; i <= 12; i++) { html += '<div class="card" style="margin:8px 0;padding:12px"><strong>Activity #' + ((page - 1) * 12 + i) + '</strong><div class="muted">Page ' + page + ' · item loaded on scroll</div></div>'; }
 					sentinel.insertAdjacentHTML('beforebegin', html);
 					status.textContent = 'pages loaded: ' + page + (page < 3 ? ' – scroll down to load more' : ' – target button is now in the DOM ✔');
-					if (page >= 3) { sentinel.replaceWith(btn); io.disconnect(); }
+					if (page === 3) { sentinel.before(btn); }
 				}
 				feed.appendChild(sentinel);
 				var io = new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) { setTimeout(addPage, 600); } }, { rootMargin: '0px' });
